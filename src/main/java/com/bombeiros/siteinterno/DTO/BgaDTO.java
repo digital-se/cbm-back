@@ -10,7 +10,11 @@ public class BgaDTO {
 	
     private int num_bga;
 
-    
+    public BgaDTO(MultipartFile image, String nome, int num_bga) {
+        this.image = image;
+        this.nome = nome;
+        this.num_bga = num_bga;
+    }
 
     public MultipartFile getImage() {
         return image;
@@ -36,12 +40,4 @@ public class BgaDTO {
         this.num_bga = num_bga;
     }
 
-    public BgaDTO(MultipartFile image, String nome, int num_bga) {
-        this.image = image;
-        this.nome = nome;
-        this.num_bga = num_bga;
-    }
-    
-    
-    
 }

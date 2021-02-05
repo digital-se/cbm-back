@@ -11,19 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
-
-
-
 @Entity
 @Table(name="BGO")
 public class Bgo implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name="BGA")
 public class Bga implements Serializable {
@@ -35,9 +34,6 @@ public class Bga implements Serializable {
 	public Bga() {
 		
 	}
-
-
-	
 
 	public String getNome() {
 		return nome;
@@ -74,8 +70,5 @@ public class Bga implements Serializable {
 	public void setImagens(List<Imagem> imagens) {
 		this.imagens = imagens;
 	}
-	
-	
-	
 	
 }
