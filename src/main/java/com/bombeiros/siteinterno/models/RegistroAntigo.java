@@ -27,7 +27,7 @@ public class RegistroAntigo implements Serializable{
 
 
 	@OneToMany(mappedBy = "registroAntigo", cascade = CascadeType.ALL)
-	private List<Imagem> imagens;
+	private List<Documento> documentos;
 	
 	public RegistroAntigo() {
 		
@@ -51,12 +51,12 @@ public class RegistroAntigo implements Serializable{
 		this.id_registroAntigo = id_registroAntigo;
 	}
 
-	public List<Imagem> getImagens() {
-		return imagens;
+	public List<Documento> getDocumentos() {
+		return documentos;
 	}
 
-	public void setImagens(List<Imagem> imagens) {
-		this.imagens = imagens;
+	public void setDocumentos(List<Documento> documentos) {
+		this.documentos = documentos;
 	}
 
 	

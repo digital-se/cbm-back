@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.bombeiros.siteinterno.message.ResponseFile;
 import com.bombeiros.siteinterno.message.ResponseMessage;
-import com.bombeiros.siteinterno.models.Imagem;
+import com.bombeiros.siteinterno.models.Documento;
 import com.bombeiros.siteinterno.services.FileStorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +29,17 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/imagens")
-public class ImagemUploadController {
+@RequestMapping(value = "/documentos")
+public class DocumentoUploadController {
     
     @Autowired
     private FileStorageService storageService;
 
 
 
-    @ApiOperation(value = "Faz o upload de imagem ")
+    @ApiOperation(value = "Faz o upload de documento ")
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "Fez o upload de imagem"),
+		@ApiResponse(code = 200, message = "Fez o upload de documento"),
 		@ApiResponse(code = 401, message = "Sem autenticação"),
 		@ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 		@ApiResponse(code = 404, message = "Não encontrado"),
@@ -49,22 +49,22 @@ public class ImagemUploadController {
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
         try {
-            storageService.salvarImagem(file);
+            storageService.salvarDocumento(file);
 
-            message = "Upload de imagem com sucesso: " + file.getOriginalFilename();
+            message = "Upload de documento com sucesso: " + file.getOriginalFilename();
 
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
 
         } catch (Exception e) {
-            message = "Não foi possível dar upload na imagem: " + file.getOriginalFilename() + "!";
+            message = "Não foi possível dar upload na documento: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
         }
     }
 
     
-    @ApiOperation(value = "Retorna a lista de imagens")
+    @ApiOperation(value = "Retorna a lista de documentos")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Retornou a lista de imagens"),
+        @ApiResponse(code = 200, message = "Retornou a lista de documentos"),
         @ApiResponse(code = 401, message = "Sem autenticação"),
         @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
         @ApiResponse(code = 404, message = "Não encontrado"),
@@ -72,28 +72,28 @@ public class ImagemUploadController {
     })
     @GetMapping
     public ResponseEntity<List<ResponseFile>> getListFiles() {
-      List<ResponseFile> files = storageService.getAllImagens().map(imagem -> {
+      List<ResponseFile> files = storageService.getAllDocumentos().map(documento -> {
         String fileDownloadUri = ServletUriComponentsBuilder
             .fromCurrentContextPath()
-            .path("/imagens/listar/")
-            .path(imagem.getId_imagem().toString())
+            .path("/documentos/listar/")
+            .path(documento.getId_documento().toString())
             .toUriString();
   
         return new ResponseFile(
-            imagem.getId_imagem(),
-            imagem.getName(),
+            documento.getId_documento(),
+            documento.getName(),
             fileDownloadUri,
-            imagem.getType(),
-            imagem.getImagem().length);
+            documento.getType(),
+            documento.getDocumento().length);
       }).collect(Collectors.toList());
   
       return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
 
-    @ApiOperation(value = "Retorna uma imagem pelo id")
+    @ApiOperation(value = "Retorna um documento pelo id")
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "Retornou uma imagem pelo id"),
+		@ApiResponse(code = 200, message = "Retornou um documento pelo id"),
 		@ApiResponse(code = 401, message = "Sem autenticação"),
 		@ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
 		@ApiResponse(code = 404, message = "Não encontrado"),
@@ -102,12 +102,12 @@ public class ImagemUploadController {
     @GetMapping("/listar/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable long id) {
 
-        Imagem imagem = storageService.getImagem(id);
+        Documento documento = storageService.getDocumento(id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-        headers.setContentType(MediaType.parseMediaType(imagem.getType()));
-        ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(imagem.getImagem(), headers, HttpStatus.OK);
+        headers.setContentType(MediaType.parseMediaType(documento.getType()));
+        ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(documento.getDocumento(), headers, HttpStatus.OK);
 
         return responseEntity;
 

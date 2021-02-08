@@ -2,7 +2,7 @@ package com.bombeiros.siteinterno.DTO;
 
 import java.util.List;
 
-import com.bombeiros.siteinterno.models.Imagem;
+import com.bombeiros.siteinterno.models.Documento;
 
 public class RegistroAntigoDTO {
 
@@ -10,12 +10,12 @@ public class RegistroAntigoDTO {
 
 	private String nome;
 
-	private List<Imagem> imagens;
+	private List<Documento> documentos;
 
-    public RegistroAntigoDTO(long id_registroAntigo, String nome, List<Imagem> imagens) {
+    public RegistroAntigoDTO(long id_registroAntigo, String nome, List<Documento> documentos) {
         this.id_registroAntigo = id_registroAntigo;
         this.nome = nome;
-        this.imagens = imagens;
+        this.documentos = documentos;
     }
 
     public long getId_registroAntigo() {
@@ -34,12 +34,12 @@ public class RegistroAntigoDTO {
         this.nome = nome;
     }
 
-    public List<Imagem> getImagens() {
-        return imagens;
+    public List<Documento> getDocumentos() {
+        return documentos;
     }
 
-    public void setImagens(List<Imagem> imagens) {
-        this.imagens = imagens;
+    public void setDocumentos(List<Documento> documentos) {
+        this.documentos = documentos;
     }
     
     

@@ -2,7 +2,7 @@ package com.bombeiros.siteinterno.DTO;
 
 import java.util.List;
 
-import com.bombeiros.siteinterno.models.Imagem;
+import com.bombeiros.siteinterno.models.Documento;
 
 public class RelatorioDeProcessoDTO {
     
@@ -10,12 +10,12 @@ public class RelatorioDeProcessoDTO {
 	
 	private int num_relatorio;
 	
-	private List<Imagem> imagens;
+	private List<Documento> documentos;
 
-    public RelatorioDeProcessoDTO(long id_relatorioDeProcesso, int num_relatorio, List<Imagem> imagens) {
+    public RelatorioDeProcessoDTO(long id_relatorioDeProcesso, int num_relatorio, List<Documento> documentos) {
         this.id_relatorioDeProcesso = id_relatorioDeProcesso;
         this.num_relatorio = num_relatorio;
-        this.imagens = imagens;
+        this.documentos = documentos;
     }
 
     public long getId_relatorioDeProcesso() {
@@ -34,12 +34,12 @@ public class RelatorioDeProcessoDTO {
         this.num_relatorio = num_relatorio;
     }
 
-    public List<Imagem> getImagens() {
-        return imagens;
+    public List<Documento> getDocumentos() {
+        return documentos;
     }
 
-    public void setImagens(List<Imagem> imagens) {
-        this.imagens = imagens;
+    public void setDocumentos(List<Documento> documentos) {
+        this.documentos = documentos;
     }
 
     

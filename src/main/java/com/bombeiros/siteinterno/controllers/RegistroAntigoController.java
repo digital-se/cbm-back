@@ -8,7 +8,7 @@ import com.bombeiros.siteinterno.message.ResponseFile;
 import com.bombeiros.siteinterno.message.RegistroAntigoResponseFile;
 import com.bombeiros.siteinterno.models.RegistroAntigo;
 import com.bombeiros.siteinterno.repository.RegistroAntigoRepository;
-import com.bombeiros.siteinterno.services.RegistroAntigoSaveImageService;
+import com.bombeiros.siteinterno.services.RegistroAntigoSaveDocumentoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,7 @@ public class RegistroAntigoController {
     RegistroAntigoRepository registroRepository;
 
     @Autowired
-    RegistroAntigoSaveImageService registroSaveImage;
+    RegistroAntigoSaveDocumentoService registroSaveDocumento;
 
     @ApiOperation(value = "Retorna uma lista de Registros antigos")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Registro antigos"),
@@ -49,29 +49,29 @@ public class RegistroAntigoController {
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
-    @GetMapping("/imagens")
-    public ResponseEntity<List<RegistroAntigoResponseFile>> listarRegistroImagens() {
+    @GetMapping("/documentos")
+    public ResponseEntity<List<RegistroAntigoResponseFile>> listarRegistroDocumentos() {
         List<RegistroAntigoResponseFile> files = registroRepository.findAll().stream().map(registro -> {
 
-            List<ResponseFile> imagens = registro.getImagens().stream().map(imagem -> {
+            List<ResponseFile> documentos = registro.getDocumentos().stream().map(documento -> {
                 String fileDownloadUri = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/imagens/listar/")
-                    .path(imagem.getId_imagem().toString())
+                    .path("/documentos/listar/")
+                    .path(documento.getId_documento().toString())
                     .toUriString();
 
                     return new ResponseFile(
-                    imagem.getId_imagem(),
-                    imagem.getName(),
+                    documento.getId_documento(),
+                    documento.getName(),
                     fileDownloadUri,
-                    imagem.getType(),
-                    imagem.getImagem().length);
+                    documento.getType(),
+                    documento.getDocumento().length);
               }).collect(Collectors.toList());
 
               return new RegistroAntigoResponseFile(
                   registro.getId_registroAntigo(),
                   registro.getNome(), 
-                  imagens);
+                  documentos);
                 }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -82,7 +82,7 @@ public class RegistroAntigoController {
     public ResponseEntity<RegistroAntigo> criarRegistroAntigo(@RequestPart("registro") RegistroAntigo registroAntigo,
             @RequestPart("file") MultipartFile file) throws IOException {
 
-        registroSaveImage.salvar(registroAntigo, file);
+        registroSaveDocumento.salvar(registroAntigo, file);
 
         return ResponseEntity.status(HttpStatus.OK).body(registroAntigo);
     }

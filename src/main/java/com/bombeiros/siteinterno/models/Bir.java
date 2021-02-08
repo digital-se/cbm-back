@@ -28,13 +28,12 @@ public class Bir implements Serializable {
 
 
 	@OneToMany(mappedBy = "bir", cascade = CascadeType.ALL)
-	private List<Imagem> imagens;
+	private List<Documento> documentos;
 	
 	public Bir() {
 		
 	}
 	
-
 	public String getNome() {
 		return nome;
 	}
@@ -42,7 +41,6 @@ public class Bir implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 
 	public int getNum_bir() {
 		return num_bir;
@@ -60,14 +58,12 @@ public class Bir implements Serializable {
 		this.id_bir = id_bir;
 	}
 
-	public List<Imagem> getImagens() {
-		return imagens;
+	public List<Documento> getDocumentos() {
+		return documentos;
 	}
 
-	public void setImagens(List<Imagem> imagens) {
-		this.imagens = imagens;
+	public void setDocumentos(List<Documento> documentos) {
+		this.documentos = documentos;
 	}
-	
-	
 	
 }

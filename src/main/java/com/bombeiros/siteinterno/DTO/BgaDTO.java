@@ -4,24 +4,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class BgaDTO {
     
-    private MultipartFile image;
+    private MultipartFile documento;
 
     private String nome;
 	
     private int num_bga;
 
-    public BgaDTO(MultipartFile image, String nome, int num_bga) {
-        this.image = image;
+    public BgaDTO(MultipartFile documento, String nome, int num_bga) {
+        this.documento = documento;
         this.nome = nome;
         this.num_bga = num_bga;
     }
 
-    public MultipartFile getImage() {
-        return image;
+    public MultipartFile getDocumento() {
+        return documento;
     }
 
-    public void setImage(MultipartFile image) {
-        this.image = image;
+    public void setDocumento(MultipartFile documento) {
+        this.documento = documento;
     }
 
     public String getNome() {

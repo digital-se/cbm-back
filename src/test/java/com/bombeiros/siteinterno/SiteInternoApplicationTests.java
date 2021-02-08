@@ -1,7 +1,7 @@
 package com.bombeiros.siteinterno;
 
 
-import com.bombeiros.siteinterno.models.Imagem;
+import com.bombeiros.siteinterno.models.Documento;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ class SiteInternoApplicationTests {
 	@Test
 	void case2() throws Exception {
 		
-			Imagem imagem = new Imagem();
+			Documento imagem = new Documento();
 			mockMvc.perform(post("/imagens")
 			.contentType("application/json")
 			.content(objectMapper.writeValueAsString(imagem)))
@@ -45,7 +45,7 @@ class SiteInternoApplicationTests {
 	@Test
 	void case3() throws Exception {
 		try {
-			Imagem imagem = new Imagem();
+			Documento imagem = new Documento();
 			mockMvc.perform(get("/imagens")
 			.contentType("application/json")
 			.content(objectMapper.writeValueAsString(imagem)))

@@ -34,7 +34,7 @@ public class FichaFuncionario implements Serializable {
 	
 
 	@OneToMany(mappedBy = "fichaFuncionario", cascade = CascadeType.ALL)
-	private List<Imagem> imagens;
+	private List<Documento> documentos;
 	
 	public FichaFuncionario() {
 		
@@ -80,12 +80,12 @@ public class FichaFuncionario implements Serializable {
 		this.id_fichaFuncionario = id_fichaFuncionario;
 	}
 
-	public List<Imagem> getImagens() {
-		return imagens;
+	public List<Documento> getDocumentos() {
+		return documentos;
 	}
 
-	public void setImagens(List<Imagem> imagens) {
-		this.imagens = imagens;
+	public void setDocumentos(List<Documento> documentos) {
+		this.documentos = documentos;
 	}
 	
 

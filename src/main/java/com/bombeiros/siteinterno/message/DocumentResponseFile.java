@@ -7,13 +7,13 @@ public class DocumentResponseFile {
     private long id;
     private String name;
     private int num;
-    private List<ResponseFile> imagens;
+    private List<ResponseFile> documentos;
 
-    public DocumentResponseFile(long id, String name, int num, List<ResponseFile> imagens) {
+    public DocumentResponseFile(long id, String name, int num, List<ResponseFile> documentos) {
         this.id = id;
         this.name = name;
         this.num = num;
-        this.imagens = imagens;
+        this.documentos = documentos;
     }
 
     public long getId() {
@@ -40,12 +40,12 @@ public class DocumentResponseFile {
         this.num = num;
     }
 
-    public List<ResponseFile> getImagens() {
-        return imagens;
+    public List<ResponseFile> getDocumentos() {
+        return documentos;
     }
 
-    public void setImagens(List<ResponseFile> imagens) {
-        this.imagens = imagens;
+    public void setDocumentos(List<ResponseFile> documentos) {
+        this.documentos = documentos;
     }
 
 }

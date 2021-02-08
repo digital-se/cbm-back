@@ -6,7 +6,7 @@ public class RegistroAntigoResponseFile {
     
     private Long id_registroAntigo;
     private String nome;
-    private List<ResponseFile> imagens;
+    private List<ResponseFile> documentos;
 
     
 
@@ -31,18 +31,18 @@ public class RegistroAntigoResponseFile {
         this.nome = nome;
     }
 
-    public RegistroAntigoResponseFile(Long id_registroAntigo, String nome, List<ResponseFile> imagens) {
+    public RegistroAntigoResponseFile(Long id_registroAntigo, String nome, List<ResponseFile> documentos) {
         this.id_registroAntigo = id_registroAntigo;
         this.nome = nome;
-        this.imagens = imagens;
+        this.documentos = documentos;
     }
 
-    public List<ResponseFile> getImagens() {
-        return imagens;
+    public List<ResponseFile> getDocumentos() {
+        return documentos;
     }
 
-    public void setImagens(List<ResponseFile> imagens) {
-        this.imagens = imagens;
+    public void setDocumentos(List<ResponseFile> documentos) {
+        this.documentos = documentos;
     }
 
     

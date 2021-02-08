@@ -27,7 +27,7 @@ public class RelatorioDeProcesso implements Serializable {
 	
 	
 	@OneToMany(mappedBy = "relatorioDeProcesso", cascade = CascadeType.ALL)
-	private List<Imagem> imagens;
+	private List<Documento> documentos;
 	
 	public RelatorioDeProcesso() {
 		
@@ -50,12 +50,12 @@ public class RelatorioDeProcesso implements Serializable {
 		this.id_relatorioDeProcesso = id_relatorioDeProcesso;
 	}
 
-	public List<Imagem> getImagens() {
-		return imagens;
+	public List<Documento> getDocumentos() {
+		return documentos;
 	}
 
-	public void setImagens(List<Imagem> imagens) {
-		this.imagens = imagens;
+	public void setDocumentos(List<Documento> documentos) {
+		this.documentos = documentos;
 	}
 	
 	

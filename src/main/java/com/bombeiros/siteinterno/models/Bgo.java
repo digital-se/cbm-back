@@ -27,7 +27,7 @@ public class Bgo implements Serializable {
 	
 
 	@OneToMany(mappedBy = "bgo", cascade = CascadeType.ALL)
-	private List<Imagem> imagens;
+	private List<Documento> documentos;
 	
 	public Bgo() {
 		
@@ -62,14 +62,12 @@ public class Bgo implements Serializable {
 		this.id_bgo = id_bgo;
 	}
 
-	public List<Imagem> getImagens() {
-		return imagens;
+	public List<Documento> getDocumentos() {
+		return documentos;
 	}
 
-	public void setImagens(List<Imagem> imagens) {
-		this.imagens = imagens;
+	public void setDocumentos(List<Documento> documentos) {
+		this.documentos = documentos;
 	}
 
-
-	
 }

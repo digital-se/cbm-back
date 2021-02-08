@@ -29,7 +29,7 @@ public class Bga implements Serializable {
 	private int num_bga;
 
 	@OneToMany(mappedBy = "bga", cascade = CascadeType.ALL)
-	private List<Imagem> imagens;
+	private List<Documento> documentos;
 	
 	public Bga() {
 		
@@ -63,12 +63,12 @@ public class Bga implements Serializable {
 		this.num_bga = num_bga;
 	}
 
-	public List<Imagem> getImagens() {
-		return imagens;
+	public List<Documento> getDocumentos() {
+		return documentos;
 	}
 
-	public void setImagens(List<Imagem> imagens) {
-		this.imagens = imagens;
+	public void setDocumentos(List<Documento> documentos) {
+		this.documentos = documentos;
 	}
 	
 }

@@ -10,18 +10,18 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-public class Imagem {
-    
+public class Documento {
+        
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id_imagem;
+    private Long id_documento;
 
     private String name;
 
     private String type;
-
+    
     @Lob
-    private byte[] imagem;
+    private byte[] documento;
 
     @ManyToOne
     @JoinColumn(name = "id_bga", referencedColumnName = "id_bga")
@@ -48,24 +48,24 @@ public class Imagem {
     private RelatorioDeProcesso relatorioDeProcesso;
 
     
-    public Imagem() {
+    public Documento() {
 
     }
     
-    public Long getId_imagem() {
-        return id_imagem;
+    public Long getId_documento() {
+        return id_documento;
     }
-
-    public void setId_imagem(Long id_imagem) {
-        this.id_imagem = id_imagem;
+    
+    public void setId_documento(Long id_documento) {
+        this.id_documento = id_documento;
     }
-
-    public byte[] getImagem() {
-        return imagem;
+    
+    public byte[] getDocumento() {
+        return documento;
     }
-
-    public void setImagem(byte[] imagem) {
-        this.imagem = imagem;
+    
+    public void setDocumento(byte[] documento) {
+        this.documento = documento;
     }
 
     public String getName() {
@@ -84,10 +84,10 @@ public class Imagem {
         this.type = type;
     }
 
-    public Imagem(String name, String type, byte[] imagem) {
+    public Documento(String name, String type, byte[] documento) {
         this.name = name;
         this.type = type;
-        this.imagem = imagem;
+        this.documento = documento;
     }
 
     public Bga getBga() {

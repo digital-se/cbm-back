@@ -15,16 +15,16 @@ public class FichaFuncionaroResponseFile {
 	
     private Date data_exclusao;
     
-    private List<ResponseFile> imagens;
+    private List<ResponseFile> documentos;
 
     public FichaFuncionaroResponseFile(long id_fichaFuncionario, String nome, int num_ficha, Date data_inclusao,
-            Date data_exclusao, List<ResponseFile> imagens) {
+            Date data_exclusao, List<ResponseFile> documentos) {
         this.id_fichaFuncionario = id_fichaFuncionario;
         this.nome = nome;
         this.num_ficha = num_ficha;
         this.data_inclusao = data_inclusao;
         this.data_exclusao = data_exclusao;
-        this.imagens = imagens;
+        this.documentos = documentos;
     }
 
     public FichaFuncionaroResponseFile(long id_fichaFuncionario, String nome, int num_ficha, Date data_inclusao,
@@ -76,12 +76,12 @@ public class FichaFuncionaroResponseFile {
         this.data_exclusao = data_exclusao;
     }
 
-    public List<ResponseFile> getImagens() {
-        return imagens;
+    public List<ResponseFile> getDocumentos() {
+        return documentos;
     }
 
-    public void setImagens(List<ResponseFile> imagens) {
-        this.imagens = imagens;
+    public void setDocumentos(List<ResponseFile> documentos) {
+        this.documentos = documentos;
     }
 
     

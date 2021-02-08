@@ -9,8 +9,8 @@ import com.bombeiros.siteinterno.message.BgoResponseFile;
 import com.bombeiros.siteinterno.message.DocumentResponseFile;
 import com.bombeiros.siteinterno.models.Bgo;
 import com.bombeiros.siteinterno.repository.BgoRepository;
-import com.bombeiros.siteinterno.repository.ImagemRepository;
-import com.bombeiros.siteinterno.services.BgoSaveImageService;
+import com.bombeiros.siteinterno.repository.DocumentoRepository;
+import com.bombeiros.siteinterno.services.BgoSaveDocumentoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,10 +36,10 @@ public class BgoController {
     BgoRepository bgoRepository;
 
     @Autowired
-    ImagemRepository imagemRepository;
+    DocumentoRepository documentoRepository;
 
     @Autowired
-    BgoSaveImageService bgoSaveImage;
+    BgoSaveDocumentoService bgoSaveDocumento;
 
 
     @ApiOperation(value = "Retorna uma lista de Bgo's")
@@ -61,43 +61,43 @@ public class BgoController {
         return ResponseEntity.status(HttpStatus.OK).body(bgos);
     }
 
-    @ApiOperation(value = "Retorna uma lista de Bgo's e suas respectivas imagens")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Bgo's e suas imagens"),
+    @ApiOperation(value = "Retorna uma lista de Bgo's e suas respectivas documentos")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Bgo's e suas documentos"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/imagens")
-    public ResponseEntity<List<DocumentResponseFile>> listarBgoImagens() {
+    @GetMapping("/documentos")
+    public ResponseEntity<List<DocumentResponseFile>> listarBgoDocumentos() {
 
         List<DocumentResponseFile> files = bgoRepository.findAll().stream().map(bgo -> {
 
-            List<ResponseFile> imagens = bgo.getImagens().stream().map(imagem -> {
+            List<ResponseFile> documentos = bgo.getDocumentos().stream().map(documento -> {
                 String fileDownloadUri = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/imagens/listar/")
-                    .path(imagem.getId_imagem().toString())
+                    .path("/documentos/listar/")
+                    .path(documento.getId_documento().toString())
                     .toUriString();
                 
                 return new ResponseFile(
-                    imagem.getId_imagem(),
-                    imagem.getName(),
+                    documento.getId_documento(),
+                    documento.getName(),
                     fileDownloadUri,
-                    imagem.getType(),
-                    imagem.getImagem().length);
+                    documento.getType(),
+                    documento.getDocumento().length);
               }).collect(Collectors.toList());
 
               return new DocumentResponseFile(
                 bgo.getId_bgo(),
                 bgo.getNome(),
                 bgo.getNum_bgo(),
-                imagens);
+                documentos);
           }).collect(Collectors.toList());
       
           return ResponseEntity.status(HttpStatus.OK).body(files);  
 
     }
 
-    @ApiOperation(value = "Cria um Bgo e faz o upload de sua imagem")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um Bgo e fez o upload de sua imagem"),
+    @ApiOperation(value = "Cria um Bgo e faz o upload de sua documento")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um Bgo e fez o upload de sua documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping
@@ -105,7 +105,7 @@ public class BgoController {
     public ResponseEntity<Bgo> criarBga(@RequestPart("bgo") Bgo bgo, @RequestPart("file") MultipartFile file)
             throws IOException {
 
-        bgoSaveImage.salvar(bgo, file);
+        bgoSaveDocumento.salvar(bgo, file);
 
         return ResponseEntity.status(HttpStatus.OK).body(bgo);
     }

@@ -8,7 +8,7 @@ import com.bombeiros.siteinterno.message.ResponseFile;
 import com.bombeiros.siteinterno.message.FichaFuncionaroResponseFile;
 import com.bombeiros.siteinterno.models.FichaFuncionario;
 import com.bombeiros.siteinterno.repository.FichaFuncionarioRepository;
-import com.bombeiros.siteinterno.services.FichaFuncionaroSaveImageService;
+import com.bombeiros.siteinterno.services.FichaFuncionaroSaveDocumentosService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class FichaFuncionarioController {
     FichaFuncionarioRepository fichaRepository;
 
     @Autowired
-    FichaFuncionaroSaveImageService saveFichaImage;
+    FichaFuncionaroSaveDocumentosService saveFichaDocumento;
 
     @ApiOperation(value = "Retorna uma lista de Fichas de funcionário")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Fichas de funcionário"),
@@ -49,19 +49,19 @@ public class FichaFuncionarioController {
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
-    @GetMapping("/imagens")
-    public ResponseEntity<List<FichaFuncionaroResponseFile>> listarFichaFuncionarioImagens() {
+    @GetMapping("/documentos")
+    public ResponseEntity<List<FichaFuncionaroResponseFile>> listarFichaFuncionarioDocumentos() {
         List<FichaFuncionaroResponseFile> files = fichaRepository.findAll().stream().map(ficha -> {
-            List<ResponseFile> imagens = ficha.getImagens().stream().map(imagem -> {
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/imagens/listar/")
-                        .path(imagem.getId_imagem().toString()).toUriString();
+            List<ResponseFile> documentos = ficha.getDocumentos().stream().map(documento -> {
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/documentos/listar/")
+                        .path(documento.getId_documento().toString()).toUriString();
 
-                return new ResponseFile(imagem.getId_imagem(), imagem.getName(), fileDownloadUri, imagem.getType(),
-                        imagem.getImagem().length);
+                return new ResponseFile(documento.getId_documento(), documento.getName(), fileDownloadUri, documento.getType(),
+                        documento.getDocumento().length);
             }).collect(Collectors.toList());
 
             return new FichaFuncionaroResponseFile(ficha.getId_fichaFuncionario(), ficha.getNome(),
-                    ficha.getNum_ficha(), ficha.getData_inclusao(), ficha.getData_exclusao(), imagens);
+                    ficha.getNum_ficha(), ficha.getData_inclusao(), ficha.getData_exclusao(), documentos);
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -72,7 +72,7 @@ public class FichaFuncionarioController {
             @RequestPart("ficha") FichaFuncionario fichaFuncionario, @RequestPart("file") MultipartFile file)
             throws IOException {
         
-        saveFichaImage.salvar(fichaFuncionario, file);
+        saveFichaDocumento.salvar(fichaFuncionario, file);
 
         return ResponseEntity.status(HttpStatus.OK).body(fichaFuncionario);
     }

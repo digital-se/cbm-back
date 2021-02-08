@@ -8,7 +8,7 @@ import com.bombeiros.siteinterno.message.ResponseFile;
 import com.bombeiros.siteinterno.message.RelatorioProcessoResponseFile;
 import com.bombeiros.siteinterno.models.RelatorioDeProcesso;
 import com.bombeiros.siteinterno.repository.RelatorioDeProcessoRepository;
-import com.bombeiros.siteinterno.services.RelatorioDeProcessoSaveImageService;
+import com.bombeiros.siteinterno.services.RelatorioDeProcessoSaveDocumentoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,7 @@ public class RelatorioDeProcessoController {
     RelatorioDeProcessoRepository relatorioRepository;
 
     @Autowired
-    RelatorioDeProcessoSaveImageService relatorioSaveImage;
+    RelatorioDeProcessoSaveDocumentoService relatorioSaveDocumento;
 
     @ApiOperation(value = "Retorna uma lista de Relatorios de processo")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Relatorios de processo"),
@@ -52,32 +52,32 @@ public class RelatorioDeProcessoController {
         
     }
 
-    @ApiOperation(value = "Retorna uma lista de Relatorios de processo e suas respectivas imagens")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Relatorios de processo e suas respectivas imagens"),
+    @ApiOperation(value = "Retorna uma lista de Relatorios de processo e suas respectivas documentos")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Relatorios de processo e suas respectivas documentos"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/imagens")
-    public ResponseEntity<List<RelatorioProcessoResponseFile>> listarRelatorioImagens() {
+    @GetMapping("/documentos")
+    public ResponseEntity<List<RelatorioProcessoResponseFile>> listarRelatorioDocumentos() {
 
         List<RelatorioProcessoResponseFile> files = relatorioRepository.findAll().stream().map(relatorio -> {
 
-            List<ResponseFile> imagens = relatorio.getImagens().stream().map(imagem -> {
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/imagens/listar/")
-                        .path(imagem.getId_imagem().toString()).toUriString();
+            List<ResponseFile> documentos = relatorio.getDocumentos().stream().map(documento -> {
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/documentos/listar/")
+                        .path(documento.getId_documento().toString()).toUriString();
 
-                return new ResponseFile(imagem.getId_imagem(), imagem.getName(), fileDownloadUri, imagem.getType(),
-                        imagem.getImagem().length);
+                return new ResponseFile(documento.getId_documento(), documento.getName(), fileDownloadUri, documento.getType(),
+                        documento.getDocumento().length);
             }).collect(Collectors.toList());
 
             return new RelatorioProcessoResponseFile(relatorio.getId_relatorioDeProcesso(),
-                    relatorio.getNum_relatorio(), imagens);
+                    relatorio.getNum_relatorio(), documentos);
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
-    @ApiOperation(value = "Cria um Relatorio de Processo e faz o upload de sua imagem")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um Relatorio de Processo e fez o upload de sua imagem"),
+    @ApiOperation(value = "Cria um Relatorio de Processo e faz o upload de sua documento")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um Relatorio de Processo e fez o upload de sua documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping
@@ -85,7 +85,7 @@ public class RelatorioDeProcessoController {
     public ResponseEntity<RelatorioDeProcesso> criarBga(@RequestPart("relatorio") RelatorioDeProcesso relatorio,
             @RequestPart("file") MultipartFile file) throws IOException {
 
-        relatorioSaveImage.salvar(relatorio, file);
+        relatorioSaveDocumento.salvar(relatorio, file);
 
         return ResponseEntity.status(HttpStatus.OK).body(relatorio);
     }

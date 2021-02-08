@@ -4,24 +4,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class BirDTO {
     
-    private MultipartFile image;
+    private MultipartFile documento;
 
     private String nome;
 	
     private int num_bir;
 
-    public BirDTO(MultipartFile image, String nome, int num_bir) {
-        this.image = image;
+    public BirDTO(MultipartFile documento, String nome, int num_bir) {
+        this.documento = documento;
         this.nome = nome;
         this.num_bir = num_bir;
     }
 
-    public MultipartFile getImage() {
-        return image;
+    public MultipartFile getDocumento() {
+        return documento;
     }
 
-    public void setImage(MultipartFile image) {
-        this.image = image;
+    public void setDocumento(MultipartFile documento) {
+        this.documento = documento;
     }
 
     public String getNome() {
