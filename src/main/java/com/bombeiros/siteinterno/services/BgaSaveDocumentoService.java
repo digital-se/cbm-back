@@ -16,17 +16,18 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class FileStorageService {
-    
+public class BgaSaveDocumentoService {
+
     @Autowired
     private DocumentoRepository documentoRepository;
     @Autowired
     private BgaRepository bgaRepository;
 
-
     // Método de salvar as informações do Bga e uma documento referente ao Bga
-    // Dependendo do banco de dados utilizado, provavelmente deverá ser feito alterações no "application.properties" para ser feito o upload de documentos
-    // No application.properties você definirá o tamanho máximo que uma documento pode ter para ser salva no banco de dados
+    // Dependendo do banco de dados utilizado, provavelmente deverá ser feito
+    // alterações no "application.properties" para ser feito o upload de documentos
+    // No application.properties você definirá o tamanho máximo que uma documento
+    // pode ter para ser salva no banco de dados
     @Transactional
     public Documento salvar(Bga bga, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());

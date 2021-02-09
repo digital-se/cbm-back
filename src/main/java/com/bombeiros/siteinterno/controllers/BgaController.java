@@ -10,7 +10,7 @@ import com.bombeiros.siteinterno.message.DocumentResponseFile;
 import com.bombeiros.siteinterno.models.Bga;
 import com.bombeiros.siteinterno.repository.BgaRepository;
 import com.bombeiros.siteinterno.repository.DocumentoRepository;
-import com.bombeiros.siteinterno.services.FileStorageService;
+import com.bombeiros.siteinterno.services.BgaSaveDocumentoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +39,7 @@ public class BgaController {
     DocumentoRepository documentoRepository;
 
     @Autowired
-    FileStorageService fileStorage;
+    BgaSaveDocumentoService fileStorage;
 
     @ApiOperation(value = "Retorna uma lista de Bga's")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Bga's"),
