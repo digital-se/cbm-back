@@ -29,7 +29,6 @@ public class BgoSaveDocumentoService {
         Documento Documento = new Documento(fileName, file.getContentType(), file.getBytes());
 
         bgoRepository.save(bgo);
-
         Documento.setBgo(bgo);
 
         return documentoRepository.save(Documento);
