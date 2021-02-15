@@ -50,12 +50,13 @@ public class BgaController {
     public ResponseEntity<List<BgaResponseFile>> listarBga() {
         List<BgaResponseFile> bgas = bgaRepository.findAll().stream().map(bga -> {
 
-            return new BgaResponseFile(bga.getId_bga(), bga.getNome(), bga.getNum_bga());
+            return new BgaResponseFile(bga.getIdBga(), bga.getNome(), bga.getNumBga());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(bgas);
     }
 
+    //CRASHANDO
     @ApiOperation(value = "Retorna uma lista de Bga's e seus respectivos documentos")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Bga's e seus documentos"),
             @ApiResponse(code = 404, message = "Não encontrado"),
@@ -67,13 +68,13 @@ public class BgaController {
 
             List<ResponseFile> documentos = bga.getDocumentos().stream().map(documento -> {
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/documentos/listar/").path(documento.getId_documento().toString()).toUriString();
+                        .path("/documentos/listar/").path(documento.getIdDocumento().toString()).toUriString();
 
-                return new ResponseFile(documento.getId_documento(), documento.getName(), fileDownloadUri,
-                        documento.getType(), documento.getDocumento().length);
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                        documento.getType(), documento.getDocumentoData().length);
             }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(bga.getId_bga(), bga.getNome(), bga.getNum_bga(), documentos);
+            return new DocumentResponseFile(bga.getIdBga(), bga.getNome(), bga.getNumBga(), documentos);
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -91,28 +92,15 @@ public class BgaController {
         List<DocumentResponseFile> files = bgaRepository.findById(bgaid).stream().map(bga -> {
             List<ResponseFile> documentos = bga.getDocumentos().stream().map(documento -> {
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/documentos/listar/").path(documento.getId_documento().toString()).toUriString();
+                        .path("/documentos/listar/").path(documento.getIdDocumento().toString()).toUriString();
 
-                return new ResponseFile(documento.getId_documento(), documento.getName(), fileDownloadUri,
-                        documento.getType(), documento.getDocumento().length);
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                        documento.getType(), documento.getDocumentoData().length);
             }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(bga.getId_bga(), bga.getNome(), bga.getNum_bga(), documentos);
+            return new DocumentResponseFile(bga.getIdBga(), bga.getNome(), bga.getNumBga(), documentos);
         }).collect(Collectors.toList());
 
-        /* List<DocumentResponseFile> files2 = bgaRepository.findAll().stream().map(bga -> {
-
-            List<ResponseFile> documentos = bga.getDocumentos().stream().map(documento -> {
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/documentos/listar/").path(documento.getId_documento().toString()).toUriString();
-
-                return new ResponseFile(documento.getId_documento(), documento.getName(), fileDownloadUri,
-                        documento.getType(), documento.getDocumento().length);
-            }).collect(Collectors.toList());
-
-            return new DocumentResponseFile(bga.getId_bga(), bga.getNome(), bga.getNum_bga(), documentos);
-        }).collect(Collectors.toList());
- */
         return ResponseEntity.status(HttpStatus.OK).body(files);
 
     }

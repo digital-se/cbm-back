@@ -2,22 +2,22 @@ package com.bombeiros.siteinterno.message;
 
 public class BgaResponseFile {
     
-    private Long id_bga;
+    private Long idBga;
     private String nome;
-    private int num_bga;
+    private int numBga;
 
-    public BgaResponseFile(Long id_bga, String nome, int num_bga) {
-        this.id_bga = id_bga;
+    public BgaResponseFile(Long idBga, String nome, int numBga) {
+        this.idBga = idBga;
         this.nome = nome;
-        this.num_bga = num_bga;
+        this.numBga = numBga;
     }
 
-    public Long getId_bga() {
-        return id_bga;
+    public Long getIdBga() {
+        return idBga;
     }
 
-    public void setId_bga(Long id_bga) {
-        this.id_bga = id_bga;
+    public void setIdBga(Long idBga) {
+        this.idBga = idBga;
     }
 
     public String getNome() {
@@ -28,12 +28,12 @@ public class BgaResponseFile {
         this.nome = nome;
     }
 
-    public int getNum_bga() {
-        return num_bga;
+    public int getNumBga() {
+        return numBga;
     }
 
-    public void setNum_bga(int num_bga) {
-        this.num_bga = num_bga;
+    public void setNumBga(int numBga) {
+        this.numBga = numBga;
     }
 
     

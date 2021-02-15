@@ -1,28 +1,28 @@
-package com.bombeiros.siteinterno.DTO;
+package com.bombeiros.siteinterno.dto;
 
 public class DocumentoDTO {
 
-    private Long id_documento;
+    private Long idDocumento;
 
     private String name;
 
     private String type;
 
-    private byte[] documento;
+    private byte[] documentoData;
 
-    public DocumentoDTO(Long id_documento, String name, String type, byte[] documento) {
-        this.id_documento = id_documento;
+    public DocumentoDTO(Long idDocumento, String name, String type, byte[] documento) {
+        this.idDocumento = idDocumento;
         this.name = name;
         this.type = type;
-        this.documento = documento;
+        this.documentoData = documento;
     }
 
-    public Long getId_documento() {
-        return id_documento;
+    public Long getIdDocumento() {
+        return idDocumento;
     }
 
-    public void setId_documento(Long id_documento) {
-        this.id_documento = id_documento;
+    public void setIdDocumento(Long idDocumento) {
+        this.idDocumento = idDocumento;
     }
 
     public String getName() {
@@ -42,11 +42,11 @@ public class DocumentoDTO {
     }
 
     public byte[] getDocumento() {
-        return documento;
+        return documentoData;
     }
 
     public void setDocumento(byte[] documento) {
-        this.documento = documento;
+        this.documentoData = documento;
     }
     
     

@@ -19,18 +19,18 @@ public class Bgo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_bgo;
+	private long idBgo;
 	
 	private String nome;
 	
-	private int num_bgo;
+	private int numBgo;
 	
 
 	@OneToMany(mappedBy = "bgo", cascade = CascadeType.ALL)
 	private List<Documento> documentos;
 	
 	public Bgo() {
-		
+		//do nothing
 	}
 
 	public String getNome() {
@@ -41,25 +41,25 @@ public class Bgo implements Serializable {
 		this.nome = nome;
 	}
 
-	public int getNum_bgo() {
-		return num_bgo;
+	public int getNumBgo() {
+		return numBgo;
 	}
 
-	public void setNum_bgo(int num_bgo) {
-		this.num_bgo = num_bgo;
+	public void setNumBgo(int numBgo) {
+		this.numBgo = numBgo;
 	}
 
-	public Bgo(String nome, int num_bgo) {
+	public Bgo(String nome, int numBgo) {
 		this.nome = nome;
-		this.num_bgo = num_bgo;
+		this.numBgo = numBgo;
 	}
 
-	public long getId_bgo() {
-		return id_bgo;
+	public long getIdBgo() {
+		return idBgo;
 	}
 
-	public void setId_bgo(long id_bgo) {
-		this.id_bgo = id_bgo;
+	public void setIdBgo(long idBgo) {
+		this.idBgo = idBgo;
 	}
 
 	public List<Documento> getDocumentos() {

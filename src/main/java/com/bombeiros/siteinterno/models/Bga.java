@@ -20,19 +20,19 @@ public class Bga implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_bga;
+	private long idBga;
 	
 	@Column
 	private String nome;
 	
 	@Column
-	private int num_bga;
+	private int numBga;
 
 	@OneToMany(mappedBy = "bga", cascade = CascadeType.ALL)
 	private List<Documento> documentos;
 	
 	public Bga() {
-		
+		//do nothing
 	}
 
 	public String getNome() {
@@ -43,24 +43,24 @@ public class Bga implements Serializable {
 		this.nome = nome;
 	}
 
-	public int getNum_bga() {
-		return num_bga;
+	public int getNumBga() {
+		return numBga;
 	}
 
-	public void setNum_bga(int num_bga) {
-		this.num_bga = num_bga;
+	public void setNumBga(int numBga) {
+		this.numBga = numBga;
 	}
 
-	public long getId_bga() {
-		return id_bga;
+	public long getIdBga() {
+		return idBga;
 	}
 
-	public void setId_bga(long id_bga) {
-		this.id_bga = id_bga;
+	public void setIdBga(long idBga) {
+		this.idBga = idBga;
 	}
-	public Bga(String nome, int num_bga) {
+	public Bga(String nome, int numBga) {
 		this.nome = nome;
-		this.num_bga = num_bga;
+		this.numBga = numBga;
 	}
 
 	public List<Documento> getDocumentos() {

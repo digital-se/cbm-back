@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.DTO;
+package com.bombeiros.siteinterno.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,12 +8,12 @@ public class BirDTO {
 
     private String nome;
 	
-    private int num_bir;
+    private int numBir;
 
-    public BirDTO(MultipartFile documento, String nome, int num_bir) {
+    public BirDTO(MultipartFile documento, String nome, int numBir) {
         this.documento = documento;
         this.nome = nome;
-        this.num_bir = num_bir;
+        this.numBir = numBir;
     }
 
     public MultipartFile getDocumento() {
@@ -32,14 +32,12 @@ public class BirDTO {
         this.nome = nome;
     }
 
-    public int getNum_bir() {
-        return num_bir;
+    public int getNumBir() {
+        return numBir;
     }
 
-    public void setNum_bir(int num_bir) {
-        this.num_bir = num_bir;
-    }
-
-    
+    public void setNumBir(int numBir) {
+        this.numBir = numBir;
+    }  
 
 }

@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.DTO;
+package com.bombeiros.siteinterno.dto;
 
 import java.util.List;
 
@@ -6,24 +6,24 @@ import com.bombeiros.siteinterno.models.Documento;
 
 public class RegistroAntigoDTO {
 
-    private long id_registroAntigo;
+    private long idRegistroAntigo;
 
 	private String nome;
 
 	private List<Documento> documentos;
 
-    public RegistroAntigoDTO(long id_registroAntigo, String nome, List<Documento> documentos) {
-        this.id_registroAntigo = id_registroAntigo;
+    public RegistroAntigoDTO(long idRegistroAntigo, String nome, List<Documento> documentos) {
+        this.idRegistroAntigo = idRegistroAntigo;
         this.nome = nome;
         this.documentos = documentos;
     }
 
-    public long getId_registroAntigo() {
-        return id_registroAntigo;
+    public long getIdRegistroAntigo() {
+        return idRegistroAntigo;
     }
 
-    public void setId_registroAntigo(long id_registroAntigo) {
-        this.id_registroAntigo = id_registroAntigo;
+    public void setIdRegistroAntigo(long idRegistroAntigo) {
+        this.idRegistroAntigo = idRegistroAntigo;
     }
 
     public String getNome() {

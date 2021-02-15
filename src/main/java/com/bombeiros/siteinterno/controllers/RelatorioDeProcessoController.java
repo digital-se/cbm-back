@@ -44,8 +44,8 @@ public class RelatorioDeProcessoController {
     public ResponseEntity<List<RelatorioProcessoResponseFile>> listarRelatorioDeProcesso() {
             List<RelatorioProcessoResponseFile> files = relatorioRepository.findAll().stream().map(relatorio -> {
                return new RelatorioProcessoResponseFile(
-                        relatorio.getId_relatorioDeProcesso(),
-                        relatorio.getNum_relatorio());
+                        relatorio.getIdRelatorioDeProcesso(),
+                        relatorio.getNumRelatorio());
             }).collect(Collectors.toList());
 
             return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -63,14 +63,14 @@ public class RelatorioDeProcessoController {
 
             List<ResponseFile> documentos = relatorio.getDocumentos().stream().map(documento -> {
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/documentos/listar/")
-                        .path(documento.getId_documento().toString()).toUriString();
+                        .path(documento.getIdDocumento().toString()).toUriString();
 
-                return new ResponseFile(documento.getId_documento(), documento.getName(), fileDownloadUri, documento.getType(),
-                        documento.getDocumento().length);
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri, documento.getType(),
+                        documento.getDocumentoData().length);
             }).collect(Collectors.toList());
 
-            return new RelatorioProcessoResponseFile(relatorio.getId_relatorioDeProcesso(),
-                    relatorio.getNum_relatorio(), documentos);
+            return new RelatorioProcessoResponseFile(relatorio.getIdRelatorioDeProcesso(),
+                    relatorio.getNumRelatorio(), documentos);
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);

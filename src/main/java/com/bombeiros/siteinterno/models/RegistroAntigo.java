@@ -21,7 +21,7 @@ public class RegistroAntigo implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_registroAntigo;
+	private long idRegistroAntigo;
 
 	private String nome;
 
@@ -30,7 +30,7 @@ public class RegistroAntigo implements Serializable{
 	private List<Documento> documentos;
 	
 	public RegistroAntigo() {
-		
+		//do nothing
 	}
 	
 
@@ -43,12 +43,12 @@ public class RegistroAntigo implements Serializable{
 	}
 
 
-	public long getId_registroAntigo() {
-		return id_registroAntigo;
+	public long getIdRegistroAntigo() {
+		return idRegistroAntigo;
 	}
 
-	public void setId_registroAntigo(long id_registroAntigo) {
-		this.id_registroAntigo = id_registroAntigo;
+	public void setIdRegistroAntigo(long idRegistroAntigo) {
+		this.idRegistroAntigo = idRegistroAntigo;
 	}
 
 	public List<Documento> getDocumentos() {

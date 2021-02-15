@@ -43,7 +43,7 @@ public class RegistroAntigoController {
     @GetMapping
     public ResponseEntity<List<RegistroAntigoResponseFile>> listarRegistroAntigo() {
         List<RegistroAntigoResponseFile> files = registroRepository.findAll().stream().map(registro -> {
-            return new RegistroAntigoResponseFile(registro.getId_registroAntigo(), registro.getNome());
+            return new RegistroAntigoResponseFile(registro.getIdRegistroAntigo(), registro.getNome());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -57,19 +57,19 @@ public class RegistroAntigoController {
                 String fileDownloadUri = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
                     .path("/documentos/listar/")
-                    .path(documento.getId_documento().toString())
+                    .path(documento.getIdDocumento().toString())
                     .toUriString();
 
                     return new ResponseFile(
-                    documento.getId_documento(),
+                    documento.getIdDocumento(),
                     documento.getName(),
                     fileDownloadUri,
                     documento.getType(),
-                    documento.getDocumento().length);
+                    documento.getDocumentoData().length);
               }).collect(Collectors.toList());
 
               return new RegistroAntigoResponseFile(
-                  registro.getId_registroAntigo(),
+                  registro.getIdRegistroAntigo(),
                   registro.getNome(), 
                   documentos);
                 }).collect(Collectors.toList());

@@ -20,18 +20,18 @@ public class Bir implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_bir;
+	private long idBir;
 	
 	private String nome;
 	
-	private int num_bir;
+	private int numBir;
 
 
 	@OneToMany(mappedBy = "bir", cascade = CascadeType.ALL)
 	private List<Documento> documentos;
 	
 	public Bir() {
-		
+		//do nothing
 	}
 	
 	public String getNome() {
@@ -42,20 +42,20 @@ public class Bir implements Serializable {
 		this.nome = nome;
 	}
 
-	public int getNum_bir() {
-		return num_bir;
+	public int getNumBir() {
+		return numBir;
 	}
 
-	public void setNum_bir(int num_bir) {
-		this.num_bir = num_bir;
+	public void setNumBir(int numBir) {
+		this.numBir = numBir;
 	}
 
-	public long getId_bir() {
-		return id_bir;
+	public long getIdBir() {
+		return idBir;
 	}
 
-	public void setId_bir(long id_bir) {
-		this.id_bir = id_bir;
+	public void setIdBir(long idBir) {
+		this.idBir = idBir;
 	}
 
 	public List<Documento> getDocumentos() {

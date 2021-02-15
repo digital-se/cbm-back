@@ -42,8 +42,8 @@ public class FichaFuncionarioController {
     @GetMapping
     public ResponseEntity<List<FichaFuncionaroResponseFile>> listarFichaFuncionario() {
         List<FichaFuncionaroResponseFile> files = fichaRepository.findAll().stream().map(ficha -> {
-            return new FichaFuncionaroResponseFile(ficha.getId_fichaFuncionario(), ficha.getNome(),
-                    ficha.getNum_ficha(), ficha.getData_inclusao(), ficha.getData_exclusao());
+            return new FichaFuncionaroResponseFile(ficha.getIdFichaFuncionario(), ficha.getNome(),
+                    ficha.getNumFicha(), ficha.getDataInclusao(), ficha.getDataExclusao());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -54,14 +54,14 @@ public class FichaFuncionarioController {
         List<FichaFuncionaroResponseFile> files = fichaRepository.findAll().stream().map(ficha -> {
             List<ResponseFile> documentos = ficha.getDocumentos().stream().map(documento -> {
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/documentos/listar/")
-                        .path(documento.getId_documento().toString()).toUriString();
+                        .path(documento.getIdDocumento().toString()).toUriString();
 
-                return new ResponseFile(documento.getId_documento(), documento.getName(), fileDownloadUri, documento.getType(),
-                        documento.getDocumento().length);
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri, documento.getType(),
+                        documento.getDocumentoData().length);
             }).collect(Collectors.toList());
 
-            return new FichaFuncionaroResponseFile(ficha.getId_fichaFuncionario(), ficha.getNome(),
-                    ficha.getNum_ficha(), ficha.getData_inclusao(), ficha.getData_exclusao(), documentos);
+            return new FichaFuncionaroResponseFile(ficha.getIdFichaFuncionario(), ficha.getNome(),
+                    ficha.getNumFicha(), ficha.getDataInclusao(), ficha.getDataExclusao(), documentos);
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);

@@ -76,15 +76,15 @@ public class DocumentoUploadController {
         String fileDownloadUri = ServletUriComponentsBuilder
             .fromCurrentContextPath()
             .path("/documentos/listar/")
-            .path(documento.getId_documento().toString())
+            .path(documento.getIdDocumento().toString())
             .toUriString();
   
         return new ResponseFile(
-            documento.getId_documento(),
+            documento.getIdDocumento(),
             documento.getName(),
             fileDownloadUri,
             documento.getType(),
-            documento.getDocumento().length);
+            documento.getDocumentoData().length);
       }).collect(Collectors.toList());
   
       return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -107,9 +107,8 @@ public class DocumentoUploadController {
         HttpHeaders headers = new HttpHeaders();
         headers.setCacheControl(CacheControl.noCache().getHeaderValue());
         headers.setContentType(MediaType.parseMediaType(documento.getType()));
-        ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(documento.getDocumento(), headers, HttpStatus.OK);
 
-        return responseEntity;
+        return new ResponseEntity<>(documento.getDocumentoData(), headers, HttpStatus.OK);
 
     }
 }

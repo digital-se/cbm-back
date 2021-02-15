@@ -4,23 +4,23 @@ import java.util.List;
 
 public class RegistroAntigoResponseFile {
     
-    private Long id_registroAntigo;
+    private Long idRegistroAntigo;
     private String nome;
     private List<ResponseFile> documentos;
 
     
 
-    public RegistroAntigoResponseFile(Long id_registroAntigo, String nome) {
-        this.id_registroAntigo = id_registroAntigo;
+    public RegistroAntigoResponseFile(Long idRegistroAntigo, String nome) {
+        this.idRegistroAntigo = idRegistroAntigo;
         this.nome = nome;
     }
 
-    public Long getId_registroAntigo() {
-        return id_registroAntigo;
+    public Long getIdRegistroAntigo() {
+        return idRegistroAntigo;
     }
 
-    public void setId_registroAntigo(Long id_registroAntigo) {
-        this.id_registroAntigo = id_registroAntigo;
+    public void setIdRegistroAntigo(Long idRegistroAntigo) {
+        this.idRegistroAntigo = idRegistroAntigo;
     }
 
     public String getNome() {
@@ -31,8 +31,8 @@ public class RegistroAntigoResponseFile {
         this.nome = nome;
     }
 
-    public RegistroAntigoResponseFile(Long id_registroAntigo, String nome, List<ResponseFile> documentos) {
-        this.id_registroAntigo = id_registroAntigo;
+    public RegistroAntigoResponseFile(Long idRegistroAntigo, String nome, List<ResponseFile> documentos) {
+        this.idRegistroAntigo = idRegistroAntigo;
         this.nome = nome;
         this.documentos = documentos;
     }

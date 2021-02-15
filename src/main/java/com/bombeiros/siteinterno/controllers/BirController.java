@@ -49,7 +49,7 @@ public class BirController {
     public ResponseEntity<List<BirResponseFile>> listarBir() {
         List<BirResponseFile> birs = birRepository.findAll().stream().map(bir -> {
 
-            return new BirResponseFile(bir.getId_bir(), bir.getNome(), bir.getNum_bir());
+            return new BirResponseFile(bir.getIdBir(), bir.getNome(), bir.getNumBir());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(birs);
@@ -64,13 +64,13 @@ public class BirController {
         List<DocumentResponseFile> files = birRepository.findAll().stream().map(bir -> {
             List<ResponseFile> documentos = bir.getDocumentos().stream().map(documento -> {
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/documentos/listar/")
-                        .path(documento.getId_documento().toString()).toUriString();
+                        .path(documento.getIdDocumento().toString()).toUriString();
 
-                return new ResponseFile(documento.getId_documento(), documento.getName(), fileDownloadUri, documento.getType(),
-                        documento.getDocumento().length);
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri, documento.getType(),
+                        documento.getDocumentoData().length);
             }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(bir.getId_bir(), bir.getNome(), bir.getNum_bir(), documentos);
+            return new DocumentResponseFile(bir.getIdBir(), bir.getNome(), bir.getNumBir(), documentos);
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);

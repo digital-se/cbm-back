@@ -53,9 +53,9 @@ public class BgoController {
         List<BgoResponseFile> bgos = bgoRepository.findAll().stream().map(bgo -> {
 
             return new BgoResponseFile(
-                bgo.getId_bgo(),
+                bgo.getIdBgo(),
                 bgo.getNome(),
-                bgo.getNum_bgo());
+                bgo.getNumBgo());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(bgos);
@@ -74,21 +74,21 @@ public class BgoController {
                 String fileDownloadUri = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
                     .path("/documentos/listar/")
-                    .path(documento.getId_documento().toString())
+                    .path(documento.getIdDocumento().toString())
                     .toUriString();
                 
                 return new ResponseFile(
-                    documento.getId_documento(),
+                    documento.getIdDocumento(),
                     documento.getName(),
                     fileDownloadUri,
                     documento.getType(),
-                    documento.getDocumento().length);
+                    documento.getDocumentoData().length);
               }).collect(Collectors.toList());
 
               return new DocumentResponseFile(
-                bgo.getId_bgo(),
+                bgo.getIdBgo(),
                 bgo.getNome(),
-                bgo.getNum_bgo(),
+                bgo.getNumBgo(),
                 documentos);
           }).collect(Collectors.toList());
       

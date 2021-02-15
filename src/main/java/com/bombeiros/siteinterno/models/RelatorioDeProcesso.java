@@ -21,33 +21,33 @@ public class RelatorioDeProcesso implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_relatorioDeProcesso;
+	private long idRelatorioDeProcesso;
 	
-	private int num_relatorio;
+	private int numRelatorio;
 	
 	
 	@OneToMany(mappedBy = "relatorioDeProcesso", cascade = CascadeType.ALL)
 	private List<Documento> documentos;
 	
 	public RelatorioDeProcesso() {
-		
+		//do nothing
 	}
 	
 
-	public int getNum_relatorio() {
-		return num_relatorio;
+	public int getNumRelatorio() {
+		return numRelatorio;
 	}
 
-	public void setNum_relatorio(int num_relatorio) {
-		this.num_relatorio = num_relatorio;
+	public void setNumRelatorio(int numRelatorio) {
+		this.numRelatorio = numRelatorio;
 	}
 
-	public long getId_relatorioDeProcesso() {
-		return id_relatorioDeProcesso;
+	public long getIdRelatorioDeProcesso() {
+		return idRelatorioDeProcesso;
 	}
 
-	public void setId_relatorioDeProcesso(long id_relatorioDeProcesso) {
-		this.id_relatorioDeProcesso = id_relatorioDeProcesso;
+	public void setIdRelatorioDeProcesso(long idRelatorioDeProcesso) {
+		this.idRelatorioDeProcesso = idRelatorioDeProcesso;
 	}
 
 	public List<Documento> getDocumentos() {

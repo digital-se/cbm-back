@@ -5,43 +5,43 @@ import java.util.List;
 
 public class FichaFuncionaroResponseFile {
     
-    private long id_fichaFuncionario;
+    private long idFichaFuncionario;
 	
 	private String nome;
 	
-	private int num_ficha;
+	private int numFicha;
 	
-	private Date data_inclusao;
+	private Date dataInclusao;
 	
-    private Date data_exclusao;
+    private Date dataExclusao;
     
     private List<ResponseFile> documentos;
 
-    public FichaFuncionaroResponseFile(long id_fichaFuncionario, String nome, int num_ficha, Date data_inclusao,
-            Date data_exclusao, List<ResponseFile> documentos) {
-        this.id_fichaFuncionario = id_fichaFuncionario;
+    public FichaFuncionaroResponseFile(long idFichaFuncionario, String nome, int numFicha, Date dataInclusao,
+            Date dataExclusao, List<ResponseFile> documentos) {
+        this.idFichaFuncionario = idFichaFuncionario;
         this.nome = nome;
-        this.num_ficha = num_ficha;
-        this.data_inclusao = data_inclusao;
-        this.data_exclusao = data_exclusao;
+        this.numFicha = numFicha;
+        this.dataInclusao = dataInclusao;
+        this.dataExclusao = dataExclusao;
         this.documentos = documentos;
     }
 
-    public FichaFuncionaroResponseFile(long id_fichaFuncionario, String nome, int num_ficha, Date data_inclusao,
-            Date data_exclusao) {
-        this.id_fichaFuncionario = id_fichaFuncionario;
+    public FichaFuncionaroResponseFile(long idFichaFuncionario, String nome, int numFicha, Date dataInclusao,
+            Date dataExclusao) {
+        this.idFichaFuncionario = idFichaFuncionario;
         this.nome = nome;
-        this.num_ficha = num_ficha;
-        this.data_inclusao = data_inclusao;
-        this.data_exclusao = data_exclusao;
+        this.numFicha = numFicha;
+        this.dataInclusao = dataInclusao;
+        this.dataExclusao = dataExclusao;
     }
 
-    public long getId_fichaFuncionario() {
-        return id_fichaFuncionario;
+    public long getIdFichaFuncionario() {
+        return idFichaFuncionario;
     }
 
-    public void setId_fichaFuncionario(long id_fichaFuncionario) {
-        this.id_fichaFuncionario = id_fichaFuncionario;
+    public void setIdFichaFuncionario(long idFichaFuncionario) {
+        this.idFichaFuncionario = idFichaFuncionario;
     }
 
     public String getNome() {
@@ -52,28 +52,28 @@ public class FichaFuncionaroResponseFile {
         this.nome = nome;
     }
 
-    public int getNum_ficha() {
-        return num_ficha;
+    public int getNumFicha() {
+        return numFicha;
     }
 
-    public void setNum_ficha(int num_ficha) {
-        this.num_ficha = num_ficha;
+    public void setNumFicha(int numFicha) {
+        this.numFicha = numFicha;
     }
 
-    public Date getData_inclusao() {
-        return data_inclusao;
+    public Date getDataInclusao() {
+        return dataInclusao;
     }
 
-    public void setData_inclusao(Date data_inclusao) {
-        this.data_inclusao = data_inclusao;
+    public void setDataInclusao(Date dataInclusao) {
+        this.dataInclusao = dataInclusao;
     }
 
-    public Date getData_exclusao() {
-        return data_exclusao;
+    public Date getDataExclusao() {
+        return dataExclusao;
     }
 
-    public void setData_exclusao(Date data_exclusao) {
-        this.data_exclusao = data_exclusao;
+    public void setDataExclusao(Date dataExclusao) {
+        this.dataExclusao = dataExclusao;
     }
 
     public List<ResponseFile> getDocumentos() {

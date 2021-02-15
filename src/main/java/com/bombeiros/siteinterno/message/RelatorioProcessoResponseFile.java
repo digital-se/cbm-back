@@ -4,31 +4,31 @@ import java.util.List;
 
 public class RelatorioProcessoResponseFile {
     
-    private Long id_relatorioDeProcesso;
-    private int num_relatorio;
+    private Long idRelatorioDeProcesso;
+    private int numRelatorio;
     private List<ResponseFile> documentos;
 
     
 
-    public RelatorioProcessoResponseFile(Long id_relatorioDeProcesso, int num_relatorio) {
-        this.id_relatorioDeProcesso = id_relatorioDeProcesso;
-        this.num_relatorio = num_relatorio;
+    public RelatorioProcessoResponseFile(Long idRelatorioDeProcesso, int numRelatorio) {
+        this.idRelatorioDeProcesso = idRelatorioDeProcesso;
+        this.numRelatorio = numRelatorio;
     }
 
-    public Long getId_relatorioDeProcesso() {
-        return id_relatorioDeProcesso;
+    public Long getIdRelatorioDeProcesso() {
+        return idRelatorioDeProcesso;
     }
 
-    public void setId_relatorioDeProcesso(Long id_relatorioDeProcesso) {
-        this.id_relatorioDeProcesso = id_relatorioDeProcesso;
+    public void setIdRelatorioDeProcesso(Long idRelatorioDeProcesso) {
+        this.idRelatorioDeProcesso = idRelatorioDeProcesso;
     }
 
-    public int getNum_relatorio() {
-        return num_relatorio;
+    public int getNumRelatorio() {
+        return numRelatorio;
     }
 
-    public void setNum_relatorio(int num_relatorio) {
-        this.num_relatorio = num_relatorio;
+    public void setNumRelatorio(int numRelatorio) {
+        this.numRelatorio = numRelatorio;
     }
 
     public List<ResponseFile> getDocumentos() {
@@ -39,9 +39,9 @@ public class RelatorioProcessoResponseFile {
         this.documentos = documentos;
     }
 
-    public RelatorioProcessoResponseFile(Long id_relatorioDeProcesso, int num_relatorio, List<ResponseFile> documentos) {
-        this.id_relatorioDeProcesso = id_relatorioDeProcesso;
-        this.num_relatorio = num_relatorio;
+    public RelatorioProcessoResponseFile(Long idRelatorioDeProcesso, int numRelatorio, List<ResponseFile> documentos) {
+        this.idRelatorioDeProcesso = idRelatorioDeProcesso;
+        this.numRelatorio = numRelatorio;
         this.documentos = documentos;
     }
 

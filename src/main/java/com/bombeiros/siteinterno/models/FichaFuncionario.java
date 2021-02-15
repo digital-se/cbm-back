@@ -22,22 +22,21 @@ public class FichaFuncionario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_fichaFuncionario;
+	private long idFichaFuncionario;
 	
 	private String nome;
 	
-	private int num_ficha;
+	private int numFicha;
 	
-	private Date data_inclusao;
+	private Date dataInclusao;
 	
-	private Date data_exclusao;
-	
+	private Date dataExclusao;
 
 	@OneToMany(mappedBy = "fichaFuncionario", cascade = CascadeType.ALL)
 	private List<Documento> documentos;
 	
 	public FichaFuncionario() {
-		
+		//do nothing
 	}
 	
 	public String getNome() {
@@ -48,36 +47,36 @@ public class FichaFuncionario implements Serializable {
 		this.nome = nome;
 	}
 
-	public int getNum_ficha() {
-		return num_ficha;
+	public int getNumFicha() {
+		return numFicha;
 	}
 
-	public void setNum_ficha(int num_ficha) {
-		this.num_ficha = num_ficha;
+	public void setNumFicha(int numFicha) {
+		this.numFicha = numFicha;
 	}
 
-	public Date getData_inclusao() {
-		return data_inclusao;
+	public Date getDataInclusao() {
+		return dataInclusao;
 	}
 
-	public void setData_inclusao(Date data_inclusao) {
-		this.data_inclusao = data_inclusao;
+	public void setDataInclusao(Date dataInclusao) {
+		this.dataInclusao = dataInclusao;
 	}
 
-	public Date getData_exclusao() {
-		return data_exclusao;
+	public Date getDataExclusao() {
+		return dataExclusao;
 	}
 
-	public void setData_exclusao(Date data_exclusao) {
-		this.data_exclusao = data_exclusao;
+	public void setDataExclusao(Date dataExclusao) {
+		this.dataExclusao = dataExclusao;
 	}
 
-	public long getId_fichaFuncionario() {
-		return id_fichaFuncionario;
+	public long getIdFichaFuncionario() {
+		return idFichaFuncionario;
 	}
 
-	public void setId_fichaFuncionario(long id_fichaFuncionario) {
-		this.id_fichaFuncionario = id_fichaFuncionario;
+	public void setIdFichaFuncionario(long idFichaFuncionario) {
+		this.idFichaFuncionario = idFichaFuncionario;
 	}
 
 	public List<Documento> getDocumentos() {
@@ -87,7 +86,5 @@ public class FichaFuncionario implements Serializable {
 	public void setDocumentos(List<Documento> documentos) {
 		this.documentos = documentos;
 	}
-	
 
-	
 }

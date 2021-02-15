@@ -1,3 +1,5 @@
+package com.bombeiros.siteinterno.models;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,35 +13,35 @@ public class Foto {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id_foto;
+    private Long idFoto;
 
     private String name;
 
     private String type;
     
     @Lob
-    private byte[] foto;
+    private byte[] fotoData;
 
     @ManyToOne
-    @JoinColumn(name = "id_fichaFuncionario", referencedColumnName = "id_fichaFuncionario")
+    @JoinColumn(name = "id_ficha_funcionario", referencedColumnName = "idFichaFuncionario")
     private FichaFuncionario fichaFuncionario;
 
     public Foto() {
-
+        //do nothing
     }
 
-    public Foto(String name, String type, byte[] foto) {
+    public Foto(String name, String type, byte[] fotoData) {
         this.name = name;
         this.type = type;
-        this.foto = foto;
+        this.fotoData = fotoData;
     }
 
-    public Long getId_foto() {
-        return id_foto;
+    public Long getIdFoto() {
+        return idFoto;
     }
 
-    public void setId_foto(Long id_foto) {
-        this.id_foto = id_foto;
+    public void setIdFoto(Long idFoto) {
+        this.idFoto = idFoto;
     }
 
     public String getName() {
@@ -58,12 +60,12 @@ public class Foto {
         this.type = type;
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public byte[] getFotoData() {
+        return fotoData;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setFoto(byte[] fotoData) {
+        this.fotoData = fotoData;
     }
 
     public FichaFuncionario getFichaFuncionario() {
@@ -74,6 +76,4 @@ public class Foto {
         this.fichaFuncionario = fichaFuncionario;
     }
 
-    
-    
 }

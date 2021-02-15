@@ -14,37 +14,37 @@ public class Documento {
         
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id_documento;
+    private Long idDocumento;
 
     private String name;
 
     private String type;
     
     @Lob
-    private byte[] documento;
+    private byte[] documentoData;
 
     @ManyToOne
-    @JoinColumn(name = "id_bga", referencedColumnName = "id_bga")
+    @JoinColumn(name = "id_bga", referencedColumnName = "idBga")
     private Bga bga;
 
     @ManyToOne
-    @JoinColumn(name = "id_bgo", referencedColumnName = "id_bgo")
+    @JoinColumn(name = "id_bgo", referencedColumnName = "idBgo")
     private Bgo bgo;
 
     @ManyToOne
-    @JoinColumn(name = "id_bir", referencedColumnName = "id_bir")
+    @JoinColumn(name = "id_bir", referencedColumnName = "idBir")
     private Bir bir;
 
     @ManyToOne
-    @JoinColumn(name = "id_fichaFuncionario", referencedColumnName = "id_fichaFuncionario")
+    @JoinColumn(name = "id_ficha_funcionario", referencedColumnName = "idFichaFuncionario")
     private FichaFuncionario fichaFuncionario;
 
     @ManyToOne
-    @JoinColumn(name = "id_registroAntigo", referencedColumnName = "id_registroAntigo")
+    @JoinColumn(name = "id_registro_antigo", referencedColumnName = "idRegistroAntigo")
     private RegistroAntigo registroAntigo;
 
     @ManyToOne
-    @JoinColumn(name = "id_relatorioDeProcesso", referencedColumnName = "id_relatorioDeProcesso")
+    @JoinColumn(name = "id_relatorio_de_processo", referencedColumnName = "idRelatorioDeProcesso")
     private RelatorioDeProcesso relatorioDeProcesso;
 
     
@@ -52,20 +52,20 @@ public class Documento {
 
     }
     
-    public Long getId_documento() {
-        return id_documento;
+    public Long getIdDocumento() {
+        return idDocumento;
     }
     
-    public void setId_documento(Long id_documento) {
-        this.id_documento = id_documento;
+    public void setIdDocumento(Long idDocumento) {
+        this.idDocumento = idDocumento;
     }
     
-    public byte[] getDocumento() {
-        return documento;
+    public byte[] getDocumentoData() {
+        return documentoData;
     }
     
-    public void setDocumento(byte[] documento) {
-        this.documento = documento;
+    public void setDocumentoData(byte[] documentoData) {
+        this.documentoData = documentoData;
     }
 
     public String getName() {
@@ -84,10 +84,10 @@ public class Documento {
         this.type = type;
     }
 
-    public Documento(String name, String type, byte[] documento) {
+    public Documento(String name, String type, byte[] documentoData) {
         this.name = name;
         this.type = type;
-        this.documento = documento;
+        this.documentoData = documentoData;
     }
 
     public Bga getBga() {
