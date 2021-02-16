@@ -48,17 +48,23 @@ public class DocumentoUploadController {
     @PostMapping
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
-        try {
-            storageService.salvarDocumento(file);
-
-            message = "Upload de documento com sucesso: " + file.getOriginalFilename();
-
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-
-        } catch (Exception e) {
-            message = "Não foi possível dar upload na documento: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        if (file == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseMessage(message));
+        } else {
+            try {
+            
+                storageService.salvarDocumento(file);
+    
+                message = "Upload de documento com sucesso: " + file.getOriginalFilename();
+    
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+    
+            } catch (Exception e) {
+                message = "Não foi possível dar upload na documento: " + file.getOriginalFilename() + "!";
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+            }
         }
+        
     }
 
     

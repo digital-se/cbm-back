@@ -1,5 +1,7 @@
 package com.bombeiros.siteinterno.models;
 
+import java.lang.reflect.Field;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -138,4 +140,18 @@ public class Documento {
         this.relatorioDeProcesso = relatorioDeProcesso;
     }
     
+    public boolean isEmpty()  {
+
+        for (Field field : this.getClass().getDeclaredFields()) {
+            try {
+                field.setAccessible(true);
+                if (field.get(this)!=null) {
+                    return false;
+                }
+            } catch (Exception e) {
+              System.out.println("Exception occured in processing");
+            }
+        }
+        return true;
+    }
 }
