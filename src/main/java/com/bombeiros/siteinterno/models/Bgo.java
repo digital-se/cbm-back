@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,11 +22,12 @@ public class Bgo implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long idBgo;
 	
+	@Column
 	private String nome;
 	
+	@Column
 	private int numBgo;
 	
-
 	@OneToMany(mappedBy = "bgo", cascade = CascadeType.ALL)
 	private List<Documento> documentos;
 	
@@ -41,11 +43,11 @@ public class Bgo implements Serializable {
 		this.nome = nome;
 	}
 
-	public int getNumBgo() {
+	public int getNum() {
 		return numBgo;
 	}
 
-	public void setNumBgo(int numBgo) {
+	public void setNum(int numBgo) {
 		this.numBgo = numBgo;
 	}
 
@@ -54,11 +56,11 @@ public class Bgo implements Serializable {
 		this.numBgo = numBgo;
 	}
 
-	public long getIdBgo() {
+	public long getId() {
 		return idBgo;
 	}
 
-	public void setIdBgo(long idBgo) {
+	public void setId(long idBgo) {
 		this.idBgo = idBgo;
 	}
 

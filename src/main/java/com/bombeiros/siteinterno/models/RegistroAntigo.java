@@ -43,11 +43,11 @@ public class RegistroAntigo implements Serializable{
 	}
 
 
-	public long getIdRegistroAntigo() {
+	public long getId() {
 		return idRegistroAntigo;
 	}
 
-	public void setIdRegistroAntigo(long idRegistroAntigo) {
+	public void setId(long idRegistroAntigo) {
 		this.idRegistroAntigo = idRegistroAntigo;
 	}
 

@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.dto;
+package com.bombeiros.siteinterno.DTO;
 
 import java.util.List;
 
@@ -18,19 +18,19 @@ public class RelatorioDeProcessoDTO {
         this.documentos = documentos;
     }
 
-    public long getIdRelatorioDeProcesso() {
+    public long getId() {
         return idRelatorioDeProcesso;
     }
 
-    public void setIdRelatorioDeProcesso(long idRelatorioDeProcesso) {
+    public void setId(long idRelatorioDeProcesso) {
         this.idRelatorioDeProcesso = idRelatorioDeProcesso;
     }
 
-    public int getNumRelatorio() {
+    public int getNum() {
         return numRelatorio;
     }
 
-    public void setNumRelatorio(int numRelatorio) {
+    public void setNum(int numRelatorio) {
         this.numRelatorio = numRelatorio;
     }
 

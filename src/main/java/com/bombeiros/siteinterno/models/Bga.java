@@ -43,19 +43,19 @@ public class Bga implements Serializable {
 		this.nome = nome;
 	}
 
-	public int getNumBga() {
+	public int getNum() {
 		return numBga;
 	}
 
-	public void setNumBga(int numBga) {
+	public void setNum(int numBga) {
 		this.numBga = numBga;
 	}
 
-	public long getIdBga() {
+	public long getId() {
 		return idBga;
 	}
 
-	public void setIdBga(long idBga) {
+	public void setId(long idBga) {
 		this.idBga = idBga;
 	}
 	public Bga(String nome, int numBga) {

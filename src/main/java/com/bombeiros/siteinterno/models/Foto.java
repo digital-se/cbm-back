@@ -36,11 +36,11 @@ public class Foto {
         this.fotoData = fotoData;
     }
 
-    public Long getIdFoto() {
+    public Long getId() {
         return idFoto;
     }
 
-    public void setIdFoto(Long idFoto) {
+    public void setId(Long idFoto) {
         this.idFoto = idFoto;
     }
 

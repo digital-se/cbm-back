@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -43,7 +44,7 @@ public class RegistroAntigoController {
     @GetMapping
     public ResponseEntity<List<RegistroAntigoResponseFile>> listarRegistroAntigo() {
         List<RegistroAntigoResponseFile> files = registroRepository.findAll().stream().map(registro -> {
-            return new RegistroAntigoResponseFile(registro.getIdRegistroAntigo(), registro.getNome());
+            return new RegistroAntigoResponseFile(registro.getId(), registro.getNome());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -69,13 +70,40 @@ public class RegistroAntigoController {
               }).collect(Collectors.toList());
 
               return new RegistroAntigoResponseFile(
-                  registro.getIdRegistroAntigo(),
+                  registro.getId(),
                   registro.getNome(), 
                   documentos);
                 }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
+
+
+    // NEW
+
+    /* @ApiOperation(value = "Retorna uma lista de documentos de um respectivo BIR")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo BIR"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @GetMapping("/{raid}")
+    public ResponseEntity<List<RegistroAntigoResponseFile>> listarDocumentosBgo(@PathVariable long raid) {
+
+        List<RegistroAntigoResponseFile> files = registroRepository.findById(raid).stream().map(bir -> {
+            List<ResponseFile> documentos = bir.getDocumentos().stream().map(documento -> {
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
+                        .path(documento.getIdDocumento().toString()).toUriString();
+
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                        documento.getType(), 0 documento.getDocumentoData().length);
+            }).collect(Collectors.toList());
+
+            return new DocumentResponseFile(bir.getIdBir(), bir.getNome(), bir.getNumBir(), documentos);
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(files);
+
+    } */
+
 
     @PostMapping
     @ResponseBody

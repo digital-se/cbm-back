@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.dto;
+package com.bombeiros.siteinterno.DTO;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,11 +32,11 @@ public class BgoDTO {
         this.nome = nome;
     }
 
-    public int getNumBgo() {
+    public int getNum() {
         return numBgo;
     }
 
-    public void setNumBgo(int numBgo) {
+    public void setNum(int numBgo) {
         this.numBgo = numBgo;
     }
 

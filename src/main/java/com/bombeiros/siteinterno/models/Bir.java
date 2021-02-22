@@ -42,19 +42,19 @@ public class Bir implements Serializable {
 		this.nome = nome;
 	}
 
-	public int getNumBir() {
+	public int getNum() {
 		return numBir;
 	}
 
-	public void setNumBir(int numBir) {
+	public void setNum(int numBir) {
 		this.numBir = numBir;
 	}
 
-	public long getIdBir() {
+	public long getId() {
 		return idBir;
 	}
 
-	public void setIdBir(long idBir) {
+	public void setId(long idBir) {
 		this.idBir = idBir;
 	}
 

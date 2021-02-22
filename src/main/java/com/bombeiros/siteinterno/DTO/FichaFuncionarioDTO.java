@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.dto;
+package com.bombeiros.siteinterno.DTO;
 
 import java.util.Date;
 
@@ -23,11 +23,11 @@ public class FichaFuncionarioDTO {
         this.dataExclusao = dataExclusao;
     }
 
-    public long getIdFichaFuncionario() {
+    public long getId() {
         return idFichaFuncionario;
     }
 
-    public void setIdFichaFuncionario(long idFichaFuncionario) {
+    public void setId(long idFichaFuncionario) {
         this.idFichaFuncionario = idFichaFuncionario;
     }
 
@@ -39,11 +39,11 @@ public class FichaFuncionarioDTO {
         this.nome = nome;
     }
 
-    public int getNumFicha() {
+    public int getNum() {
         return numFicha;
     }
 
-    public void setNumFicha(int numFicha) {
+    public void setNum(int numFicha) {
         this.numFicha = numFicha;
     }
 

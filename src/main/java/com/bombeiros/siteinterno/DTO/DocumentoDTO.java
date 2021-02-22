@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.dto;
+package com.bombeiros.siteinterno.DTO;
 
 public class DocumentoDTO {
 
@@ -17,11 +17,11 @@ public class DocumentoDTO {
         this.documentoData = documento;
     }
 
-    public Long getIdDocumento() {
+    public Long getId() {
         return idDocumento;
     }
 
-    public void setIdDocumento(Long idDocumento) {
+    public void setId(Long idDocumento) {
         this.idDocumento = idDocumento;
     }
 

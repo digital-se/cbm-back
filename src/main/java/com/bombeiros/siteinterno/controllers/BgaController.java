@@ -1,7 +1,6 @@
 package com.bombeiros.siteinterno.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,7 +17,6 @@ import com.bombeiros.siteinterno.services.BgaSaveDocumentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.swagger.annotations.ApiOperation;
@@ -51,11 +48,11 @@ public class BgaController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Bga's"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/bgaData")
+    @GetMapping("/bgas")
     public ResponseEntity<List<BgaResponseFile>> listarBga() {
         List<BgaResponseFile> bgas = bgaRepository.findAll().stream().map(bga -> {
 
-            return new BgaResponseFile(bga.getIdBga(), bga.getNome(), bga.getNumBga());
+            return new BgaResponseFile(bga.getId(), bga.getNome(), bga.getNum());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(bgas);
@@ -65,7 +62,7 @@ public class BgaController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Bga's e seus documentos"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/bgaPlusDocsData")
+    @GetMapping("/documentos")
     public ResponseEntity<List<DocumentResponseFile>> listarBgaDocumentos() {
 
         List<DocumentResponseFile> files = bgaRepository.findAll().stream().map(bga -> {
@@ -73,24 +70,18 @@ public class BgaController {
             List<Documento> documentos = bga.getDocumentos();
             Stream<Documento> documentosStream = documentos.stream();
             List<ResponseFile> documentosRF = null;
-            
-                documentosRF = documentosStream.map(documento -> {
 
-                    if (documento.isEmpty()) {
-                        return null;
-                    } else {
-                        
-                        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                                .path("/todos/listar/").path(documento.getIdDocumento().toString()).toUriString();
-                        
-                        //quebrado
-                        return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
-                                documento.getType(), 0/*documento.getDocumentoData().length*/);
-                    }
+            documentosRF = documentosStream.map(documento -> {
 
-                }).collect(Collectors.toList());
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
+                        .path(documento.getIdDocumento().toString()).toUriString();
 
-            return new DocumentResponseFile(bga.getIdBga(), bga.getNome(), bga.getNumBga(), documentosRF);
+                // quebrado
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                        documento.getType(), 0/* documento.getDocumentoData().length */);
+            }).collect(Collectors.toList());
+
+            return new DocumentResponseFile(bga.getId(), bga.getNome(), bga.getNum(), documentosRF);
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -114,7 +105,7 @@ public class BgaController {
                         documento.getType(), documento.getDocumentoData().length);
             }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(bga.getIdBga(), bga.getNome(), bga.getNumBga(), documentos);
+            return new DocumentResponseFile(bga.getId(), bga.getNome(), bga.getNum(), documentos);
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);

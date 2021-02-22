@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.dto;
+package com.bombeiros.siteinterno.DTO;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ public class RegistroAntigoDTO {
         this.documentos = documentos;
     }
 
-    public long getIdRegistroAntigo() {
+    public long getId() {
         return idRegistroAntigo;
     }
 
-    public void setIdRegistroAntigo(long idRegistroAntigo) {
+    public void setId(long idRegistroAntigo) {
         this.idRegistroAntigo = idRegistroAntigo;
     }
 

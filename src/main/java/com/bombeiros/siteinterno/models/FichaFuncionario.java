@@ -47,11 +47,11 @@ public class FichaFuncionario implements Serializable {
 		this.nome = nome;
 	}
 
-	public int getNumFicha() {
+	public int getNum() {
 		return numFicha;
 	}
 
-	public void setNumFicha(int numFicha) {
+	public void setNum(int numFicha) {
 		this.numFicha = numFicha;
 	}
 
@@ -71,11 +71,11 @@ public class FichaFuncionario implements Serializable {
 		this.dataExclusao = dataExclusao;
 	}
 
-	public long getIdFichaFuncionario() {
+	public long getId() {
 		return idFichaFuncionario;
 	}
 
-	public void setIdFichaFuncionario(long idFichaFuncionario) {
+	public void setId(long idFichaFuncionario) {
 		this.idFichaFuncionario = idFichaFuncionario;
 	}
 

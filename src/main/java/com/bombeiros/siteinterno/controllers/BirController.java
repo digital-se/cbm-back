@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -45,11 +46,11 @@ public class BirController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Bir's"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping
+    @GetMapping("/birs")
     public ResponseEntity<List<BirResponseFile>> listarBir() {
         List<BirResponseFile> birs = birRepository.findAll().stream().map(bir -> {
 
-            return new BirResponseFile(bir.getIdBir(), bir.getNome(), bir.getNumBir());
+            return new BirResponseFile(bir.getId(), bir.getNome(), bir.getNum());
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(birs);
@@ -70,10 +71,35 @@ public class BirController {
                         documento.getDocumentoData().length);
             }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(bir.getIdBir(), bir.getNome(), bir.getNumBir(), documentos);
+            return new DocumentResponseFile(bir.getId(), bir.getNome(), bir.getNum(), documentos);
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
+    }
+
+
+    // Listando todos os documentos de um BIR
+    @ApiOperation(value = "Retorna uma lista de documentos de um respectivo BIR")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo BIR"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @GetMapping("/{birid}")
+    public ResponseEntity<List<DocumentResponseFile>> listarDocumentosBgo(@PathVariable long birid) {
+
+        List<DocumentResponseFile> files = birRepository.findById(birid).stream().map(bir -> {
+            List<ResponseFile> documentos = bir.getDocumentos().stream().map(documento -> {
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
+                        .path(documento.getIdDocumento().toString()).toUriString();
+
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                        documento.getType(), 0 /*documento.getDocumentoData().length*/);
+            }).collect(Collectors.toList());
+
+            return new DocumentResponseFile(bir.getId(), bir.getNome(), bir.getNum(), documentos);
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(files);
+
     }
 
     @ApiOperation(value = "Cria um Bir e faz o upload de sua documento")
