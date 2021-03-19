@@ -76,7 +76,7 @@ public class BgaController {
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
                         .path(documento.getIdDocumento().toString()).toUriString();
 
-                // quebrado
+                // todo
                 return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                         documento.getType(), 0/* documento.getDocumentoData().length */);
             }).collect(Collectors.toList());
