@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import com.bombeiros.siteinterno.message.ResponseFile;
 import com.bombeiros.siteinterno.message.ResponseMessage;
 import com.bombeiros.siteinterno.models.Documento;
-import com.bombeiros.siteinterno.services.BgaSaveDocumentoService;
+import com.bombeiros.siteinterno.services.BgaServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DocumentoUploadController {
     
     @Autowired
-    private BgaSaveDocumentoService storageService;
+    private BgaServices storageService;
 
 
 

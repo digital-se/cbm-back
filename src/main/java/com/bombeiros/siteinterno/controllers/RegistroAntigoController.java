@@ -8,7 +8,7 @@ import com.bombeiros.siteinterno.message.ResponseFile;
 import com.bombeiros.siteinterno.message.RegistroAntigoResponseFile;
 import com.bombeiros.siteinterno.models.RegistroAntigo;
 import com.bombeiros.siteinterno.repository.RegistroAntigoRepository;
-import com.bombeiros.siteinterno.services.RegistroAntigoSaveDocumentoService;
+import com.bombeiros.siteinterno.services.RegistroAntigoServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,7 @@ public class RegistroAntigoController {
     RegistroAntigoRepository registroRepository;
 
     @Autowired
-    RegistroAntigoSaveDocumentoService registroSaveDocumento;
+    RegistroAntigoServices registroSaveDocumento;
 
     @ApiOperation(value = "Retorna uma lista de Registros antigos")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Registro antigos"),

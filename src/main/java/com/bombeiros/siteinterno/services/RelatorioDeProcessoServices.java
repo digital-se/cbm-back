@@ -6,9 +6,9 @@ import java.util.stream.Stream;
 import javax.transaction.Transactional;
 
 import com.bombeiros.siteinterno.models.Documento;
-import com.bombeiros.siteinterno.models.RegistroAntigo;
+import com.bombeiros.siteinterno.models.RelatorioDeProcesso;
 import com.bombeiros.siteinterno.repository.DocumentoRepository;
-import com.bombeiros.siteinterno.repository.RegistroAntigoRepository;
+import com.bombeiros.siteinterno.repository.RelatorioDeProcessoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,34 +16,30 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class RegistroAntigoSaveDocumentoService {
-
-    @Autowired
-    RegistroAntigoRepository registroAntigoRepository;
+public class RelatorioDeProcessoServices {
 
     @Autowired
     DocumentoRepository documentoRepository;
 
+    @Autowired
+    RelatorioDeProcessoRepository relatorioRepository;
+
     @Transactional
-    public Documento salvar(RegistroAntigo registroAntigo, MultipartFile file) throws IOException {
-        
+    public Documento salvar(RelatorioDeProcesso relatorioProcesso, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
 
-        registroAntigoRepository.save(registroAntigo);
+        relatorioRepository.save(relatorioProcesso);
 
-        documento.setRegistroAntigo(registroAntigo);
+        documento.setRelatorioDeProcesso(relatorioProcesso);
 
         return documentoRepository.save(documento);
     }
 
-    
-     // Método de retornar uma documento pelo seu ID
-     public Documento getDocumento(Long id) {
+    public Documento getDocumento(Long id) {
         return documentoRepository.findById(id).get();
     }
 
-    // Método de retornar todas as documentos
     public Stream<Documento> getAllDocumentos() {
         return documentoRepository.findAll().stream();
     }

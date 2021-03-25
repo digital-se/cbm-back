@@ -8,7 +8,7 @@ import com.bombeiros.siteinterno.message.ResponseFile;
 import com.bombeiros.siteinterno.message.RelatorioProcessoResponseFile;
 import com.bombeiros.siteinterno.models.RelatorioDeProcesso;
 import com.bombeiros.siteinterno.repository.RelatorioDeProcessoRepository;
-import com.bombeiros.siteinterno.services.RelatorioDeProcessoSaveDocumentoService;
+import com.bombeiros.siteinterno.services.RelatorioDeProcessoServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,7 @@ public class RelatorioDeProcessoController {
     RelatorioDeProcessoRepository relatorioRepository;
 
     @Autowired
-    RelatorioDeProcessoSaveDocumentoService relatorioSaveDocumento;
+    RelatorioDeProcessoServices relatorioSaveDocumento;
 
     @ApiOperation(value = "Retorna uma lista de Relatorios de processo")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Relatorios de processo"),
