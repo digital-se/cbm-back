@@ -1,33 +1,18 @@
 package com.bombeiros.siteinterno.controllers;
 
 import java.io.IOException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.util.ArrayList;
-
-import com.bombeiros.siteinterno.message.TesteResponseFile;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -38,8 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class SendToTesseractController {
 
     // broken
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/getFromUrl")
-    public ResponseEntity<String> getFromUrl(@RequestParam(name = "file") MultipartFile file)
+    public MultiValueMap<String,String> getFromUrl(@RequestParam(name = "file") MultipartFile file)
             throws RestClientException, IOException {
 
         // converte arquivo para formato enviavel
@@ -66,8 +52,13 @@ public class SendToTesseractController {
         
         // retorna a resposta do ocr (precisa mudar pro formato la de
         // ResponseEntity.ok(resultado);
-        return restTemplate.postForEntity("http://localhost:9191/ocr/extrair", requestEntity, String.class);
+        ResponseEntity<String> result = restTemplate.postForEntity("http://localhost:9191/ocr/extrair", requestEntity, String.class);
 
+        MultiValueMap<String,String> response = new LinkedMultiValueMap<>();
+
+        response.add("txt", result.getBody());
+
+        return response;
 
     }
 
