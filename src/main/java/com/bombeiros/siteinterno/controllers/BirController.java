@@ -29,9 +29,44 @@ import io.swagger.annotations.ApiResponses;
 public class BirController {
 
     @Autowired
-    private BirServices birService;
+    private BirServices artigoServices;
 
-    // done
+    // SALVAR
+    @ApiOperation(value = "Cria um BIR e faz o upload de seu documento")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um BIR e fez o upload de seu documento"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @PostMapping("/salvar")
+    @ResponseBody
+    public ResponseEntity<Bir> salvar(@RequestPart("bir") Bir artigo, @RequestPart("file") MultipartFile file)
+            throws IOException {
+
+        artigoServices.salvar(artigo, file);
+
+        return ResponseEntity.status(HttpStatus.OK).body(artigo);
+    }
+
+    // LISTAR DOCUMENTOS
+    @ApiOperation(value = "Retorna uma lista de documentos de um respectivo BIR")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo BIR"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @GetMapping("/documentos/{birid}")
+    public ResponseEntity<List<DocumentResponseFile>> listarDocumentos(@PathVariable long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
+    }
+
+    // LISTAR ARTIGOS
+    @ApiOperation(value = "Retorna uma lista de BIR's")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de BIR's"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @GetMapping("/artigos")
+    public ResponseEntity<List<BirResponseFile>> listarArtigos() { // adicionar parametro string para query futuramente
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getArtigos());
+    }
+
+    /* // done
     @ApiOperation(value = "Retorna uma lista de documentos de um respectivo BIR")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo BIR"),
             @ApiResponse(code = 404, message = "Não encontrado"),
@@ -75,7 +110,7 @@ public class BirController {
     public ResponseEntity<List<DocumentResponseFile>> listarBirDocumentos() {
         return ResponseEntity.status(HttpStatus.OK).body(birService.getBirsEDocumentos());
 
-    }
+    } */
 
     // --------------------------
 
