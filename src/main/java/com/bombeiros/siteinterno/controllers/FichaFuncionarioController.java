@@ -63,37 +63,4 @@ public class FichaFuncionarioController {
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
 
-    /*
-     * @ApiOperation(value = "Retorna uma lista de documentos de um respectivo BIR")
-     * 
-     * @ApiResponses(value = { @ApiResponse(code = 200, message =
-     * "Retornou uma lista de documentos de um respectivo BIR"),
-     * 
-     * @ApiResponse(code = 404, message = "Não encontrado"),
-     * 
-     * @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-     * 
-     * @GetMapping("/{ffid}") public
-     * ResponseEntity<List<FichaFuncionaroResponseFile>>
-     * listarDocumentosFichaFuncionario(@PathVariable long ffid) {
-     * 
-     * List<FichaFuncionaroResponseFile> files =
-     * fichaRepository.findById(ffid).stream().map(ficha -> { List<ResponseFile>
-     * documentos = ficha.getDocumentos().stream().map(documento -> { String
-     * fileDownloadUri =
-     * ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
-     * .path(documento.getIdDocumento().toString()).toUriString();
-     * 
-     * return new ResponseFile(documento.getIdDocumento(), documento.getName(),
-     * fileDownloadUri, documento.getType(), documento.getDocumentoData().length);
-     * }).collect(Collectors.toList());
-     * 
-     * return new DocumentResponseFile(ficha.getId(), ficha.getNome(),
-     * ficha.getNum(), documentos); }).collect(Collectors.toList());
-     * 
-     * return ResponseEntity.status(HttpStatus.OK).body(files);
-     * 
-     * }
-     */
-
 }
