@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class SendToTesseractService {
     
+    //Em teste
     public MultiValueMap<String,String> send(MultipartFile file) throws IOException {
         
         // converte arquivo para formato enviavel

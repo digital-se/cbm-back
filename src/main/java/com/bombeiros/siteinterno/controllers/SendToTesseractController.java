@@ -15,13 +15,12 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/ocrService")
+@RequestMapping("/ocr")
 public class SendToTesseractController {
 
     @Autowired
     private SendToTesseractService tessService;
 
-    // broken
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/sendImage")
     public MultiValueMap<String, String> getFromUrl(@RequestParam(name = "file") MultipartFile file) throws RestClientException, IOException {
