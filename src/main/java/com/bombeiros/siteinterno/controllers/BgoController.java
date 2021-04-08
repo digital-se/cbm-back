@@ -29,16 +29,57 @@ import io.swagger.annotations.ApiResponses;
 public class BgoController {
 
     @Autowired
-    private BgoServices bgoService;
+    private BgoServices artigoServices;
 
-    // done
+    // SALVAR
+    @ApiOperation(value = "Cria um BGO e faz o upload de seu documento")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um BGO e fez o upload de seu documento"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @PostMapping("/salvar")
+    @ResponseBody
+    public ResponseEntity<Bgo> salvar(@RequestPart("bgo") Bgo artigo, @RequestPart("file") MultipartFile file)
+            throws IOException {
+
+        artigoServices.salvar(artigo, file);
+
+        return ResponseEntity.status(HttpStatus.OK).body(artigo);
+    }
+
+    // LISTAR DOCUMENTOS
+    @ApiOperation(value = "Retorna uma lista de documentos de um respectivo BGO")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo BGO"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @GetMapping("/documentos/{bgoid}")
+    public ResponseEntity<List<DocumentResponseFile>> listarDocumentos(@PathVariable long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
+    }
+
+    // LISTAR ARTIGOS
+    @ApiOperation(value = "Retorna uma lista de BGO's")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de BGO's"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @GetMapping("/artigos")
+    public ResponseEntity<List<BgoResponseFile>> listarArtigos() { // adicionar parametro string para query futuramente
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getArtigos());
+    }
+
+    // LISTAR TUDO | PARA TESTES, REMOVER FUTURAMENTE
+    /* public ResponseEntity<List<DocumentResponseFile>> listarTudo() {
+        return ResponseEntity.status(HttpStatus.OK).body(bgoServices.getBgasEDocumentos());
+
+    } */
+
+    /* // done
     @ApiOperation(value = "Retorna uma lista de documentos de um respectivo BGO")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo BGO"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/{bgoid}")
     public ResponseEntity<List<DocumentResponseFile>> listarDocumentosBgo(@PathVariable long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(bgoService.getBgoDocumentos(id));
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getBgoDocumentos(id));
     }
 
     // done
@@ -51,7 +92,7 @@ public class BgoController {
     public ResponseEntity<Bgo> criarBgo(@RequestPart("bgo") Bgo bgo, @RequestPart("file") MultipartFile file)
             throws IOException {
 
-        bgoService.salvar(bgo, file);
+        artigoServices.salvar(bgo, file);
 
         return ResponseEntity.status(HttpStatus.OK).body(bgo);
     }
@@ -63,7 +104,7 @@ public class BgoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/bgos")
     public ResponseEntity<List<BgoResponseFile>> listarBgo() {
-        return ResponseEntity.status(HttpStatus.OK).body(bgoService.getBgos());
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getBgos());
     }
 
     // for tests, remove that on prod!!!!
@@ -73,9 +114,9 @@ public class BgoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos")
     public ResponseEntity<List<DocumentResponseFile>> listarBgoDocumentos() {
-        return ResponseEntity.status(HttpStatus.OK).body(bgoService.getBgosEDocumentos());
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getBgosEDocumentos());
 
-    }
+    } */
 
     // --------------------------
     /*
