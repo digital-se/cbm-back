@@ -28,7 +28,7 @@ public class BgaServices {
     @Autowired
     private DocumentoRepository documentoRepository;
     @Autowired
-    private BgaRepository bgaRepository;
+    private BgaRepository artigoRepository;
 
     // Método de salvar as informações do Bga e uma documento referente ao Bga
     // Dependendo do banco de dados utilizado, provavelmente deverá ser feito
@@ -38,12 +38,12 @@ public class BgaServices {
 
     // SALVAR    
     @Transactional
-    public Documento salvar(Bga bga, MultipartFile file) throws IOException {
+    public Documento salvar(Bga artigo, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
 
-        bgaRepository.save(bga);
-        documento.setBga(bga);
+        artigoRepository.save(artigo);
+        documento.setBga(artigo);
         documentoRepository.save(documento);
 
         return documento;
@@ -52,9 +52,9 @@ public class BgaServices {
     // LISTAR DOCUMENTOS
     public List<DocumentResponseFile> getDocumentos(Long id) {
 
-        List<DocumentResponseFile> files = bgaRepository.findById(id).stream().map(bga -> {
+        List<DocumentResponseFile> files = artigoRepository.findById(id).stream().map(artigo -> {
 
-            List<ResponseFile> documentos = bga.getDocumentos().stream().map(documento -> {
+            List<ResponseFile> documentos = artigo.getDocumentos().stream().map(documento -> {
 
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
                         .path(documento.getIdDocumento().toString()).toUriString();
@@ -63,7 +63,7 @@ public class BgaServices {
 
             }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(bga.getId(), bga.getNome(), bga.getNum(), documentos);
+            return new DocumentResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum(), documentos);
         }).collect(Collectors.toList());
 
         return files;
@@ -71,11 +71,11 @@ public class BgaServices {
 
     // LISTAR ARTIGOS
     public List<BgaResponseFile> getArtigos() {
-        List<BgaResponseFile> bgas = bgaRepository.findAll().stream().map(bga -> {
-            return new BgaResponseFile(bga.getId(), bga.getNome(), bga.getNum());
+        List<BgaResponseFile> files = artigoRepository.findAll().stream().map(artigo -> {
+            return new BgaResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum());
         }).collect(Collectors.toList());
 
-        return bgas;
+        return files;
     }
 
     
@@ -91,7 +91,7 @@ public class BgaServices {
         // if next page, call the method again passing that x-10-1 as the next id for
         // the next 10 docs
 
-        List<DocumentResponseFile> files = bgaRepository.findAll().stream().map(bga -> {
+        List<DocumentResponseFile> files = artigoRepository.findAll().stream().map(bga -> {
 
             List<Documento> documentos = bga.getDocumentos();
             Stream<Documento> documentosStream = documentos.stream();
@@ -114,12 +114,12 @@ public class BgaServices {
     }
 
     //Necessario no documentoUploadController por algum motivo
-    public Documento salvarDocumento(MultipartFile file) throws IOException {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
+    // public Documento salvarDocumento(MultipartFile file) throws IOException {
+    //     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    //     Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
 
-        return documentoRepository.save(documento);
-    }
+    //     return documentoRepository.save(documento);
+    // }
 
     // Método de retornar uma documento pelo seu ID, porem ele itera por todos os documentos... não apenas no bga.
     /* public Documento getDocumento(Long id) {

@@ -29,21 +29,21 @@ import io.swagger.annotations.ApiResponses;
 public class BgaController {
 
     @Autowired
-    private BgaServices bgaServices;
+    private BgaServices artigoServices;
 
     // SALVAR
-    @ApiOperation(value = "Cria um Bga e faz o upload de seu documento")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um Bga e fez o upload de seu documento"),
+    @ApiOperation(value = "Cria um BGA e faz o upload de seu documento")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um BGA e fez o upload de seu documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping("/salvar")
     @ResponseBody
-    public ResponseEntity<Bga> salvar(@RequestPart("bga") Bga bga, @RequestPart("file") MultipartFile file)
+    public ResponseEntity<Bga> salvar(@RequestPart("bga") Bga artigo, @RequestPart("file") MultipartFile file)
             throws IOException {
 
-        bgaServices.salvar(bga, file);
+        artigoServices.salvar(artigo, file);
 
-        return ResponseEntity.status(HttpStatus.OK).body(bga);
+        return ResponseEntity.status(HttpStatus.OK).body(artigo);
     }
 
     // LISTAR DOCUMENTOS
@@ -53,22 +53,22 @@ public class BgaController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{bgaid}")
     public ResponseEntity<List<DocumentResponseFile>> listarDocumentos(@PathVariable long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(bgaServices.getDocumentos(id));
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
     }
 
     // LISTAR ARTIGOS
-    @ApiOperation(value = "Retorna uma lista de Bga's")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Bga's"),
+    @ApiOperation(value = "Retorna uma lista de BGA's")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de BGA's"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/artigos")
     public ResponseEntity<List<BgaResponseFile>> listarArtigos() { //adicionar parametro string para query futuramente
-        return ResponseEntity.status(HttpStatus.OK).body(bgaServices.getArtigos());
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getArtigos());
     }
 
     // LISTAR TUDO | PARA TESTES, REMOVER FUTURAMENTE
     public ResponseEntity<List<DocumentResponseFile>> listarTudo() {
-        return ResponseEntity.status(HttpStatus.OK).body(bgaServices.getBgasEDocumentos());
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getBgasEDocumentos());
 
     }
 
