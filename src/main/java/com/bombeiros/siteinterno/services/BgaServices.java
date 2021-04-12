@@ -84,16 +84,16 @@ public class BgaServices {
     //------ EXTRAS TEMPORARIOS ------
 
     // need refatoration / for tests, remove that on prod!!!!
-    public List<DocumentResponseFile> getBgasEDocumentos() {
+    public List<DocumentResponseFile> getTudo() {
         // to implement:
         // get last bga, send 10 lasts and return the id of the last one as recursive
         // method
         // if next page, call the method again passing that x-10-1 as the next id for
         // the next 10 docs
 
-        List<DocumentResponseFile> files = artigoRepository.findAll().stream().map(bga -> {
+        List<DocumentResponseFile> files = artigoRepository.findAll().stream().map(artigo -> {
 
-            List<Documento> documentos = bga.getDocumentos();
+            List<Documento> documentos = artigo.getDocumentos();
             Stream<Documento> documentosStream = documentos.stream();
             List<ResponseFile> documentosRF = null;
 
@@ -107,7 +107,7 @@ public class BgaServices {
                         documento.getType(), 0/* documento.getDocumentoData().length */);
             }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(bga.getId(), bga.getNome(), bga.getNum(), documentosRF);
+            return new DocumentResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum(), documentosRF);
         }).collect(Collectors.toList());
 
         return files;

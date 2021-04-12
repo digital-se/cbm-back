@@ -68,7 +68,7 @@ public class BgaController {
 
     // LISTAR TUDO | PARA TESTES, REMOVER FUTURAMENTE
     public ResponseEntity<List<DocumentResponseFile>> listarTudo() {
-        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getBgasEDocumentos());
+        return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getTudo());
 
     }
 

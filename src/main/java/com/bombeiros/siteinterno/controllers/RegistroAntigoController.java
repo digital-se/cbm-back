@@ -31,75 +31,131 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping(value = "/registroAntigo")
 public class RegistroAntigoController {
 
-    @Autowired
-    RegistroAntigoRepository registroRepository;
+        @Autowired
+        RegistroAntigoRepository registroRepository;
 
-    @Autowired
-    RegistroAntigoServices raServices;
+        @Autowired
+        RegistroAntigoServices artigoServices;
 
-    @ApiOperation(value = "Salva um novo registro antigo no DB")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Documento foi salvo com sucesso"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping("/post")
-    @ResponseBody
-    public ResponseEntity<RegistroAntigo> salvarRegistroAntigo(@RequestPart("registro") RegistroAntigo registroAntigo,
-            @RequestPart("file") MultipartFile file) throws IOException {
+        // SALVAR
+        @ApiOperation(value = "Cria um Registro Antigo e faz o upload de seu documento")
+        @ApiResponses(value = {
+                        @ApiResponse(code = 200, message = "Criou uma Registro Antigo e fez o upload de seu documento"),
+                        @ApiResponse(code = 404, message = "Não encontrado"),
+                        @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+        @PostMapping("/salvar")
+        @ResponseBody
+        public ResponseEntity<RegistroAntigo> salvar(@RequestPart("fichaDeFuncionario") RegistroAntigo artigo,
+                        @RequestPart("file") MultipartFile file) throws IOException {
 
-        raServices.salvar(registroAntigo, file);
+                artigoServices.salvar(artigo, file);
 
-        return ResponseEntity.status(HttpStatus.OK).body(registroAntigo);
-    }
+                return ResponseEntity.status(HttpStatus.OK).body(artigo);
+        }
 
-    @ApiOperation(value = "Retorna uma lista de documentos de um registro antigo especifico")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um registro antigo"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/get/{raid}")
-    public ResponseEntity<List<DocumentResponseFile>> listarDocumentos(@PathVariable long raid) throws IOException {
-        return ResponseEntity.status(HttpStatus.OK).body(raServices.listarDocumentos(raid));
-    }
+        // LISTAR DOCUMENTOS
+        @ApiOperation(value = "Retorna uma lista de documentos de uma respectiva Registro Antigo")
+        @ApiResponses(value = {
+                        @ApiResponse(code = 200, message = "Retornou uma lista de documentos de uma respectiva Registro Antigo"),
+                        @ApiResponse(code = 404, message = "Não encontrado"),
+                        @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+        @GetMapping("/documentos/{raid}")
+        public ResponseEntity<List<DocumentResponseFile>> listarDocumentos(@PathVariable long id) {
+                return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
+        }
 
-    
+        // LISTAR ARTIGOS
+        @ApiOperation(value = "Retorna uma lista de Registro Antigo")
+        @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Registro Antigo"),
+                        @ApiResponse(code = 404, message = "Não encontrado"),
+                        @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+        @GetMapping("/artigos")
+        public ResponseEntity<List<RegistroAntigoResponseFile>> listarArtigos() { // adicionar parametro string para
+                                                                                  // query
+                                                                                  // futuramente
+                return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getArtigos());
+        }
 
-    /* @GetMapping("/documentos")
-    public ResponseEntity<List<RegistroAntigoResponseFile>> listarRegistroDocumentos() {
-        List<RegistroAntigoResponseFile> files = registroRepository.findAll().stream().map(registro -> {
+        // @ApiOperation(value = "Salva um novo registro antigo no DB")
+        // @ApiResponses(value = { @ApiResponse(code = 200, message = "Documento foi
+        // salvo com sucesso"),
+        // @ApiResponse(code = 404, message = "Não encontrado"),
+        // @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+        // @PostMapping("/post")
+        // @ResponseBody
+        // public ResponseEntity<RegistroAntigo>
+        // salvarRegistroAntigo(@RequestPart("registro") RegistroAntigo registroAntigo,
+        // @RequestPart("file") MultipartFile file) throws IOException {
 
-            List<ResponseFile> documentos = registro.getDocumentos().stream().map(documento -> {
-                String fileDownloadUri = ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("/documentos/listar/")
-                    .path(documento.getIdDocumento().toString())
-                    .toUriString();
+        // artigoServices.salvar(registroAntigo, file);
 
-                    return new ResponseFile(
-                    documento.getIdDocumento(),
-                    documento.getName(),
-                    fileDownloadUri,
-                    documento.getType(),
-                    documento.getDocumentoData().length);
-              }).collect(Collectors.toList());
+        // return ResponseEntity.status(HttpStatus.OK).body(registroAntigo);
+        // }
 
-              return new RegistroAntigoResponseFile(
-                  registro.getId(),
-                  registro.getNome(), 
-                  documentos);
-                }).collect(Collectors.toList());
+        // @ApiOperation(value = "Retorna uma lista de documentos de um registro antigo
+        // especifico")
+        // @ApiResponses(value = {
+        // @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um
+        // registro antigo"),
+        // @ApiResponse(code = 404, message = "Não encontrado"),
+        // @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+        // @GetMapping("/get/{raid}")
+        // public ResponseEntity<List<DocumentResponseFile>>
+        // listarDocumentos(@PathVariable long raid) throws IOException {
+        // return
+        // ResponseEntity.status(HttpStatus.OK).body(artigoServices.listarDocumentos(raid));
+        // }
 
-        return ResponseEntity.status(HttpStatus.OK).body(files);
-    } */
+        // @ApiOperation(value = "Retorna uma lista de documentos de um respectivo BGA")
+        // @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma
+        // lista de documentos de um respectivo BGA"),
+        // @ApiResponse(code = 404, message = "Não encontrado"),
+        // @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+        // @GetMapping("/{bgaid}")
+        // public ResponseEntity<List<DocumentResponseFile>>
+        // listarDocumentosBga(@PathVariable long id) {
+        // return
+        // ResponseEntity.status(HttpStatus.OK).body(bgaSaveDocumentoService.getDocumentos(id));
+        // }
 
-    /* @ApiOperation(value = "Retorna uma lista de Registros antigos")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Registro antigos"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping
-    public ResponseEntity<List<RegistroAntigoResponseFile>> listarRegistroAntigo() {
-        List<RegistroAntigoResponseFile> files = registroRepository.findAll().stream().map(registro -> {
-            return new RegistroAntigoResponseFile(registro.getId(), registro.getNome());
-        }).collect(Collectors.toList());
+        /*
+         * @GetMapping("/documentos") public
+         * ResponseEntity<List<RegistroAntigoResponseFile>> listarRegistroDocumentos() {
+         * List<RegistroAntigoResponseFile> files =
+         * registroRepository.findAll().stream().map(registro -> {
+         * 
+         * List<ResponseFile> documentos =
+         * registro.getDocumentos().stream().map(documento -> { String fileDownloadUri =
+         * ServletUriComponentsBuilder .fromCurrentContextPath()
+         * .path("/documentos/listar/") .path(documento.getIdDocumento().toString())
+         * .toUriString();
+         * 
+         * return new ResponseFile( documento.getIdDocumento(), documento.getName(),
+         * fileDownloadUri, documento.getType(), documento.getDocumentoData().length);
+         * }).collect(Collectors.toList());
+         * 
+         * return new RegistroAntigoResponseFile( registro.getId(), registro.getNome(),
+         * documentos); }).collect(Collectors.toList());
+         * 
+         * return ResponseEntity.status(HttpStatus.OK).body(files); }
+         */
 
-        return ResponseEntity.status(HttpStatus.OK).body(files);
-    } */
+        /*
+         * @ApiOperation(value = "Retorna uma lista de Registros antigos")
+         * 
+         * @ApiResponses(value = { @ApiResponse(code = 200, message =
+         * "Retornou uma lista de Registro antigos"),
+         * 
+         * @ApiResponse(code = 404, message = "Não encontrado"),
+         * 
+         * @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+         * 
+         * @GetMapping public ResponseEntity<List<RegistroAntigoResponseFile>>
+         * listarRegistroAntigo() { List<RegistroAntigoResponseFile> files =
+         * registroRepository.findAll().stream().map(registro -> { return new
+         * RegistroAntigoResponseFile(registro.getId(), registro.getNome());
+         * }).collect(Collectors.toList());
+         * 
+         * return ResponseEntity.status(HttpStatus.OK).body(files); }
+         */
 }
