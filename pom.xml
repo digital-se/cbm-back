@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.bombeiros</groupId>
 	<artifactId>site-interno</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>site-interno</name>
 	<description>Site interno dos bombeiros</description>
 
