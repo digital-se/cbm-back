@@ -1,10 +1,15 @@
 package com.bombeiros.siteinterno.services;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
 
+import com.bombeiros.siteinterno.message.DocumentResponseFile;
+import com.bombeiros.siteinterno.message.RelatorioProcessoResponseFile;
+import com.bombeiros.siteinterno.message.ResponseFile;
 import com.bombeiros.siteinterno.models.Documento;
 import com.bombeiros.siteinterno.models.RelatorioDeProcesso;
 import com.bombeiros.siteinterno.repository.DocumentoRepository;
@@ -14,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 public class RelatorioDeProcessoServices {
@@ -22,18 +28,61 @@ public class RelatorioDeProcessoServices {
     DocumentoRepository documentoRepository;
 
     @Autowired
-    RelatorioDeProcessoRepository relatorioRepository;
+    RelatorioDeProcessoRepository rpRepository;
+
+    // salvar
+    // listarDocumentos (id)
+    // listarArtigos (query)
 
     @Transactional
     public Documento salvar(RelatorioDeProcesso relatorioProcesso, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
 
-        relatorioRepository.save(relatorioProcesso);
+        rpRepository.save(relatorioProcesso);
 
         documento.setRelatorioDeProcesso(relatorioProcesso);
 
         return documentoRepository.save(documento);
+    }
+
+    public List<RelatorioProcessoResponseFile> listarDocumentos() throws IOException {
+        List<RelatorioProcessoResponseFile> files = rpRepository.findAll().stream().map(relatorio -> {
+
+            List<ResponseFile> documentos = relatorio.getDocumentos().stream().map(documento -> {
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/documentos/listar/").path(documento.getIdDocumento().toString()).toUriString();
+
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                        documento.getType(), documento.getDocumentoData().length);
+            }).collect(Collectors.toList());
+
+            return new RelatorioProcessoResponseFile(relatorio.getId(), relatorio.getNum(), documentos);
+        }).collect(Collectors.toList());
+        return files;
+    }
+
+    public List<DocumentResponseFile> listarArtigos() throws IOException {
+        List<DocumentResponseFile> files = rpRepository.findAll().stream().map(rp -> {
+
+            List<Documento> documentos = rp.getDocumentos();
+            Stream<Documento> documentosStream = documentos.stream();
+            List<ResponseFile> documentosRF = null;
+
+            documentosRF = documentosStream.map(documento -> {
+
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
+                        .path(documento.getIdDocumento().toString()).toUriString();
+
+                // todo
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                        documento.getType(), 0/* documento.getDocumentoData().length */);
+            }).collect(Collectors.toList());
+
+            return new DocumentResponseFile(rp.getId(), "", rp.getNum(), documentosRF);
+        }).collect(Collectors.toList());
+
+        return files;
     }
 
     public Documento getDocumento(Long id) {

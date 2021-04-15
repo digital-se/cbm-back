@@ -67,6 +67,7 @@ public class BgaController {
     }
 
     // LISTAR TUDO | PARA TESTES, REMOVER FUTURAMENTE
+    @GetMapping("/tudo")
     public ResponseEntity<List<DocumentResponseFile>> listarTudo() {
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getTudo());
 

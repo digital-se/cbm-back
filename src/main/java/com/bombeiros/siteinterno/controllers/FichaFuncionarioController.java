@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping(value = "/fichaFuncionario")
+@RequestMapping(value = "/ff")
 public class FichaFuncionarioController {
 
     @Autowired

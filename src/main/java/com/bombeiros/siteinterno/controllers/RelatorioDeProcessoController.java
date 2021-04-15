@@ -27,91 +27,112 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping(value = "/relatorioDeProcesso")
+@RequestMapping(value = "/rp")
 public class RelatorioDeProcessoController {
 
-    @Autowired
-    RelatorioDeProcessoRepository relatorioRepository;
+        @Autowired
+        RelatorioDeProcessoRepository relatorioRepository;
 
-    @Autowired
-    RelatorioDeProcessoServices relatorioSaveDocumento;
+        @Autowired
+        RelatorioDeProcessoServices relatorioSaveDocumento;
 
-    @ApiOperation(value = "Retorna uma lista de Relatorios de processo")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Relatorios de processo"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping
-    public ResponseEntity<List<RelatorioProcessoResponseFile>> listarRelatorioDeProcesso() {
-            List<RelatorioProcessoResponseFile> files = relatorioRepository.findAll().stream().map(relatorio -> {
-               return new RelatorioProcessoResponseFile(
-                        relatorio.getId(),
-                        relatorio.getNum());
-            }).collect(Collectors.toList());
+        @ApiOperation(value = "Retorna uma lista de Relatorios de processo")
+        @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Relatorios de processo"),
+                        @ApiResponse(code = 404, message = "Não encontrado"),
+                        @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+        @GetMapping
+        public ResponseEntity<List<RelatorioProcessoResponseFile>> listarRelatorioDeProcesso() {
+                List<RelatorioProcessoResponseFile> files = relatorioRepository.findAll().stream().map(relatorio -> {
+                        return new RelatorioProcessoResponseFile(relatorio.getId(), relatorio.getNum());
+                }).collect(Collectors.toList());
 
-            return ResponseEntity.status(HttpStatus.OK).body(files);
-        
-    }
+                return ResponseEntity.status(HttpStatus.OK).body(files);
 
-    @ApiOperation(value = "Retorna uma lista de Relatorios de processo e suas respectivas documentos")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Relatorios de processo e suas respectivas documentos"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/documentos")
-    public ResponseEntity<List<RelatorioProcessoResponseFile>> listarRelatorioDocumentos() {
+        }
 
-        List<RelatorioProcessoResponseFile> files = relatorioRepository.findAll().stream().map(relatorio -> {
+        @ApiOperation(value = "Retorna uma lista de Relatorios de processo e suas respectivas documentos")
+        @ApiResponses(value = {
+                        @ApiResponse(code = 200, message = "Retornou uma lista de Relatorios de processo e suas respectivas documentos"),
+                        @ApiResponse(code = 404, message = "Não encontrado"),
+                        @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+        @GetMapping("/documentos")
+        public ResponseEntity<List<RelatorioProcessoResponseFile>> listarRelatorioDocumentos() {
 
-            List<ResponseFile> documentos = relatorio.getDocumentos().stream().map(documento -> {
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/documentos/listar/")
-                        .path(documento.getIdDocumento().toString()).toUriString();
+                List<RelatorioProcessoResponseFile> files = relatorioRepository.findAll().stream().map(relatorio -> {
 
-                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri, documento.getType(),
-                        documento.getDocumentoData().length);
-            }).collect(Collectors.toList());
+                        List<ResponseFile> documentos = relatorio.getDocumentos().stream().map(documento -> {
+                                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                                                .path("/documentos/listar/").path(documento.getIdDocumento().toString())
+                                                .toUriString();
 
-            return new RelatorioProcessoResponseFile(relatorio.getId(),
-                    relatorio.getNum(), documentos);
-        }).collect(Collectors.toList());
+                                return new ResponseFile(documento.getIdDocumento(), documento.getName(),
+                                                fileDownloadUri, documento.getType(),
+                                                documento.getDocumentoData().length);
+                        }).collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(files);
-    }
+                        return new RelatorioProcessoResponseFile(relatorio.getId(), relatorio.getNum(), documentos);
+                }).collect(Collectors.toList());
 
+                return ResponseEntity.status(HttpStatus.OK).body(files);
+        }
 
-    /* @ApiOperation(value = "Retorna uma lista de documentos de um respectivo BIR")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo BIR"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/{rpid}")
-    public ResponseEntity<List<RelatorioProcessoResponseFile>> listarDocumentosBgo(@PathVariable long rpid) {
+        /*
+         * @ApiOperation(value = "Retorna uma lista de documentos de um respectivo BIR")
+         * 
+         * @ApiResponses(value = { @ApiResponse(code = 200, message =
+         * "Retornou uma lista de documentos de um respectivo BIR"),
+         * 
+         * @ApiResponse(code = 404, message = "Não encontrado"),
+         * 
+         * @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+         * 
+         * @GetMapping("/{rpid}") public
+         * ResponseEntity<List<RelatorioProcessoResponseFile>>
+         * listarDocumentosBgo(@PathVariable long rpid) {
+         * 
+         * List<RelatorioProcessoResponseFile> files =
+         * relatorioRepository.findById(rpid).stream().map(bir -> { List<ResponseFile>
+         * documentos = bir.getDocumentos().stream().map(documento -> { String
+         * fileDownloadUri =
+         * ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
+         * .path(documento.getIdDocumento().toString()).toUriString();
+         * 
+         * return new ResponseFile(documento.getIdDocumento(), documento.getName(),
+         * fileDownloadUri, documento.getType(), 0 documento.getDocumentoData().length);
+         * }).collect(Collectors.toList());
+         * 
+         * return new DocumentResponseFile(bir.getIdBir(), bir.getNome(),
+         * bir.getNumBir(), documentos); }).collect(Collectors.toList());
+         * 
+         * return ResponseEntity.status(HttpStatus.OK).body(files);
+         * 
+         * }
+         */
 
-        List<RelatorioProcessoResponseFile> files = relatorioRepository.findById(rpid).stream().map(bir -> {
-            List<ResponseFile> documentos = bir.getDocumentos().stream().map(documento -> {
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
-                        .path(documento.getIdDocumento().toString()).toUriString();
+        // salvar
+        // listarDocumentos (id)
+        // listarArtigos (query)
+        // done
+        @ApiOperation(value = "Cria um Relatorio de Processo e faz o upload de sua documento")
+        @ApiResponses(value = {
+                        @ApiResponse(code = 200, message = "Criou um Relatorio de Processo e fez o upload de sua documento"),
+                        @ApiResponse(code = 404, message = "Não encontrado"),
+                        @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+        @PostMapping
+        @ResponseBody
+        public ResponseEntity<RelatorioDeProcesso> salvar(@RequestPart("relatorio") RelatorioDeProcesso relatorio,
+                        @RequestPart("file") MultipartFile file) throws IOException {
 
-                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
-                        documento.getType(), 0 documento.getDocumentoData().length);
-            }).collect(Collectors.toList());
+                relatorioSaveDocumento.salvar(relatorio, file);
 
-            return new DocumentResponseFile(bir.getIdBir(), bir.getNome(), bir.getNumBir(), documentos);
-        }).collect(Collectors.toList());
+                return ResponseEntity.status(HttpStatus.OK).body(relatorio);
+        }
 
-        return ResponseEntity.status(HttpStatus.OK).body(files);
+        public String listarDocumentos(){
+                return null;
+        }
 
-    } */
-
-
-    @ApiOperation(value = "Cria um Relatorio de Processo e faz o upload de sua documento")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um Relatorio de Processo e fez o upload de sua documento"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping
-    @ResponseBody
-    public ResponseEntity<RelatorioDeProcesso> criarBga(@RequestPart("relatorio") RelatorioDeProcesso relatorio,
-            @RequestPart("file") MultipartFile file) throws IOException {
-
-        relatorioSaveDocumento.salvar(relatorio, file);
-
-        return ResponseEntity.status(HttpStatus.OK).body(relatorio);
-    }
+        public String listarArtigos(){
+                return null;
+        }
 }
