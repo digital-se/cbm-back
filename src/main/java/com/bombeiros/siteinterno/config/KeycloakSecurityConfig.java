@@ -25,6 +25,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
+            .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui","/configuration/security", "/swagger-ui/*").permitAll() //testes
             .antMatchers("/bga/*").permitAll() //testes
             .antMatchers("/bgo/*").hasAnyRole("user","admin")
             .antMatchers("/bir/*").hasAnyRole("user","admin")
