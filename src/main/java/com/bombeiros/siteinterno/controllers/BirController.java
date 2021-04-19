@@ -38,7 +38,7 @@ public class BirController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping("/salvar")
     @ResponseBody
-    public ResponseEntity<Bir> salvar(@RequestPart("bir") Bir artigo, @RequestPart("file") MultipartFile file)
+    public ResponseEntity<Bir> salvar(@RequestPart("artigo") Bir artigo, @RequestPart("file") MultipartFile file)
             throws IOException {
 
         artigoServices.salvar(artigo, file);

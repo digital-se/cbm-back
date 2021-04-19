@@ -38,7 +38,7 @@ public class BgaController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping("/salvar")
     @ResponseBody
-    public ResponseEntity<Bga> salvar(@RequestPart("bga") Bga artigo, @RequestPart("file") MultipartFile file)
+    public ResponseEntity<Bga> salvar(@RequestPart("artigo") Bga artigo, @RequestPart("file") MultipartFile file)
             throws IOException {
 
         artigoServices.salvar(artigo, file);

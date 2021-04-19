@@ -38,7 +38,7 @@ public class FichaFuncionarioController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping("/salvar")
     @ResponseBody
-    public ResponseEntity<FichaFuncionario> salvar(@RequestPart("fichaDeFuncionario") FichaFuncionario artigo, @RequestPart("file") MultipartFile file)
+    public ResponseEntity<FichaFuncionario> salvar(@RequestPart("artigo") FichaFuncionario artigo, @RequestPart("file") MultipartFile file)
             throws IOException {
 
         artigoServices.salvar(artigo, file);

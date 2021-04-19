@@ -2,9 +2,7 @@ package com.bombeiros.siteinterno.controllers;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import com.bombeiros.siteinterno.message.ResponseFile;
 import com.bombeiros.siteinterno.message.DocumentResponseFile;
 import com.bombeiros.siteinterno.message.RegistroAntigoResponseFile;
 import com.bombeiros.siteinterno.models.RegistroAntigo;
@@ -45,7 +43,7 @@ public class RegistroAntigoController {
                         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
         @PostMapping("/salvar")
         @ResponseBody
-        public ResponseEntity<RegistroAntigo> salvar(@RequestPart("fichaDeFuncionario") RegistroAntigo artigo,
+        public ResponseEntity<RegistroAntigo> salvar(@RequestPart("artigo") RegistroAntigo artigo,
                         @RequestPart("file") MultipartFile file) throws IOException {
 
                 artigoServices.salvar(artigo, file);
@@ -54,9 +52,9 @@ public class RegistroAntigoController {
         }
 
         // LISTAR DOCUMENTOS
-        @ApiOperation(value = "Retorna uma lista de documentos de uma respectiva Registro Antigo")
+        @ApiOperation(value = "Retorna uma lista de documentos de um respectivo Registro Antigo")
         @ApiResponses(value = {
-                        @ApiResponse(code = 200, message = "Retornou uma lista de documentos de uma respectiva Registro Antigo"),
+                        @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo Registro Antigo"),
                         @ApiResponse(code = 404, message = "Não encontrado"),
                         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
         @GetMapping("/documentos/{raid}")
