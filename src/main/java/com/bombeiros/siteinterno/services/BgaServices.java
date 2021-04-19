@@ -49,6 +49,21 @@ public class BgaServices {
         return documento;
     }
 
+     // LISTAR DOCUMENTOS DE UM ARTIGO
+     public List<DocumentoResponseFile> getDocumentosDeUmArtigo(Long id) {
+
+        List<DocumentoResponseFile> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
+
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
+                    .path(documento.getIdDocumento().toString()).toUriString();
+            return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                    documento.getType(), documento.getDocumentoData().length);
+
+        }).collect(Collectors.toList());
+
+        return responseFiles;
+    }
+
     // LISTAR DOCUMENTOS
     public List<ArtigoResponseFile> getDocumentos(Long id) {
 
