@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.bombeiros.siteinterno.message.BirResponseFile;
-import com.bombeiros.siteinterno.message.DocumentResponseFile;
+import com.bombeiros.siteinterno.message.ArtigoResponseFile;
 import com.bombeiros.siteinterno.models.Bir;
 import com.bombeiros.siteinterno.services.BirServices;
 
@@ -52,7 +52,7 @@ public class BirController {
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{birid}")
-    public ResponseEntity<List<DocumentResponseFile>> listarDocumentos(@PathVariable long id) {
+    public ResponseEntity<List<ArtigoResponseFile>> listarDocumentos(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
     }
 

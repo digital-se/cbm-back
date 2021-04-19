@@ -15,10 +15,10 @@ public class FichaFuncionarioResponseFile {
 	
     private Date dataExclusao;
     
-    private List<ResponseFile> documentos;
+    private List<DocumentoResponseFile> documentos;
 
     public FichaFuncionarioResponseFile(long idFichaFuncionario, String nome, int numFicha, Date dataInclusao,
-            Date dataExclusao, List<ResponseFile> documentos) {
+            Date dataExclusao, List<DocumentoResponseFile> documentos) {
         this.idFichaFuncionario = idFichaFuncionario;
         this.nome = nome;
         this.numFicha = numFicha;
@@ -76,11 +76,11 @@ public class FichaFuncionarioResponseFile {
         this.dataExclusao = dataExclusao;
     }
 
-    public List<ResponseFile> getDocumentos() {
+    public List<DocumentoResponseFile> getDocumentos() {
         return documentos;
     }
 
-    public void setDocumentos(List<ResponseFile> documentos) {
+    public void setDocumentos(List<DocumentoResponseFile> documentos) {
         this.documentos = documentos;
     }
 

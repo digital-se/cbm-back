@@ -6,7 +6,7 @@ public class RelatorioProcessoResponseFile {
     
     private Long idRelatorioDeProcesso;
     private int numRelatorio;
-    private List<ResponseFile> documentos;
+    private List<DocumentoResponseFile> documentos;
 
     
 
@@ -31,15 +31,15 @@ public class RelatorioProcessoResponseFile {
         this.numRelatorio = numRelatorio;
     }
 
-    public List<ResponseFile> getDocumentos() {
+    public List<DocumentoResponseFile> getDocumentos() {
         return documentos;
     }
 
-    public void setDocumentos(List<ResponseFile> documentos) {
+    public void setDocumentos(List<DocumentoResponseFile> documentos) {
         this.documentos = documentos;
     }
 
-    public RelatorioProcessoResponseFile(Long idRelatorioDeProcesso, int numRelatorio, List<ResponseFile> documentos) {
+    public RelatorioProcessoResponseFile(Long idRelatorioDeProcesso, int numRelatorio, List<DocumentoResponseFile> documentos) {
         this.idRelatorioDeProcesso = idRelatorioDeProcesso;
         this.numRelatorio = numRelatorio;
         this.documentos = documentos;

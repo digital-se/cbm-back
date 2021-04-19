@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.bombeiros.siteinterno.message.BgaResponseFile;
-import com.bombeiros.siteinterno.message.DocumentResponseFile;
+import com.bombeiros.siteinterno.message.ArtigoResponseFile;
 import com.bombeiros.siteinterno.models.Bga;
 import com.bombeiros.siteinterno.services.BgaServices;
 
@@ -52,7 +52,7 @@ public class BgaController {
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{bgaid}")
-    public ResponseEntity<List<DocumentResponseFile>> listarDocumentos(@PathVariable long id) {
+    public ResponseEntity<List<ArtigoResponseFile>> listarDocumentos(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
     }
 
@@ -68,7 +68,7 @@ public class BgaController {
 
     // LISTAR TUDO | PARA TESTES, REMOVER FUTURAMENTE
     @GetMapping("/tudo")
-    public ResponseEntity<List<DocumentResponseFile>> listarTudo() {
+    public ResponseEntity<List<ArtigoResponseFile>> listarTudo() {
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getTudo());
 
     }

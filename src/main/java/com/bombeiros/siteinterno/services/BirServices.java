@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import com.bombeiros.siteinterno.message.BirResponseFile;
-import com.bombeiros.siteinterno.message.DocumentResponseFile;
-import com.bombeiros.siteinterno.message.ResponseFile;
+import com.bombeiros.siteinterno.message.ArtigoResponseFile;
+import com.bombeiros.siteinterno.message.DocumentoResponseFile;
 import com.bombeiros.siteinterno.models.Bir;
 import com.bombeiros.siteinterno.models.Documento;
 import com.bombeiros.siteinterno.repository.BirRepository;
@@ -43,20 +43,20 @@ public class BirServices {
     }
 
     // LISTAR DOCUMENTOS
-    public List<DocumentResponseFile> getDocumentos(Long id) {
+    public List<ArtigoResponseFile> getDocumentos(Long id) {
 
-        List<DocumentResponseFile> files = artigoRepository.findById(id).stream().map(artigo -> {
+        List<ArtigoResponseFile> files = artigoRepository.findById(id).stream().map(artigo -> {
 
-            List<ResponseFile> documentos = artigo.getDocumentos().stream().map(documento -> {
+            List<DocumentoResponseFile> documentos = artigo.getDocumentos().stream().map(documento -> {
 
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
                         .path(documento.getIdDocumento().toString()).toUriString();
-                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                         documento.getType(), documento.getDocumentoData().length);
 
             }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum(), documentos);
+            return new ArtigoResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum(), documentos);
         }).collect(Collectors.toList());
 
         return files;

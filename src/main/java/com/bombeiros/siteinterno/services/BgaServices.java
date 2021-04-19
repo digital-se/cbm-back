@@ -7,9 +7,9 @@ import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
 
+import com.bombeiros.siteinterno.message.ArtigoResponseFile;
 import com.bombeiros.siteinterno.message.BgaResponseFile;
-import com.bombeiros.siteinterno.message.DocumentResponseFile;
-import com.bombeiros.siteinterno.message.ResponseFile;
+import com.bombeiros.siteinterno.message.DocumentoResponseFile;
 import com.bombeiros.siteinterno.models.Bga;
 import com.bombeiros.siteinterno.models.Documento;
 import com.bombeiros.siteinterno.repository.BgaRepository;
@@ -50,20 +50,20 @@ public class BgaServices {
     }
 
     // LISTAR DOCUMENTOS
-    public List<DocumentResponseFile> getDocumentos(Long id) {
+    public List<ArtigoResponseFile> getDocumentos(Long id) {
 
-        List<DocumentResponseFile> files = artigoRepository.findById(id).stream().map(artigo -> {
+        List<ArtigoResponseFile> files = artigoRepository.findById(id).stream().map(artigo -> {
 
-            List<ResponseFile> documentos = artigo.getDocumentos().stream().map(documento -> {
+            List<DocumentoResponseFile> documentos = artigo.getDocumentos().stream().map(documento -> {
 
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
                         .path(documento.getIdDocumento().toString()).toUriString();
-                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                         documento.getType(), documento.getDocumentoData().length);
 
             }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum(), documentos);
+            return new ArtigoResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum(), documentos);
         }).collect(Collectors.toList());
 
         return files;
@@ -84,18 +84,18 @@ public class BgaServices {
     //------ EXTRAS TEMPORARIOS ------
 
     // need refatoration / for tests, remove that on prod!!!!
-    public List<DocumentResponseFile> getTudo() {
+    public List<ArtigoResponseFile> getTudo() {
         // to implement:
         // get last bga, send 10 lasts and return the id of the last one as recursive
         // method
         // if next page, call the method again passing that x-10-1 as the next id for
         // the next 10 docs
 
-        List<DocumentResponseFile> files = artigoRepository.findAll().stream().map(artigo -> {
+        List<ArtigoResponseFile> files = artigoRepository.findAll().stream().map(artigo -> {
 
             List<Documento> documentos = artigo.getDocumentos();
             Stream<Documento> documentosStream = documentos.stream();
-            List<ResponseFile> documentosRF = null;
+            List<DocumentoResponseFile> documentosRF = null;
 
             documentosRF = documentosStream.map(documento -> {
 
@@ -103,11 +103,11 @@ public class BgaServices {
                         .path(documento.getIdDocumento().toString()).toUriString();
 
                 // todo
-                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                         documento.getType(), 0/* documento.getDocumentoData().length */);
             }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum(), documentosRF);
+            return new ArtigoResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum(), documentosRF);
         }).collect(Collectors.toList());
 
         return files;

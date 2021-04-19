@@ -1,6 +1,6 @@
 package com.bombeiros.siteinterno.message;
 
-public class ResponseFile {
+public class DocumentoResponseFile {
     
     private long id;
     private String name;
@@ -8,7 +8,7 @@ public class ResponseFile {
     private String type;
     private long size;
 
-    public ResponseFile(Long id, String name, String url, String type, long size) {
+    public DocumentoResponseFile(Long id, String name, String url, String type, long size) {
         this.id = id;
         this.name = name;
         this.url = url;

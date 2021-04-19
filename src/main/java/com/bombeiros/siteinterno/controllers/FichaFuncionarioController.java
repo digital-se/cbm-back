@@ -3,7 +3,7 @@ package com.bombeiros.siteinterno.controllers;
 import java.io.IOException;
 import java.util.List;
 
-import com.bombeiros.siteinterno.message.DocumentResponseFile;
+import com.bombeiros.siteinterno.message.ArtigoResponseFile;
 import com.bombeiros.siteinterno.message.FichaFuncionarioResponseFile;
 import com.bombeiros.siteinterno.models.FichaFuncionario;
 import com.bombeiros.siteinterno.services.FichaFuncionarioServices;
@@ -52,7 +52,7 @@ public class FichaFuncionarioController {
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{ffid}")
-    public ResponseEntity<List<DocumentResponseFile>> listarDocumentos(@PathVariable long id) {
+    public ResponseEntity<List<ArtigoResponseFile>> listarDocumentos(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
     }
 

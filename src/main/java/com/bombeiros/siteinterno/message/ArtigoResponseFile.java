@@ -2,14 +2,14 @@ package com.bombeiros.siteinterno.message;
 
 import java.util.List;
 
-public class DocumentResponseFile {
+public class ArtigoResponseFile {
 
     private long id;
     private String name;
     private int num;
-    private List<ResponseFile> documentos;
+    private List<DocumentoResponseFile> documentos;
 
-    public DocumentResponseFile(long id, String name, int num, List<ResponseFile> documentos) {
+    public ArtigoResponseFile(long id, String name, int num, List<DocumentoResponseFile> documentos) {
         this.id = id;
         this.name = name;
         this.num = num;
@@ -40,11 +40,11 @@ public class DocumentResponseFile {
         this.num = num;
     }
 
-    public List<ResponseFile> getDocumentos() {
+    public List<DocumentoResponseFile> getDocumentos() {
         return documentos;
     }
 
-    public void setDocumentos(List<ResponseFile> documentos) {
+    public void setDocumentos(List<DocumentoResponseFile> documentos) {
         this.documentos = documentos;
     }
 
