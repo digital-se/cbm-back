@@ -25,71 +25,116 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class RelatorioDeProcessoServices {
 
     @Autowired
-    DocumentoRepository documentoRepository;
+    RelatorioDeProcessoRepository artigoRepository;
 
     @Autowired
-    RelatorioDeProcessoRepository rpRepository;
+    DocumentoRepository documentoRepository;
+
+    // SALVAR    
+    @Transactional
+    public Documento salvar(RelatorioDeProcesso artigo, MultipartFile file) throws IOException {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
+
+        artigoRepository.save(artigo);
+        documento.setRelatorioDeProcesso(artigo);
+        documentoRepository.save(documento);
+
+        return documento;
+    }
+
+    // LISTAR DOCUMENTOS TODO
+    public List<DocumentResponseFile> getDocumentos(Long id) {
+
+        List<DocumentResponseFile> files = artigoRepository.findById(id).stream().map(artigo -> {
+
+            List<ResponseFile> documentos = artigo.getDocumentos().stream().map(documento -> {
+
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
+                        .path(documento.getIdDocumento().toString()).toUriString();
+                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                        documento.getType(), documento.getDocumentoData().length);
+
+            }).collect(Collectors.toList());
+
+            return new DocumentResponseFile(artigo.getId(), "", 0, documentos);
+        }).collect(Collectors.toList());
+
+        return files;
+    }
+
+    // LISTAR ARTIGOS TODO
+    public List<RelatorioProcessoResponseFile> getArtigos() {
+        List<RelatorioProcessoResponseFile> files = artigoRepository.findAll().stream().map(artigo -> {
+            return new RelatorioProcessoResponseFile(artigo.getId(), 0);
+        }).collect(Collectors.toList());
+
+        return files;
+    }
+
+
+    //-----------------------------------------------------------
 
     // salvar
     // listarDocumentos (id)
     // listarArtigos (query)
 
-    @Transactional
-    public Documento salvar(RelatorioDeProcesso relatorioProcesso, MultipartFile file) throws IOException {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
+    // @Transactional
+    // public Documento salvar(RelatorioDeProcesso relatorioProcesso, MultipartFile file) throws IOException {
+    //     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    //     Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
 
-        rpRepository.save(relatorioProcesso);
+    //     rpRepository.save(relatorioProcesso);
 
-        documento.setRelatorioDeProcesso(relatorioProcesso);
+    //     documento.setRelatorioDeProcesso(relatorioProcesso);
 
-        return documentoRepository.save(documento);
-    }
+    //     return documentoRepository.save(documento);
+    // }
 
-    public List<RelatorioProcessoResponseFile> listarDocumentos() throws IOException {
-        List<RelatorioProcessoResponseFile> files = rpRepository.findAll().stream().map(relatorio -> {
+    // public List<RelatorioProcessoResponseFile> listarDocumentos() throws IOException {
+    //     List<RelatorioProcessoResponseFile> files = rpRepository.findAll().stream().map(relatorio -> {
 
-            List<ResponseFile> documentos = relatorio.getDocumentos().stream().map(documento -> {
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/documentos/listar/").path(documento.getIdDocumento().toString()).toUriString();
+    //         List<ResponseFile> documentos = relatorio.getDocumentos().stream().map(documento -> {
+    //             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+    //                     .path("/documentos/listar/").path(documento.getIdDocumento().toString()).toUriString();
 
-                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
-                        documento.getType(), documento.getDocumentoData().length);
-            }).collect(Collectors.toList());
+    //             return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+    //                     documento.getType(), documento.getDocumentoData().length);
+    //         }).collect(Collectors.toList());
 
-            return new RelatorioProcessoResponseFile(relatorio.getId(), relatorio.getNum(), documentos);
-        }).collect(Collectors.toList());
-        return files;
-    }
+    //         return new RelatorioProcessoResponseFile(relatorio.getId(), relatorio.getNum(), documentos);
+    //     }).collect(Collectors.toList());
+    //     return files;
+    // }
 
-    public List<DocumentResponseFile> listarArtigos() throws IOException {
-        List<DocumentResponseFile> files = rpRepository.findAll().stream().map(rp -> {
+    // public List<DocumentResponseFile> listarArtigos() throws IOException {
+    //     List<DocumentResponseFile> files = rpRepository.findAll().stream().map(rp -> {
 
-            List<Documento> documentos = rp.getDocumentos();
-            Stream<Documento> documentosStream = documentos.stream();
-            List<ResponseFile> documentosRF = null;
+    //         List<Documento> documentos = rp.getDocumentos();
+    //         Stream<Documento> documentosStream = documentos.stream();
+    //         List<ResponseFile> documentosRF = null;
 
-            documentosRF = documentosStream.map(documento -> {
+    //         documentosRF = documentosStream.map(documento -> {
 
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
-                        .path(documento.getIdDocumento().toString()).toUriString();
+    //             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
+    //                     .path(documento.getIdDocumento().toString()).toUriString();
 
-                // todo
-                return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
-                        documento.getType(), 0/* documento.getDocumentoData().length */);
-            }).collect(Collectors.toList());
+    //             // todo
+    //             return new ResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+    //                     documento.getType(), 0/* documento.getDocumentoData().length */);
+    //         }).collect(Collectors.toList());
 
-            return new DocumentResponseFile(rp.getId(), "", rp.getNum(), documentosRF);
-        }).collect(Collectors.toList());
+    //         return new DocumentResponseFile(rp.getId(), "", rp.getNum(), documentosRF);
+    //     }).collect(Collectors.toList());
 
-        return files;
-    }
+    //     return files;
+    // }
 
-    public Documento getDocumento(Long id) {
-        return documentoRepository.findById(id).get();
-    }
+    // public Documento getDocumento(Long id) {
+    //     return documentoRepository.findById(id).get();
+    // }
 
-    public Stream<Documento> getAllDocumentos() {
-        return documentoRepository.findAll().stream();
-    }
+    // public Stream<Documento> getAllDocumentos() {
+    //     return documentoRepository.findAll().stream();
+    // }
 }
