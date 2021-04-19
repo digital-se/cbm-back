@@ -75,19 +75,27 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- swagger novo -->
 		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		
+		<!-- swagger antigo -->
+		<!-- <dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.10.5</version>
-		</dependency>
+		</dependency> -->
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
+			<artifactId>springfox-swagger-ui-</artifactId>
 			<version>2.10.5</version>
-		</dependency>
+		</dependency> -->
 
-		<!-- swagger antigo -->
+		<!-- swagger antigo antigo -->
 		<!-- <dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
