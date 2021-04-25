@@ -31,6 +31,10 @@ public class BirController {
     @Autowired
     private BirServices artigoServices;
 
+    public BirController(BirServices artigoServices) {
+        this.artigoServices = artigoServices;
+    }
+
     // SALVAR
     @ApiOperation(value = "Cria um BIR e faz o upload de seu documento")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um BIR e fez o upload de seu documento"),

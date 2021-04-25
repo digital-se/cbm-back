@@ -31,6 +31,10 @@ public class FichaFuncionarioController {
     @Autowired
     private FichaFuncionarioServices artigoServices;
 
+    public FichaFuncionarioController(FichaFuncionarioServices artigoServices) {
+        this.artigoServices = artigoServices;
+    }
+
     // SALVAR
     @ApiOperation(value = "Cria uma Ficha de Funcionário e faz o upload de seu documento")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou uma Ficha de Funcionário e fez o upload de seu documento"),

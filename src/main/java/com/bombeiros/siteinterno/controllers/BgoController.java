@@ -31,6 +31,10 @@ public class BgoController {
     @Autowired
     private BgoServices artigoServices;
 
+    public BgoController(BgoServices artigoServices) {
+        this.artigoServices = artigoServices;
+    }
+
     // SALVAR
     @ApiOperation(value = "Cria um BGO e faz o upload de seu documento")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um BGO e fez o upload de seu documento"),

@@ -31,6 +31,10 @@ public class RegistroAntigoController {
         @Autowired
         RegistroAntigoServices artigoServices;
 
+        public RegistroAntigoController(RegistroAntigoServices artigoServices) {
+                this.artigoServices = artigoServices;
+        }
+
         // SALVAR
         @ApiOperation(value = "Cria um Registro Antigo e faz o upload de seu documento")
         @ApiResponses(value = {

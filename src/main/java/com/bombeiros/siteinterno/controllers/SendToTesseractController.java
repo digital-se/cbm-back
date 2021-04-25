@@ -21,6 +21,10 @@ public class SendToTesseractController {
     @Autowired
     private SendToTesseractService tessService;
 
+    public SendToTesseractController(SendToTesseractService tessService) {
+        this.tessService = tessService;
+    }
+
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/sendImage")
     public MultiValueMap<String, String> getFromUrl(@RequestParam(name = "file") MultipartFile file) throws RestClientException, IOException {
