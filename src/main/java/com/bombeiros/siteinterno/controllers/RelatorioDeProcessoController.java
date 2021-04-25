@@ -6,7 +6,6 @@ import java.util.List;
 import com.bombeiros.siteinterno.message.ArtigoResponseFile;
 import com.bombeiros.siteinterno.message.RelatorioProcessoResponseFile;
 import com.bombeiros.siteinterno.models.RelatorioDeProcesso;
-import com.bombeiros.siteinterno.repository.RelatorioDeProcessoRepository;
 import com.bombeiros.siteinterno.services.RelatorioDeProcessoServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +29,11 @@ import io.swagger.annotations.ApiResponses;
 public class RelatorioDeProcessoController {
 
         @Autowired
-        RelatorioDeProcessoRepository relatorioRepository;
-
-        @Autowired
         RelatorioDeProcessoServices artigoServices;
+
+        public RelatorioDeProcessoController(RelatorioDeProcessoServices artigoServices) {
+                this.artigoServices = artigoServices;
+        }
 
         // SALVAR
         @ApiOperation(value = "Cria um Relatorio de processo e faz o upload de seu documento")

@@ -6,7 +6,6 @@ import java.util.List;
 import com.bombeiros.siteinterno.message.ArtigoResponseFile;
 import com.bombeiros.siteinterno.message.RegistroAntigoResponseFile;
 import com.bombeiros.siteinterno.models.RegistroAntigo;
-import com.bombeiros.siteinterno.repository.RegistroAntigoRepository;
 import com.bombeiros.siteinterno.services.RegistroAntigoServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,6 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(value = "/ra")
 public class RegistroAntigoController {
-
-        @Autowired
-        RegistroAntigoRepository registroRepository;
 
         @Autowired
         RegistroAntigoServices artigoServices;
