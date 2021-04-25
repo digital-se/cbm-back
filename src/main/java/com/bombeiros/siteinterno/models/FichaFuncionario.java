@@ -34,7 +34,12 @@ public class FichaFuncionario implements Serializable {
 
 	@OneToMany(mappedBy = "fichaFuncionario", cascade = CascadeType.ALL)
 	private List<Documento> documentos;
-	
+
+	public FichaFuncionario(String nome, int numFicha) {
+		this.nome = nome;
+		this.numFicha = numFicha;
+	}
+
 	public FichaFuncionario() {
 		//do nothing
 	}

@@ -29,6 +29,13 @@ public class RegistroAntigo implements Serializable{
 	@OneToMany(mappedBy = "registroAntigo", cascade = CascadeType.ALL)
 	private List<Documento> documentos;
 	
+	
+
+	public RegistroAntigo(String nome) {
+		this.nome = nome;
+	}
+
+
 	public RegistroAntigo() {
 		//do nothing
 	}

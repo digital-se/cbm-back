@@ -29,6 +29,13 @@ public class RelatorioDeProcesso implements Serializable {
 	@OneToMany(mappedBy = "relatorioDeProcesso", cascade = CascadeType.ALL)
 	private List<Documento> documentos;
 	
+	
+
+	public RelatorioDeProcesso(int numRelatorio) {
+		this.numRelatorio = numRelatorio;
+	}
+
+
 	public RelatorioDeProcesso() {
 		//do nothing
 	}

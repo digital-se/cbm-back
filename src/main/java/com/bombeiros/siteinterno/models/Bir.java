@@ -27,6 +27,11 @@ public class Bir implements Serializable {
 	private int numBir;
 
 
+	public Bir(String nome, int numBir) {
+		this.nome = nome;
+		this.numBir = numBir;
+	}
+
 	@OneToMany(mappedBy = "bir", cascade = CascadeType.ALL)
 	private List<Documento> documentos;
 	
