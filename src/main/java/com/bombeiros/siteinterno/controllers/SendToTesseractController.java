@@ -5,6 +5,8 @@ import java.io.IOException;
 import com.bombeiros.siteinterno.services.SendToTesseractService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +29,9 @@ public class SendToTesseractController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/v1/sendImage")
-    public MultiValueMap<String, String> getFromUrl(@RequestParam(name = "file") MultipartFile file) throws RestClientException, IOException {
-
-        return tessService.send(file);
+    public ResponseEntity<MultiValueMap<String, String>> getFromUrl(@RequestParam(name = "file") MultipartFile file) throws RestClientException, IOException {
+        
+        return  ResponseEntity.status(HttpStatus.OK).body(tessService.send(file));
     }
 
 }
