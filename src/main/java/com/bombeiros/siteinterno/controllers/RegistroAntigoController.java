@@ -41,7 +41,7 @@ public class RegistroAntigoController {
                         @ApiResponse(code = 200, message = "Criou uma Registro Antigo e fez o upload de seu documento"),
                         @ApiResponse(code = 404, message = "Não encontrado"),
                         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-        @PostMapping("/salvar")
+        @PostMapping("/v1/salvar")
         @ResponseBody
         public ResponseEntity<RegistroAntigo> salvar(@RequestPart("artigo") RegistroAntigo artigo,
                         @RequestPart("file") MultipartFile file) throws IOException {
@@ -57,7 +57,7 @@ public class RegistroAntigoController {
                         @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo Registro Antigo"),
                         @ApiResponse(code = 404, message = "Não encontrado"),
                         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-        @GetMapping("/documentos/{raid}")
+        @GetMapping("/v1/documentos/{raid}")
         public ResponseEntity<List<ArtigoResponseFile>> listarDocumentos(@PathVariable long id) {
                 return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
         }
@@ -67,7 +67,7 @@ public class RegistroAntigoController {
         @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Registro Antigo"),
                         @ApiResponse(code = 404, message = "Não encontrado"),
                         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-        @GetMapping("/artigos")
+        @GetMapping("/v1/artigos")
         public ResponseEntity<List<RegistroAntigoResponseFile>> listarArtigos() { // adicionar parametro string para
                                                                                   // query
                                                                                   // futuramente

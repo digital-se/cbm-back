@@ -40,7 +40,7 @@ public class BgaController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um BGA e fez o upload de seu documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping("/salvar")
+    @PostMapping("/v1/salvar")
     @ResponseBody
     public ResponseEntity<Bga> salvar(@RequestPart("artigo") Bga artigo, @RequestPart("file") MultipartFile file)
             throws IOException {
@@ -55,7 +55,7 @@ public class BgaController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo BGA"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/documentos/{bgaid}")
+    @GetMapping("/v1/documentos/{bgaid}")
     public ResponseEntity<List<ArtigoResponseFile>> listarDocumentos(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
     }
@@ -65,13 +65,13 @@ public class BgaController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de BGA's"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/artigos")
+    @GetMapping("/v1/artigos")
     public ResponseEntity<List<BgaResponseFile>> listarArtigos() { //adicionar parametro string para query futuramente
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getArtigos());
     }
 
     // LISTAR TUDO | PARA TESTES, REMOVER FUTURAMENTE
-    @GetMapping("/tudo")
+    @GetMapping("/v1/tudo")
     public ResponseEntity<List<ArtigoResponseFile>> listarTudo() {
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getTudo());
 

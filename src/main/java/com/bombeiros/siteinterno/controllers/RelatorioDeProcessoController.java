@@ -41,7 +41,7 @@ public class RelatorioDeProcessoController {
                         @ApiResponse(code = 200, message = "Criou uma Relatorio de processo e fez o upload de seu documento"),
                         @ApiResponse(code = 404, message = "Não encontrado"),
                         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-        @PostMapping("/salvar")
+        @PostMapping("/v1/salvar")
         @ResponseBody
         public ResponseEntity<RelatorioDeProcesso> salvar(@RequestPart("artigo") RelatorioDeProcesso artigo,
                         @RequestPart("file") MultipartFile file) throws IOException {
@@ -57,7 +57,7 @@ public class RelatorioDeProcessoController {
                         @ApiResponse(code = 200, message = "Retornou uma lista de documentos de um respectivo Relatorio de processo"),
                         @ApiResponse(code = 404, message = "Não encontrado"),
                         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-        @GetMapping("/documentos/{rpid}")
+        @GetMapping("/v1/documentos/{rpid}")
         public ResponseEntity<List<ArtigoResponseFile>> listarDocumentos(@PathVariable long id) {
                 return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
         }
@@ -67,7 +67,7 @@ public class RelatorioDeProcessoController {
         @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Relatorio de processo"),
                         @ApiResponse(code = 404, message = "Não encontrado"),
                         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-        @GetMapping("/artigos")
+        @GetMapping("/v1/artigos")
         public ResponseEntity<List<RelatorioProcessoResponseFile>> listarArtigos() { // adicionar parametro string para
                                                                                   // query
                                                                                   // futuramente

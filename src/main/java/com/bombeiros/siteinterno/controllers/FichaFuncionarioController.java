@@ -40,7 +40,7 @@ public class FichaFuncionarioController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou uma Ficha de Funcionário e fez o upload de seu documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping("/salvar")
+    @PostMapping("/v1/salvar")
     @ResponseBody
     public ResponseEntity<FichaFuncionario> salvar(@RequestPart("artigo") FichaFuncionario artigo, @RequestPart("file") MultipartFile file)
             throws IOException {
@@ -55,7 +55,7 @@ public class FichaFuncionarioController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos de uma respectiva Ficha de Funcionário"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/documentos/{ffid}")
+    @GetMapping("/v1/documentos/{ffid}")
     public ResponseEntity<List<ArtigoResponseFile>> listarDocumentos(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
     }
@@ -65,7 +65,7 @@ public class FichaFuncionarioController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de Ficha de Funcionário"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/artigos")
+    @GetMapping("/v1/artigos")
     public ResponseEntity<List<FichaFuncionarioResponseFile>> listarArtigos() { // adicionar parametro string para query futuramente
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getArtigos());
     }
