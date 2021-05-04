@@ -3,8 +3,8 @@ package com.bombeiros.siteinterno.controllers;
 import java.io.IOException;
 import java.util.List;
 
-import com.bombeiros.siteinterno.message.BgaResponseFile;
 import com.bombeiros.siteinterno.message.ArtigoResponseFile;
+import com.bombeiros.siteinterno.message.BgaResponseFile;
 import com.bombeiros.siteinterno.models.Bga;
 import com.bombeiros.siteinterno.services.BgaServices;
 
@@ -47,7 +47,7 @@ public class BgaController {
 
         artigoServices.salvar(artigo, file);
 
-        return ResponseEntity.status(HttpStatus.OK).body(artigo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(artigo);
     }
 
     // LISTAR DOCUMENTOS

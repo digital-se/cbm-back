@@ -48,7 +48,7 @@ public class RegistroAntigoController {
 
                 artigoServices.salvar(artigo, file);
 
-                return ResponseEntity.status(HttpStatus.OK).body(artigo);
+                return ResponseEntity.status(HttpStatus.CREATED).body(artigo);
         }
 
         // LISTAR DOCUMENTOS
