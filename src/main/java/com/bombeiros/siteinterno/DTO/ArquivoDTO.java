@@ -7,7 +7,8 @@ public class ArquivoDTO {
     private String url;
     private String type;
     private long size;
-
+    
+    //VERIFICAR COM O MODEL
     public ArquivoDTO(Long id, String name, String url, String type, long size) {
         this.id = id;
         this.name = name;
