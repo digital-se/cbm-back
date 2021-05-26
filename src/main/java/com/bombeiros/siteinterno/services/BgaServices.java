@@ -7,13 +7,11 @@ import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
 
-import com.bombeiros.siteinterno.message.ArtigoResponseFile;
-import com.bombeiros.siteinterno.message.BgaResponseFile;
-import com.bombeiros.siteinterno.message.DocumentoResponseFile;
+import com.bombeiros.siteinterno.DTO.ArquivoDTO;
+import com.bombeiros.siteinterno.DTO.DocumentoDTO;
+import com.bombeiros.siteinterno.models.Arquivo;
 import com.bombeiros.siteinterno.models.Bga;
-import com.bombeiros.siteinterno.models.Documento;
 import com.bombeiros.siteinterno.repository.BgaRepository;
-import com.bombeiros.siteinterno.repository.DocumentoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
-public class BgaServices {
+public class BgaServices implements IServices{
 
     // use constructor injection on documentRepository!!!!
     @Autowired
@@ -36,9 +34,38 @@ public class BgaServices {
     // No application.properties você definirá o tamanho máximo que uma documento
     // pode ter para ser salva no banco de dados
 
+    //------ V2 ------
+
+    @Override
+    public ArquivoDTO salvar(DocumentoDTO artigo, MultipartFile file) throws IOException {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        Arquivo documento = new Arquivo(fileName, file.getContentType(), file.getBytes());
+
+        artigoRepository.save((Bga) artigo);
+        documento.setBga(artigo);
+        documentoRepository.save(documento);
+
+        return documento
+    }
+
+    @Override
+    public List<DocumentoResponseFile> getDocumentos(Long id) throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<ArtigoResponseFile> getArtigos() throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+
+    //------ V1 ------
+
     // SALVAR    
     @Transactional
-    public Documento salvar(Bga artigo, MultipartFile file) throws IOException {
+    public Documento salvarV1(Bga artigo, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
 
@@ -49,23 +76,8 @@ public class BgaServices {
         return documento;
     }
 
-     // LISTAR DOCUMENTOS DE UM ARTIGO
-     public List<DocumentoResponseFile> getDocumentosDeUmArtigo(Long id) {
-
-        List<DocumentoResponseFile> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
-
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
-                    .path(documento.getIdDocumento().toString()).toUriString();
-            return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
-                    documento.getType(), documento.getDocumentoData().length);
-
-        }).collect(Collectors.toList());
-
-        return responseFiles;
-    }
-
     // LISTAR DOCUMENTOS
-    public List<ArtigoResponseFile> getDocumentos(Long id) {
+    public List<ArtigoResponseFile> getDocumentosV1(Long id) {
 
         List<ArtigoResponseFile> files = artigoRepository.findById(id).stream().map(artigo -> {
 
@@ -85,7 +97,7 @@ public class BgaServices {
     }
 
     // LISTAR ARTIGOS
-    public List<BgaResponseFile> getArtigos() {
+    public List<BgaResponseFile> getArtigosV1() {
         List<BgaResponseFile> files = artigoRepository.findAll().stream().map(artigo -> {
             return new BgaResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum());
         }).collect(Collectors.toList());
@@ -93,8 +105,20 @@ public class BgaServices {
         return files;
     }
 
-    
+    // LISTAR DOCUMENTOS DE UM ARTIGO
+    public List<DocumentoResponseFile> getDocumentosDeUmArtigoV1(Long id) {
 
+        List<DocumentoResponseFile> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
+
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
+                    .path(documento.getIdDocumento().toString()).toUriString();
+            return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                    documento.getType(), documento.getDocumentoData().length);
+
+        }).collect(Collectors.toList());
+
+        return responseFiles;
+    }
 
     //------ EXTRAS TEMPORARIOS ------
 
@@ -127,6 +151,10 @@ public class BgaServices {
 
         return files;
     }
+
+    
+
+    
 
     //Necessario no documentoUploadController por algum motivo
     // public Documento salvarDocumento(MultipartFile file) throws IOException {

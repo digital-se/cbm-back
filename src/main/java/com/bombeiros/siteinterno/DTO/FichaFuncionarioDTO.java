@@ -1,24 +1,19 @@
-package com.bombeiros.siteinterno.message;
+package com.bombeiros.siteinterno.DTO;
 
 import java.sql.Date;
 import java.util.List;
 
-public class FichaFuncionarioResponseFile {
-    
-    private long idFichaFuncionario;
-	
-	private String nome;
-	
-	private int numFicha;
-	
-	private Date dataInclusao;
-	
-    private Date dataExclusao;
-    
-    private List<DocumentoResponseFile> documentos;
+public class FichaFuncionarioDTO {
 
-    public FichaFuncionarioResponseFile(long idFichaFuncionario, String nome, int numFicha, Date dataInclusao,
-            Date dataExclusao, List<DocumentoResponseFile> documentos) {
+    private long idFichaFuncionario;
+    private String nome;
+    private int numFicha;
+    private Date dataInclusao;
+    private Date dataExclusao;
+    private List<ArquivoDTO> documentos;
+
+    public FichaFuncionarioDTO(long idFichaFuncionario, String nome, int numFicha, Date dataInclusao,
+            Date dataExclusao, List<ArquivoDTO> documentos) {
         this.idFichaFuncionario = idFichaFuncionario;
         this.nome = nome;
         this.numFicha = numFicha;
@@ -27,7 +22,7 @@ public class FichaFuncionarioResponseFile {
         this.documentos = documentos;
     }
 
-    public FichaFuncionarioResponseFile(long idFichaFuncionario, String nome, int numFicha, Date dataInclusao,
+    public FichaFuncionarioDTO(long idFichaFuncionario, String nome, int numFicha, Date dataInclusao,
             Date dataExclusao) {
         this.idFichaFuncionario = idFichaFuncionario;
         this.nome = nome;
@@ -76,13 +71,12 @@ public class FichaFuncionarioResponseFile {
         this.dataExclusao = dataExclusao;
     }
 
-    public List<DocumentoResponseFile> getDocumentos() {
+    public List<ArquivoDTO> getDocumentos() {
         return documentos;
     }
 
-    public void setDocumentos(List<DocumentoResponseFile> documentos) {
+    public void setDocumentos(List<ArquivoDTO> documentos) {
         this.documentos = documentos;
     }
 
-    
 }

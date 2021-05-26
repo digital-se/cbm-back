@@ -12,38 +12,32 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="FICHA_FUNCIONARIO")
+@Table(name = "FICHA_FUNCIONARIO")
 public class FichaFuncionario implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idFichaFuncionario;
-	
 	private String nome;
-	
 	private int numFicha;
-	
 	private Date dataInclusao;
-	
 	private Date dataExclusao;
 
 	@OneToMany(mappedBy = "fichaFuncionario", cascade = CascadeType.ALL)
-	private List<Documento> documentos;
+	private List<Arquivo> documentos;
+
+	public FichaFuncionario() {
+		// do nothing
+	}
 
 	public FichaFuncionario(String nome, int numFicha) {
 		this.nome = nome;
 		this.numFicha = numFicha;
 	}
 
-	public FichaFuncionario() {
-		//do nothing
-	}
-	
 	public String getNome() {
 		return nome;
 	}
@@ -84,11 +78,11 @@ public class FichaFuncionario implements Serializable {
 		this.idFichaFuncionario = idFichaFuncionario;
 	}
 
-	public List<Documento> getDocumentos() {
+	public List<Arquivo> getDocumentos() {
 		return documentos;
 	}
 
-	public void setDocumentos(List<Documento> documentos) {
+	public void setDocumentos(List<Arquivo> documentos) {
 		this.documentos = documentos;
 	}
 

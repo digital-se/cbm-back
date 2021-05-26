@@ -1,14 +1,14 @@
-package com.bombeiros.siteinterno.message;
+package com.bombeiros.siteinterno.DTO;
 
-public class DocumentoResponseFile {
-    
+public class ArquivoDTO {
+
     private long id;
     private String name;
     private String url;
     private String type;
     private long size;
 
-    public DocumentoResponseFile(Long id, String name, String url, String type, long size) {
+    public ArquivoDTO(Long id, String name, String url, String type, long size) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -56,6 +56,4 @@ public class DocumentoResponseFile {
         this.id = id;
     }
 
-    
-    
 }

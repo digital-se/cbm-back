@@ -11,34 +11,32 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="BIR")
+@Table(name = "BIR")
 public class Bir implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idBir;
-	
+
 	private String nome;
-	
+
 	private int numBir;
 
+	@OneToMany(mappedBy = "bir", cascade = CascadeType.ALL)
+	private List<Arquivo> documentos;
+
+	public Bir() {
+		// do nothing
+	}
 
 	public Bir(String nome, int numBir) {
 		this.nome = nome;
 		this.numBir = numBir;
 	}
 
-	@OneToMany(mappedBy = "bir", cascade = CascadeType.ALL)
-	private List<Documento> documentos;
-	
-	public Bir() {
-		//do nothing
-	}
-	
 	public String getNome() {
 		return nome;
 	}
@@ -63,12 +61,12 @@ public class Bir implements Serializable {
 		this.idBir = idBir;
 	}
 
-	public List<Documento> getDocumentos() {
+	public List<Arquivo> getDocumentos() {
 		return documentos;
 	}
 
-	public void setDocumentos(List<Documento> documentos) {
+	public void setDocumentos(List<Arquivo> documentos) {
 		this.documentos = documentos;
 	}
-	
+
 }

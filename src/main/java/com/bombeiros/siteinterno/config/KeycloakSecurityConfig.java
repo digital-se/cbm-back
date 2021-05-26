@@ -26,13 +26,13 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         super.configure(http);
         http.authorizeRequests()
             .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui","/configuration/security", "/swagger-ui/*").permitAll() //testes
-            .antMatchers("/bga/*").permitAll() //testes
+            .antMatchers("/bga/*").hasAnyRole("user","admin")
             .antMatchers("/bgo/*").hasAnyRole("user","admin")
             .antMatchers("/bir/*").hasAnyRole("user","admin")
             .antMatchers("/ff/*").hasAnyRole("user","admin")
             .antMatchers("/ra/*").hasAnyRole("user","admin")
             .antMatchers("/rp/*").hasAnyRole("user","admin")
-            .anyRequest().denyAll();
+            .anyRequest().permitAll();
             
         //http.csrf().disable();
     }

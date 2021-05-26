@@ -1,7 +1,5 @@
 package com.bombeiros.siteinterno.models;
 
-import java.lang.reflect.Field;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,18 +8,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
-
 @Entity
-public class Documento {
-        
+public class Arquivo {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idDocumento;
 
     private String name;
 
     private String type;
-    
+
     @Lob
     private byte[] documentoData;
 
@@ -49,23 +46,28 @@ public class Documento {
     @JoinColumn(name = "id_relatorio_de_processo", referencedColumnName = "idRelatorioDeProcesso")
     private RelatorioDeProcesso relatorioDeProcesso;
 
-    
-    public Documento() {
+    public Arquivo() {
 
     }
-    
+
+    public Arquivo(String name, String type, byte[] documentoData) {
+        this.name = name;
+        this.type = type;
+        this.documentoData = documentoData;
+    }
+
     public Long getIdDocumento() {
         return idDocumento;
     }
-    
+
     public void setIdDocumento(Long idDocumento) {
         this.idDocumento = idDocumento;
     }
-    
+
     public byte[] getDocumentoData() {
         return documentoData;
     }
-    
+
     public void setDocumentoData(byte[] documentoData) {
         this.documentoData = documentoData;
     }
@@ -84,12 +86,6 @@ public class Documento {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Documento(String name, String type, byte[] documentoData) {
-        this.name = name;
-        this.type = type;
-        this.documentoData = documentoData;
     }
 
     public Bga getBga() {
@@ -139,5 +135,5 @@ public class Documento {
     public void setRelatorioDeProcesso(RelatorioDeProcesso relatorioDeProcesso) {
         this.relatorioDeProcesso = relatorioDeProcesso;
     }
-    
+
 }

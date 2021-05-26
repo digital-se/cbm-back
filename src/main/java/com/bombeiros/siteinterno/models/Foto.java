@@ -8,15 +8,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+//This class still incomplete
 @Entity
 public class Foto {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long idFoto;
-
     private String name;
-
     private String type;
     
     @Lob

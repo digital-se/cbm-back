@@ -1,15 +1,15 @@
-package com.bombeiros.siteinterno.message;
+package com.bombeiros.siteinterno.DTO;
 
 import java.util.List;
 
-public class ArtigoResponseFile {
+public class DocumentoDTO {
 
     private long id;
     private String name;
     private int num;
-    private List<DocumentoResponseFile> documentos;
+    private List<ArquivoDTO> documentos;
 
-    public ArtigoResponseFile(long id, String name, int num, List<DocumentoResponseFile> documentos) {
+    public DocumentoDTO(long id, String name, int num, List<ArquivoDTO> documentos) {
         this.id = id;
         this.name = name;
         this.num = num;
@@ -40,11 +40,11 @@ public class ArtigoResponseFile {
         this.num = num;
     }
 
-    public List<DocumentoResponseFile> getDocumentos() {
+    public List<ArquivoDTO> getDocumentos() {
         return documentos;
     }
 
-    public void setDocumentos(List<DocumentoResponseFile> documentos) {
+    public void setDocumentos(List<ArquivoDTO> documentos) {
         this.documentos = documentos;
     }
 

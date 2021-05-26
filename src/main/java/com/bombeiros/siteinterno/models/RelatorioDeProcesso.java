@@ -11,35 +11,28 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="RELATORIO_DE_PROCESSO")
+@Table(name = "RELATORIO_DE_PROCESSO")
 public class RelatorioDeProcesso implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
-
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idRelatorioDeProcesso;
-	
+
 	private int numRelatorio;
-	
-	
+
 	@OneToMany(mappedBy = "relatorioDeProcesso", cascade = CascadeType.ALL)
-	private List<Documento> documentos;
-	
-	
+	private List<Arquivo> documentos;
+
+	public RelatorioDeProcesso() {
+		// do nothing
+	}
 
 	public RelatorioDeProcesso(int numRelatorio) {
 		this.numRelatorio = numRelatorio;
 	}
-
-
-	public RelatorioDeProcesso() {
-		//do nothing
-	}
-	
 
 	public int getNum() {
 		return numRelatorio;
@@ -57,13 +50,12 @@ public class RelatorioDeProcesso implements Serializable {
 		this.idRelatorioDeProcesso = idRelatorioDeProcesso;
 	}
 
-	public List<Documento> getDocumentos() {
+	public List<Arquivo> getDocumentos() {
 		return documentos;
 	}
 
-	public void setDocumentos(List<Documento> documentos) {
+	public void setDocumentos(List<Arquivo> documentos) {
 		this.documentos = documentos;
 	}
-	
-	
+
 }

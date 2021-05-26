@@ -11,35 +11,28 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="REGISTRO_ANTIGO")
-public class RegistroAntigo implements Serializable{
-	
+@Table(name = "REGISTRO_ANTIGO")
+public class RegistroAntigo implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
-
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idRegistroAntigo;
 
 	private String nome;
 
-
 	@OneToMany(mappedBy = "registroAntigo", cascade = CascadeType.ALL)
-	private List<Documento> documentos;
-	
-	
+	private List<Arquivo> documentos;
+
+	public RegistroAntigo() {
+		// do nothing
+	}
 
 	public RegistroAntigo(String nome) {
 		this.nome = nome;
 	}
-
-
-	public RegistroAntigo() {
-		//do nothing
-	}
-	
 
 	public String getNome() {
 		return nome;
@@ -49,7 +42,6 @@ public class RegistroAntigo implements Serializable{
 		this.nome = nome;
 	}
 
-
 	public long getId() {
 		return idRegistroAntigo;
 	}
@@ -58,13 +50,12 @@ public class RegistroAntigo implements Serializable{
 		this.idRegistroAntigo = idRegistroAntigo;
 	}
 
-	public List<Documento> getDocumentos() {
+	public List<Arquivo> getDocumentos() {
 		return documentos;
 	}
 
-	public void setDocumentos(List<Documento> documentos) {
+	public void setDocumentos(List<Arquivo> documentos) {
 		this.documentos = documentos;
 	}
 
-	
 }

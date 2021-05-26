@@ -1,14 +1,22 @@
-package com.bombeiros.siteinterno.message;
+package com.bombeiros.siteinterno.DTO;
 
-public class BgoResponseFile {
-    
+import java.util.List;
+
+public class BgoDTO {
+
     private long id_bgo;
-	
-	private String nome;
-	
+    private String nome;
     private int num_bgo;
+    private List<ArquivoDTO> documentos;
 
-    public BgoResponseFile(long id_bgo, String nome, int num_bgo) {
+    public BgoDTO(long id_bgo, String nome, int num_bgo, List<ArquivoDTO> documentos) {
+        this.id_bgo = id_bgo;
+        this.nome = nome;
+        this.num_bgo = num_bgo;
+        this.documentos = documentos;
+    }
+
+    public BgoDTO(long id_bgo, String nome, int num_bgo) {
         this.id_bgo = id_bgo;
         this.nome = nome;
         this.num_bgo = num_bgo;
@@ -37,6 +45,5 @@ public class BgoResponseFile {
     public void setNum_bgo(int num_bgo) {
         this.num_bgo = num_bgo;
     }
-    
-    
+
 }

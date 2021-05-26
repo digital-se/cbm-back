@@ -13,26 +13,31 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="BGA")
+@Table(name = "BGA")
 public class Bga implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idBga;
-	
+
 	@Column
 	private String nome;
-	
+
 	@Column
 	private int numBga;
 
 	@OneToMany(mappedBy = "bga", cascade = CascadeType.ALL)
-	private List<Documento> documentos;
-	
+	private List<Arquivo> documentos;
+
 	public Bga() {
-		//do nothing
+		// do nothing
+	}
+
+	public Bga(String nome, int numBga) {
+		this.nome = nome;
+		this.numBga = numBga;
 	}
 
 	public String getNome() {
@@ -58,17 +63,13 @@ public class Bga implements Serializable {
 	public void setId(long idBga) {
 		this.idBga = idBga;
 	}
-	public Bga(String nome, int numBga) {
-		this.nome = nome;
-		this.numBga = numBga;
-	}
 
-	public List<Documento> getDocumentos() {
+	public List<Arquivo> getDocumentos() {
 		return documentos;
 	}
 
-	public void setDocumentos(List<Documento> documentos) {
+	public void setDocumentos(List<Arquivo> documentos) {
 		this.documentos = documentos;
 	}
-	
+
 }
