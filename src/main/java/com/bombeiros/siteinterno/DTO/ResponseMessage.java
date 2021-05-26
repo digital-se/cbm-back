@@ -1,7 +1,7 @@
-package com.bombeiros.siteinterno.message;
+package com.bombeiros.siteinterno.DTO;
 
 public class ResponseMessage {
-    
+
     private String message;
 
     public ResponseMessage(String message) {
@@ -16,5 +16,4 @@ public class ResponseMessage {
         this.message = message;
     }
 
-    
 }

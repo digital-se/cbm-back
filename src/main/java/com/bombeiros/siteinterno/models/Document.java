@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,34 +12,34 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="BIR")
-public class Bir implements Serializable {
+@Table(name = "DOCUMENTOS")
+public class Document implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long idBir;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+
+	@Column
 	private String nome;
-	
-	private int numBir;
 
+	@Column
+	private int num;
 
-	public Bir(String nome, int numBir) {
+	@OneToMany(mappedBy = "documentos", cascade = CascadeType.ALL)
+	private List<Arquivo> documentos;
+
+	public Document() {
+		// do nothing
+	}
+
+	public Document(String nome, int num) {
 		this.nome = nome;
-		this.numBir = numBir;
+		this.num = num;
 	}
 
-	@OneToMany(mappedBy = "bir", cascade = CascadeType.ALL)
-	private List<Documento> documentos;
-	
-	public Bir() {
-		//do nothing
-	}
-	
 	public String getNome() {
 		return nome;
 	}
@@ -48,27 +49,27 @@ public class Bir implements Serializable {
 	}
 
 	public int getNum() {
-		return numBir;
+		return num;
 	}
 
-	public void setNum(int numBir) {
-		this.numBir = numBir;
+	public void setNum(int num) {
+		this.num = num;
 	}
 
 	public long getId() {
-		return idBir;
+		return id;
 	}
 
-	public void setId(long idBir) {
-		this.idBir = idBir;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public List<Documento> getDocumentos() {
+	public List<Arquivo> getDocumentos() {
 		return documentos;
 	}
 
-	public void setDocumentos(List<Documento> documentos) {
+	public void setDocumentos(List<Arquivo> documentos) {
 		this.documentos = documentos;
 	}
-	
+
 }

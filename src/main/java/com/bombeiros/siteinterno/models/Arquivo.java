@@ -1,7 +1,5 @@
 package com.bombeiros.siteinterno.models;
 
-import java.lang.reflect.Field;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,24 +8,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
-
 @Entity
-public class Documento {
-        
+public class Arquivo {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idDocumento;
 
     private String name;
 
     private String type;
-    
+
     @Lob
     private byte[] documentoData;
 
     @ManyToOne
     @JoinColumn(name = "id_bga", referencedColumnName = "idBga")
-    private Bga bga;
+    private Document bga;
 
     @ManyToOne
     @JoinColumn(name = "id_bgo", referencedColumnName = "idBgo")
@@ -49,23 +46,28 @@ public class Documento {
     @JoinColumn(name = "id_relatorio_de_processo", referencedColumnName = "idRelatorioDeProcesso")
     private RelatorioDeProcesso relatorioDeProcesso;
 
-    
-    public Documento() {
+    public Arquivo() {
 
     }
-    
+
+    public Arquivo(String name, String type, byte[] documentoData) {
+        this.name = name;
+        this.type = type;
+        this.documentoData = documentoData;
+    }
+
     public Long getIdDocumento() {
         return idDocumento;
     }
-    
+
     public void setIdDocumento(Long idDocumento) {
         this.idDocumento = idDocumento;
     }
-    
+
     public byte[] getDocumentoData() {
         return documentoData;
     }
-    
+
     public void setDocumentoData(byte[] documentoData) {
         this.documentoData = documentoData;
     }
@@ -86,17 +88,11 @@ public class Documento {
         this.type = type;
     }
 
-    public Documento(String name, String type, byte[] documentoData) {
-        this.name = name;
-        this.type = type;
-        this.documentoData = documentoData;
-    }
-
-    public Bga getBga() {
+    public Document getBga() {
         return bga;
     }
 
-    public void setBga(Bga bga) {
+    public void setBga(Document bga) {
         this.bga = bga;
     }
 
@@ -139,5 +135,5 @@ public class Documento {
     public void setRelatorioDeProcesso(RelatorioDeProcesso relatorioDeProcesso) {
         this.relatorioDeProcesso = relatorioDeProcesso;
     }
-    
+
 }

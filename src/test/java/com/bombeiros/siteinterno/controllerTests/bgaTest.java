@@ -7,11 +7,11 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bombeiros.siteinterno.controllers.BgaController;
+import com.bombeiros.siteinterno.controllers.DocumentController;
 import com.bombeiros.siteinterno.message.ArtigoResponseFile;
 import com.bombeiros.siteinterno.message.BgaResponseFile;
-import com.bombeiros.siteinterno.models.Bga;
-import com.bombeiros.siteinterno.models.Documento;
+import com.bombeiros.siteinterno.models.Document;
+import com.bombeiros.siteinterno.models.Document;
 import com.bombeiros.siteinterno.services.BgaServices;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ import org.springframework.mock.web.MockMultipartFile;
 @AutoConfigureMockMvc
 public class bgaTest {
  
-    private BgaController bgaController;
+    private DocumentController bgaController;
 
     @Mock
     private BgaServices bgaServices;
@@ -41,15 +41,15 @@ public class bgaTest {
     @BeforeEach
     public void init() {
         bgaServices = Mockito.mock(BgaServices.class);
-        bgaController = new BgaController(bgaServices);
+        bgaController = new DocumentController(bgaServices);
       }
     
     
     @Test
 	void caseSalvar() throws Exception {
-        Bga bga = new Bga("a", 123);
+        Document bga = new Document("a", 123);
         MockMultipartFile mmf = new MockMultipartFile("file", new byte[0]);
-        when(bgaServices.salvar(null, null)).thenReturn(new Documento("file", "jpg", new byte[0]));
+        when(bgaServices.salvar(null, null)).thenReturn(new Document("file", "jpg", new byte[0]));
         assertEquals(HttpStatus.OK, bgaController.salvar(bga, mmf).getStatusCode());
         verify(bgaServices).salvar(bga, mmf);
 			// Documento imagem = new Documento();

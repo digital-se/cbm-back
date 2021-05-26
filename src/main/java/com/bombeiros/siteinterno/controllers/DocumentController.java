@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.bombeiros.siteinterno.message.ArtigoResponseFile;
 import com.bombeiros.siteinterno.message.BgaResponseFile;
-import com.bombeiros.siteinterno.models.Bga;
+import com.bombeiros.siteinterno.models.Document;
 import com.bombeiros.siteinterno.services.BgaServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,12 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping(value = "/bga")
-public class BgaController {
+public class DocumentController {
 
     @Autowired
     private BgaServices artigoServices;
 
-    public BgaController(BgaServices artigoServices) {
+    public DocumentController(BgaServices artigoServices) {
         this.artigoServices = artigoServices;
     }
 
@@ -42,7 +42,7 @@ public class BgaController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping("/v1/salvar")
     @ResponseBody
-    public ResponseEntity<Bga> salvar(@RequestPart("artigo") Bga artigo, @RequestPart("file") MultipartFile file)
+    public ResponseEntity<Document> salvar(@RequestPart("artigo") Document artigo, @RequestPart("file") MultipartFile file)
             throws IOException {
 
         artigoServices.salvar(artigo, file);
