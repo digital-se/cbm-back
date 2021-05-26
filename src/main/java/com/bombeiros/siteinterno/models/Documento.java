@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "DOCUMENTOS")
-public class Document implements Serializable {
+public class Documento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,12 +37,12 @@ public class Document implements Serializable {
 	@OneToMany(mappedBy = "arquivo", cascade = CascadeType.ALL)
 	private List<Arquivo> arquivos;
 
-	public Document() {
+	public Documento() {
 		this.visivel = false;
 	}
 
 	//Bga, bgo, bir, registro
-	public Document(String numero, String tipo, String nome) {
+	public Documento(String numero, String tipo, String nome) {
 		this();
 		this.numero = numero;
 		this.tipo = tipo;
@@ -50,14 +50,14 @@ public class Document implements Serializable {
 	}
 
 	//relatorio
-	public Document(String numero, String tipo) {
+	public Documento(String numero, String tipo) {
 		this();
 		this.numero = numero;
 		this.tipo = tipo;
 	}
 
 	//ficha
-	public Document(String numero, String tipo, String nome, Date dataInclusao, Date dataExclusao) {
+	public Documento(String numero, String tipo, String nome, Date dataInclusao, Date dataExclusao) {
 		this();
 		this.numero = numero;
 		this.tipo = tipo;

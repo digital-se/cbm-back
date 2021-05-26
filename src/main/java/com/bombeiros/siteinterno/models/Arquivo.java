@@ -1,5 +1,6 @@
 package com.bombeiros.siteinterno.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,24 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "ARQUIVOS")
 public class Arquivo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @Column
     private String nome;
-
+    @Column
     private String tipo;
-
     @Lob
     private byte[] arquivoData;
 
     @ManyToOne
     @JoinColumn(name = "id_documento", referencedColumnName = "idDocumento")
-    private Document documento;
+    private Documento documento;
 
     public Arquivo() {
 
@@ -68,11 +70,11 @@ public class Arquivo {
         this.arquivoData = arquivoData;
     }
 
-    public Document getDocumento() {
+    public Documento getDocumento() {
         return documento;
     }
 
-    public void setDocumento(Document documento) {
+    public void setDocumento(Documento documento) {
         this.documento = documento;
     }
 
