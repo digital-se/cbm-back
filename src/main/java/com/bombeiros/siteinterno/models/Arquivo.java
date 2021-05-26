@@ -13,127 +13,69 @@ public class Arquivo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idDocumento;
+    private Long id;
 
-    private String name;
+    private String nome;
 
-    private String type;
+    private String tipo;
 
     @Lob
-    private byte[] documentoData;
+    private byte[] arquivoData;
 
     @ManyToOne
-    @JoinColumn(name = "id_bga", referencedColumnName = "idBga")
-    private Document bga;
-
-    @ManyToOne
-    @JoinColumn(name = "id_bgo", referencedColumnName = "idBgo")
-    private Bgo bgo;
-
-    @ManyToOne
-    @JoinColumn(name = "id_bir", referencedColumnName = "idBir")
-    private Bir bir;
-
-    @ManyToOne
-    @JoinColumn(name = "id_ficha_funcionario", referencedColumnName = "idFichaFuncionario")
-    private FichaFuncionario fichaFuncionario;
-
-    @ManyToOne
-    @JoinColumn(name = "id_registro_antigo", referencedColumnName = "idRegistroAntigo")
-    private RegistroAntigo registroAntigo;
-
-    @ManyToOne
-    @JoinColumn(name = "id_relatorio_de_processo", referencedColumnName = "idRelatorioDeProcesso")
-    private RelatorioDeProcesso relatorioDeProcesso;
+    @JoinColumn(name = "id_documento", referencedColumnName = "idDocumento")
+    private Document documento;
 
     public Arquivo() {
 
     }
 
-    public Arquivo(String name, String type, byte[] documentoData) {
-        this.name = name;
-        this.type = type;
-        this.documentoData = documentoData;
+    public Arquivo(String name, String type, byte[] arquivoData) {
+        this.nome = name;
+        this.tipo = type;
+        this.arquivoData = arquivoData;
     }
 
-    public Long getIdDocumento() {
-        return idDocumento;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdDocumento(Long idDocumento) {
-        this.idDocumento = idDocumento;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public byte[] getDocumentoData() {
-        return documentoData;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDocumentoData(byte[] documentoData) {
-        this.documentoData = documentoData;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getName() {
-        return name;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public String getType() {
-        return type;
+    public byte[] getArquivoData() {
+        return arquivoData;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setArquivoData(byte[] arquivoData) {
+        this.arquivoData = arquivoData;
     }
 
-    public Document getBga() {
-        return bga;
+    public Document getDocumento() {
+        return documento;
     }
 
-    public void setBga(Document bga) {
-        this.bga = bga;
+    public void setDocumento(Document documento) {
+        this.documento = documento;
     }
 
-    public Bgo getBgo() {
-        return bgo;
-    }
-
-    public void setBgo(Bgo bgo) {
-        this.bgo = bgo;
-    }
-
-    public Bir getBir() {
-        return bir;
-    }
-
-    public void setBir(Bir bir) {
-        this.bir = bir;
-    }
-
-    public FichaFuncionario getFichaFuncionario() {
-        return fichaFuncionario;
-    }
-
-    public void setFichaFuncionario(FichaFuncionario fichaFuncionario) {
-        this.fichaFuncionario = fichaFuncionario;
-    }
-
-    public RegistroAntigo getRegistroAntigo() {
-        return registroAntigo;
-    }
-
-    public void setRegistroAntigo(RegistroAntigo registroAntigo) {
-        this.registroAntigo = registroAntigo;
-    }
-
-    public RelatorioDeProcesso getRelatorioDeProcesso() {
-        return relatorioDeProcesso;
-    }
-
-    public void setRelatorioDeProcesso(RelatorioDeProcesso relatorioDeProcesso) {
-        this.relatorioDeProcesso = relatorioDeProcesso;
-    }
+    
 
 }

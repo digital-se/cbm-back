@@ -1,6 +1,7 @@
 package com.bombeiros.siteinterno.models;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,24 +21,73 @@ public class Document implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-
+	private Long id;
 	@Column
-	private String nome;
-
+    private String numero; //-registro
 	@Column
-	private int num;
-
-	@OneToMany(mappedBy = "documentos", cascade = CascadeType.ALL)
-	private List<Arquivo> documentos;
+    private String tipo;
+	@Column
+    private String nome; //-relatorio
+	@Column
+    private Date dataInclusao; //ficha
+	@Column
+    private Date dataExclusao; //ficha
+	@Column
+    private Boolean visivel;
+	@OneToMany(mappedBy = "arquivo", cascade = CascadeType.ALL)
+	private List<Arquivo> arquivos;
 
 	public Document() {
-		// do nothing
+		this.visivel = false;
 	}
 
-	public Document(String nome, int num) {
+	//Bga, bgo, bir, registro
+	public Document(String numero, String tipo, String nome) {
+		this();
+		this.numero = numero;
+		this.tipo = tipo;
 		this.nome = nome;
-		this.num = num;
+	}
+
+	//relatorio
+	public Document(String numero, String tipo) {
+		this();
+		this.numero = numero;
+		this.tipo = tipo;
+	}
+
+	//ficha
+	public Document(String numero, String tipo, String nome, Date dataInclusao, Date dataExclusao) {
+		this();
+		this.numero = numero;
+		this.tipo = tipo;
+		this.nome = nome;
+		this.dataInclusao = dataInclusao;
+		this.dataExclusao = dataExclusao;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public String getNome() {
@@ -48,28 +98,36 @@ public class Document implements Serializable {
 		this.nome = nome;
 	}
 
-	public int getNum() {
-		return num;
+	public Date getDataInclusao() {
+		return dataInclusao;
 	}
 
-	public void setNum(int num) {
-		this.num = num;
+	public void setDataInclusao(Date dataInclusao) {
+		this.dataInclusao = dataInclusao;
 	}
 
-	public long getId() {
-		return id;
+	public Date getDataExclusao() {
+		return dataExclusao;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setDataExclusao(Date dataExclusao) {
+		this.dataExclusao = dataExclusao;
 	}
 
-	public List<Arquivo> getDocumentos() {
-		return documentos;
+	public Boolean getVisivel() {
+		return visivel;
 	}
 
-	public void setDocumentos(List<Arquivo> documentos) {
-		this.documentos = documentos;
+	public void setVisivel(Boolean visivel) {
+		this.visivel = visivel;
+	}
+
+	public List<Arquivo> getArquivos() {
+		return arquivos;
+	}
+
+	public void setArquivos(List<Arquivo> arquivos) {
+		this.arquivos = arquivos;
 	}
 
 }
