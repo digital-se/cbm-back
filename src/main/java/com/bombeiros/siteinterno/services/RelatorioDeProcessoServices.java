@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import com.bombeiros.siteinterno.message.ArtigoResponseFile;
-import com.bombeiros.siteinterno.message.RelatorioProcessoResponseFile;
-import com.bombeiros.siteinterno.message.DocumentoResponseFile;
-import com.bombeiros.siteinterno.models.Documento;
+import com.bombeiros.siteinterno.DTO.ArquivoDTO;
+import com.bombeiros.siteinterno.DTO.DocumentoDTO;
+import com.bombeiros.siteinterno.DTO.RelatorioProcessoDTO;
+import com.bombeiros.siteinterno.models.Arquivo;
 import com.bombeiros.siteinterno.models.RelatorioDeProcesso;
-import com.bombeiros.siteinterno.repository.DocumentoRepository;
+import com.bombeiros.siteinterno.repository.ArtigoRepository;
 import com.bombeiros.siteinterno.repository.RelatorioDeProcessoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +27,13 @@ public class RelatorioDeProcessoServices {
     RelatorioDeProcessoRepository artigoRepository;
 
     @Autowired
-    DocumentoRepository documentoRepository;
+    ArtigoRepository documentoRepository;
 
     // SALVAR    
     @Transactional
-    public Documento salvar(RelatorioDeProcesso artigo, MultipartFile file) throws IOException {
+    public Arquivo salvar(RelatorioDeProcesso artigo, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
+        Arquivo documento = new Arquivo(fileName, file.getContentType(), file.getBytes());
 
         artigoRepository.save(artigo);
         documento.setRelatorioDeProcesso(artigo);
@@ -43,13 +43,13 @@ public class RelatorioDeProcessoServices {
     }
 
     // LISTAR DOCUMENTOS DE UM ARTIGO
-    public List<DocumentoResponseFile> getDocumentosDeUmArtigo(Long id) {
+    public List<ArquivoDTO> getDocumentosDeUmArtigo(Long id) {
 
-        List<DocumentoResponseFile> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
+        List<ArquivoDTO> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
 
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
                     .path(documento.getIdDocumento().toString()).toUriString();
-            return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+            return new ArquivoDTO(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                     documento.getType(), documento.getDocumentoData().length);
 
         }).collect(Collectors.toList());
@@ -58,29 +58,29 @@ public class RelatorioDeProcessoServices {
     }
 
     // LISTAR DOCUMENTOS TODO
-    public List<ArtigoResponseFile> getDocumentos(Long id) {
+    public List<DocumentoDTO> getDocumentos(Long id) {
 
-        List<ArtigoResponseFile> files = artigoRepository.findById(id).stream().map(artigo -> {
+        List<DocumentoDTO> files = artigoRepository.findById(id).stream().map(artigo -> {
 
-            List<DocumentoResponseFile> documentos = artigo.getDocumentos().stream().map(documento -> {
+            List<ArquivoDTO> documentos = artigo.getDocumentos().stream().map(documento -> {
 
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
                         .path(documento.getIdDocumento().toString()).toUriString();
-                return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                return new ArquivoDTO(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                         documento.getType(), documento.getDocumentoData().length);
 
             }).collect(Collectors.toList());
 
-            return new ArtigoResponseFile(artigo.getId(), "", 0, documentos);
+            return new DocumentoDTO(artigo.getId(), "", 0, documentos);
         }).collect(Collectors.toList());
 
         return files;
     }
 
     // LISTAR ARTIGOS TODO
-    public List<RelatorioProcessoResponseFile> getArtigos() {
-        List<RelatorioProcessoResponseFile> files = artigoRepository.findAll().stream().map(artigo -> {
-            return new RelatorioProcessoResponseFile(artigo.getId(), 0);
+    public List<RelatorioProcessoDTO> getArtigos() {
+        List<RelatorioProcessoDTO> files = artigoRepository.findAll().stream().map(artigo -> {
+            return new RelatorioProcessoDTO(artigo.getId(), 0);
         }).collect(Collectors.toList());
 
         return files;

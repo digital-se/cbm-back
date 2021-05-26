@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import com.bombeiros.siteinterno.message.ArtigoResponseFile;
-import com.bombeiros.siteinterno.message.BgoResponseFile;
-import com.bombeiros.siteinterno.message.DocumentoResponseFile;
 import com.bombeiros.siteinterno.models.Bgo;
-import com.bombeiros.siteinterno.models.Documento;
+import com.bombeiros.siteinterno.DTO.ArquivoDTO;
+import com.bombeiros.siteinterno.DTO.DocumentoDTO;
+import com.bombeiros.siteinterno.DTO.BgoDTO;
+import com.bombeiros.siteinterno.models.Arquivo;
 import com.bombeiros.siteinterno.repository.BgoRepository;
-import com.bombeiros.siteinterno.repository.DocumentoRepository;
+import com.bombeiros.siteinterno.repository.ArtigoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,15 +24,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class BgoServices {
 
     @Autowired
-    private DocumentoRepository documentoRepository;
+    private ArtigoRepository documentoRepository;
     @Autowired
     private BgoRepository artigoRepository;
 
     // SALVAR    
     @Transactional
-    public Documento salvar(Bgo artigo, MultipartFile file) throws IOException {
+    public Arquivo salvar(Bgo artigo, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
+        Arquivo documento = new Arquivo(fileName, file.getContentType(), file.getBytes());
 
         artigoRepository.save(artigo);
         documento.setBgo(artigo);
@@ -42,13 +42,13 @@ public class BgoServices {
     }
     
     // LISTAR DOCUMENTOS DE UM ARTIGO
-    public List<DocumentoResponseFile> getDocumentosDeUmArtigo(Long id) {
+    public List<ArquivoDTO> getDocumentosDeUmArtigo(Long id) {
 
-        List<DocumentoResponseFile> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
+        List<ArquivoDTO> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
 
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
                     .path(documento.getIdDocumento().toString()).toUriString();
-            return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+            return new ArquivoDTO(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                     documento.getType(), documento.getDocumentoData().length);
 
         }).collect(Collectors.toList());
@@ -57,29 +57,29 @@ public class BgoServices {
     }
     
     // LISTAR DOCUMENTOS
-    public List<ArtigoResponseFile> getDocumentos(Long id) {
+    public List<DocumentoDTO> getDocumentos(Long id) {
 
-        List<ArtigoResponseFile> files = artigoRepository.findById(id).stream().map(artigo -> {
+        List<DocumentoDTO> files = artigoRepository.findById(id).stream().map(artigo -> {
 
-            List<DocumentoResponseFile> documentos = artigo.getDocumentos().stream().map(documento -> {
+            List<ArquivoDTO> documentos = artigo.getDocumentos().stream().map(documento -> {
 
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
                         .path(documento.getIdDocumento().toString()).toUriString();
-                return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                return new ArquivoDTO(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                         documento.getType(), documento.getDocumentoData().length);
 
             }).collect(Collectors.toList());
 
-            return new ArtigoResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum(), documentos);
+            return new DocumentoDTO(artigo.getId(), artigo.getNome(), artigo.getNum(), documentos);
         }).collect(Collectors.toList());
 
         return files;
     }
 
     // LISTAR ARTIGOS
-    public List<BgoResponseFile> getArtigos() {
-        List<BgoResponseFile> files = artigoRepository.findAll().stream().map(artigo -> {
-            return new BgoResponseFile(artigo.getId(), artigo.getNome(), artigo.getNum());
+    public List<BgoDTO> getArtigos() {
+        List<BgoDTO> files = artigoRepository.findAll().stream().map(artigo -> {
+            return new BgoDTO(artigo.getId(), artigo.getNome(), artigo.getNum());
         }).collect(Collectors.toList());
 
         return files;

@@ -7,11 +7,11 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bombeiros.siteinterno.DTO.DocumentoDTO;
+import com.bombeiros.siteinterno.DTO.BgoDTO;
 import com.bombeiros.siteinterno.controllers.BgoController;
-import com.bombeiros.siteinterno.message.ArtigoResponseFile;
-import com.bombeiros.siteinterno.message.BgoResponseFile;
 import com.bombeiros.siteinterno.models.Bgo;
-import com.bombeiros.siteinterno.models.Documento;
+import com.bombeiros.siteinterno.models.Arquivo;
 import com.bombeiros.siteinterno.services.BgoServices;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +45,7 @@ public class bgoTest {
 	void caseSalvar() throws Exception {
         Bgo bgo = new Bgo("a", 123);
         MockMultipartFile mmf = new MockMultipartFile("file", new byte[0]);
-        when(bgoServices.salvar(null, null)).thenReturn(new Documento("file", "jpg", new byte[0]));
+        when(bgoServices.salvar(null, null)).thenReturn(new Arquivo("file", "jpg", new byte[0]));
         assertEquals(HttpStatus.OK, bgoController.salvar(bgo, mmf).getStatusCode());
         verify(bgoServices).salvar(bgo, mmf);
 			// Documento imagem = new Documento();
@@ -57,10 +57,10 @@ public class bgoTest {
 
     @Test
 	void caseDocumentos() throws Exception {
-		List<ArtigoResponseFile> lista = new ArrayList<ArtigoResponseFile>();
-        lista.add(new ArtigoResponseFile(0L, "sopa 0", 0, null));
-        lista.add(new ArtigoResponseFile(1L, "sopa 1", 1, null));
-        lista.add(new ArtigoResponseFile(2L, "sopa 2", 2, null));
+		List<DocumentoDTO> lista = new ArrayList<DocumentoDTO>();
+        lista.add(new DocumentoDTO(0L, "sopa 0", 0, null));
+        lista.add(new DocumentoDTO(1L, "sopa 1", 1, null));
+        lista.add(new DocumentoDTO(2L, "sopa 2", 2, null));
     
 
         when(bgoServices.getDocumentos(0L)).thenReturn(lista);
@@ -71,8 +71,8 @@ public class bgoTest {
 
     @Test
 	void caseArtigos() throws Exception {
-		List<BgoResponseFile> lista = new ArrayList<BgoResponseFile>();
-        lista.add(new BgoResponseFile(0L, "nome", 2111));
+		List<BgoDTO> lista = new ArrayList<BgoDTO>();
+        lista.add(new BgoDTO(0L, "nome", 2111));
 
         when(bgoServices.getArtigos()).thenReturn(lista);
         assertEquals(HttpStatus.OK, bgoController.listarArtigos().getStatusCode());

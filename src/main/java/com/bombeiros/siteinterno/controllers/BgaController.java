@@ -3,8 +3,8 @@ package com.bombeiros.siteinterno.controllers;
 import java.io.IOException;
 import java.util.List;
 
-import com.bombeiros.siteinterno.message.ArtigoResponseFile;
-import com.bombeiros.siteinterno.message.BgaResponseFile;
+import com.bombeiros.siteinterno.DTO.DocumentoDTO;
+import com.bombeiros.siteinterno.DTO.BgaDTO;
 import com.bombeiros.siteinterno.models.Bga;
 import com.bombeiros.siteinterno.services.BgaServices;
 
@@ -56,7 +56,7 @@ public class BgaController {
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/v1/documentos/{bgaid}")
-    public ResponseEntity<List<ArtigoResponseFile>> listarDocumentos(@PathVariable long id) {
+    public ResponseEntity<List<DocumentoDTO>> listarDocumentos(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
     }
 
@@ -66,15 +66,14 @@ public class BgaController {
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/v1/artigos")
-    public ResponseEntity<List<BgaResponseFile>> listarArtigos() { //adicionar parametro string para query futuramente
+    public ResponseEntity<List<BgaDTO>> listarArtigos() { //adicionar parametro string para query futuramente
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getArtigos());
     }
 
     // LISTAR TUDO | PARA TESTES, REMOVER FUTURAMENTE
     @GetMapping("/v1/tudo")
-    public ResponseEntity<List<ArtigoResponseFile>> listarTudo() {
+    public ResponseEntity<List<DocumentoDTO>> listarTudo() {
         return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getTudo());
-
     }
 
 }

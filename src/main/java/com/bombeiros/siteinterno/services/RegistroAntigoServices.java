@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import com.bombeiros.siteinterno.message.ArtigoResponseFile;
-import com.bombeiros.siteinterno.message.RegistroAntigoResponseFile;
-import com.bombeiros.siteinterno.message.DocumentoResponseFile;
-import com.bombeiros.siteinterno.models.Documento;
+import com.bombeiros.siteinterno.DTO.ArquivoDTO;
+import com.bombeiros.siteinterno.DTO.DocumentoDTO;
+import com.bombeiros.siteinterno.DTO.RegistroAntigoDTO;
+import com.bombeiros.siteinterno.models.Arquivo;
 import com.bombeiros.siteinterno.models.RegistroAntigo;
-import com.bombeiros.siteinterno.repository.DocumentoRepository;
+import com.bombeiros.siteinterno.repository.ArtigoRepository;
 import com.bombeiros.siteinterno.repository.RegistroAntigoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +27,13 @@ public class RegistroAntigoServices {
     RegistroAntigoRepository artigoRepository;
 
     @Autowired
-    DocumentoRepository documentoRepository;
+    ArtigoRepository documentoRepository;
 
     // SALVAR    
     @Transactional
-    public Documento salvar(RegistroAntigo artigo, MultipartFile file) throws IOException {
+    public Arquivo salvar(RegistroAntigo artigo, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        Documento documento = new Documento(fileName, file.getContentType(), file.getBytes());
+        Arquivo documento = new Arquivo(fileName, file.getContentType(), file.getBytes());
 
         artigoRepository.save(artigo);
         documento.setRegistroAntigo(artigo);
@@ -43,13 +43,13 @@ public class RegistroAntigoServices {
     }
 
     // LISTAR DOCUMENTOS DE UM ARTIGO
-    public List<DocumentoResponseFile> getDocumentosDeUmArtigo(Long id) {
+    public List<ArquivoDTO> getDocumentosDeUmArtigo(Long id) {
 
-        List<DocumentoResponseFile> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
+        List<ArquivoDTO> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
 
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
                     .path(documento.getIdDocumento().toString()).toUriString();
-            return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+            return new ArquivoDTO(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                     documento.getType(), documento.getDocumentoData().length);
 
         }).collect(Collectors.toList());
@@ -58,29 +58,29 @@ public class RegistroAntigoServices {
     }
 
     // LISTAR DOCUMENTOS
-    public List<ArtigoResponseFile> getDocumentos(Long id) {
+    public List<DocumentoDTO> getDocumentos(Long id) {
 
-        List<ArtigoResponseFile> files = artigoRepository.findById(id).stream().map(artigo -> {
+        List<DocumentoDTO> files = artigoRepository.findById(id).stream().map(artigo -> {
 
-            List<DocumentoResponseFile> documentos = artigo.getDocumentos().stream().map(documento -> {
+            List<ArquivoDTO> documentos = artigo.getDocumentos().stream().map(documento -> {
 
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
                         .path(documento.getIdDocumento().toString()).toUriString();
-                return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
+                return new ArquivoDTO(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                         documento.getType(), documento.getDocumentoData().length);
 
             }).collect(Collectors.toList());
 
-            return new ArtigoResponseFile(artigo.getId(), artigo.getNome(), 0, documentos);
+            return new DocumentoDTO(artigo.getId(), artigo.getNome(), 0, documentos);
         }).collect(Collectors.toList());
 
         return files;
     }
 
     // LISTAR ARTIGOS
-    public List<RegistroAntigoResponseFile> getArtigos() {
-        List<RegistroAntigoResponseFile> files = artigoRepository.findAll().stream().map(artigo -> {
-            return new RegistroAntigoResponseFile(artigo.getId(), artigo.getNome());
+    public List<RegistroAntigoDTO> getArtigos() {
+        List<RegistroAntigoDTO> files = artigoRepository.findAll().stream().map(artigo -> {
+            return new RegistroAntigoDTO(artigo.getId(), artigo.getNome());
         }).collect(Collectors.toList());
 
         return files;

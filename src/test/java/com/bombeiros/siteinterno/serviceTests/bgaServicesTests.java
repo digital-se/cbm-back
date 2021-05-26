@@ -6,8 +6,8 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bombeiros.siteinterno.message.ArtigoResponseFile;
-import com.bombeiros.siteinterno.message.BgaResponseFile;
+import com.bombeiros.siteinterno.DTO.DocumentoDTO;
+import com.bombeiros.siteinterno.DTO.BgaDTO;
 import com.bombeiros.siteinterno.services.BgaServices;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -28,21 +28,21 @@ public class bgaServicesTests {
         //if inner service, do something here
 
         //caseDocumentos SetUp
-        List<ArtigoResponseFile> listaDocs = new ArrayList<ArtigoResponseFile>();
-        listaDocs.add(new ArtigoResponseFile(0L, "sopa 0", 0, null));
-        listaDocs.add(new ArtigoResponseFile(1L, "sopa 1", 1, null));
-        listaDocs.add(new ArtigoResponseFile(2L, "sopa 2", 2, null));
+        List<DocumentoDTO> listaDocs = new ArrayList<DocumentoDTO>();
+        listaDocs.add(new DocumentoDTO(0L, "sopa 0", 0, null));
+        listaDocs.add(new DocumentoDTO(1L, "sopa 1", 1, null));
+        listaDocs.add(new DocumentoDTO(2L, "sopa 2", 2, null));
         when(bgaServices.getDocumentos(0L)).thenReturn(listaDocs);
 
         //caseArtigos SetUp
-        List<BgaResponseFile> lista = new ArrayList<BgaResponseFile>();
-        lista.add(new BgaResponseFile(0L, "nome", 2111));
+        List<BgaDTO> lista = new ArrayList<BgaDTO>();
+        lista.add(new BgaDTO(0L, "nome", 2111));
         when(bgaServices.getArtigos()).thenReturn(lista);
     }
 
     @Test
 	void caseDocumentos() throws Exception {
-		List<ArtigoResponseFile> returnList = bgaServices.getDocumentos(0L);
+		List<DocumentoDTO> returnList = bgaServices.getDocumentos(0L);
 
         assertNotNull(returnList);
         //assertTrue(!returnList.isEmpty());        
@@ -50,7 +50,7 @@ public class bgaServicesTests {
 
     @Test
 	void caseArtigos() throws Exception {
-		List<BgaResponseFile> returnList = bgaServices.getArtigos();
+		List<BgaDTO> returnList = bgaServices.getArtigos();
 
         assertNotNull(returnList);
         //assertTrue(!returnList.isEmpty());        

@@ -6,8 +6,8 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bombeiros.siteinterno.message.ArtigoResponseFile;
-import com.bombeiros.siteinterno.message.RelatorioProcessoResponseFile;
+import com.bombeiros.siteinterno.DTO.DocumentoDTO;
+import com.bombeiros.siteinterno.DTO.RelatorioProcessoDTO;
 import com.bombeiros.siteinterno.services.RelatorioDeProcessoServices;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -28,21 +28,21 @@ public class relatorioProcessoServicesTests {
         //if inner service, do something here
 
         //caseDocumentos SetUp
-        List<ArtigoResponseFile> listaDocs = new ArrayList<ArtigoResponseFile>();
-        listaDocs.add(new ArtigoResponseFile(0L, "sopa 0", 0, null));
-        listaDocs.add(new ArtigoResponseFile(1L, "sopa 1", 1, null));
-        listaDocs.add(new ArtigoResponseFile(2L, "sopa 2", 2, null));
+        List<DocumentoDTO> listaDocs = new ArrayList<DocumentoDTO>();
+        listaDocs.add(new DocumentoDTO(0L, "sopa 0", 0, null));
+        listaDocs.add(new DocumentoDTO(1L, "sopa 1", 1, null));
+        listaDocs.add(new DocumentoDTO(2L, "sopa 2", 2, null));
         when(services.getDocumentos(0L)).thenReturn(listaDocs);
 
         //caseArtigos SetUp
-        List<RelatorioProcessoResponseFile> lista = new ArrayList<RelatorioProcessoResponseFile>();
-        lista.add(new RelatorioProcessoResponseFile(0L, 0, null));
+        List<RelatorioProcessoDTO> lista = new ArrayList<RelatorioProcessoDTO>();
+        lista.add(new RelatorioProcessoDTO(0L, 0, null));
         when(services.getArtigos()).thenReturn(lista);
     }
 
     @Test
 	void caseDocumentos() throws Exception {
-		List<ArtigoResponseFile> returnList = services.getDocumentos(0L);
+		List<DocumentoDTO> returnList = services.getDocumentos(0L);
 
         assertNotNull(returnList);
         //assertTrue(!returnList.isEmpty());        
@@ -50,7 +50,7 @@ public class relatorioProcessoServicesTests {
 
     @Test
 	void caseArtigos() throws Exception {
-		List<RelatorioProcessoResponseFile> returnList = services.getArtigos();
+		List<RelatorioProcessoDTO> returnList = services.getArtigos();
 
         assertNotNull(returnList);
         //assertTrue(!returnList.isEmpty());        

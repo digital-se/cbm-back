@@ -3,8 +3,8 @@ package com.bombeiros.siteinterno.controllers;
 import java.io.IOException;
 import java.util.List;
 
-import com.bombeiros.siteinterno.message.ArtigoResponseFile;
-import com.bombeiros.siteinterno.message.RelatorioProcessoResponseFile;
+import com.bombeiros.siteinterno.DTO.DocumentoDTO;
+import com.bombeiros.siteinterno.DTO.RelatorioProcessoDTO;
 import com.bombeiros.siteinterno.models.RelatorioDeProcesso;
 import com.bombeiros.siteinterno.services.RelatorioDeProcessoServices;
 
@@ -58,7 +58,7 @@ public class RelatorioDeProcessoController {
                         @ApiResponse(code = 404, message = "Não encontrado"),
                         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
         @GetMapping("/v1/documentos/{rpid}")
-        public ResponseEntity<List<ArtigoResponseFile>> listarDocumentos(@PathVariable long id) {
+        public ResponseEntity<List<DocumentoDTO>> listarDocumentos(@PathVariable long id) {
                 return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getDocumentos(id));
         }
 
@@ -68,7 +68,7 @@ public class RelatorioDeProcessoController {
                         @ApiResponse(code = 404, message = "Não encontrado"),
                         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
         @GetMapping("/v1/artigos")
-        public ResponseEntity<List<RelatorioProcessoResponseFile>> listarArtigos() { // adicionar parametro string para
+        public ResponseEntity<List<RelatorioProcessoDTO>> listarArtigos() { // adicionar parametro string para
                                                                                   // query
                                                                                   // futuramente
                 return ResponseEntity.status(HttpStatus.OK).body(artigoServices.getArtigos());
