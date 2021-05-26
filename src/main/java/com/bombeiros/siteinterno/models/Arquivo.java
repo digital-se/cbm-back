@@ -24,7 +24,7 @@ public class Arquivo {
 
     @ManyToOne
     @JoinColumn(name = "id_bga", referencedColumnName = "idBga")
-    private Bga bga;
+    private Document bga;
 
     @ManyToOne
     @JoinColumn(name = "id_bgo", referencedColumnName = "idBgo")
@@ -88,11 +88,11 @@ public class Arquivo {
         this.type = type;
     }
 
-    public Bga getBga() {
+    public Document getBga() {
         return bga;
     }
 
-    public void setBga(Bga bga) {
+    public void setBga(Document bga) {
         this.bga = bga;
     }
 

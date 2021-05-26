@@ -11,7 +11,7 @@ import com.bombeiros.siteinterno.controllers.BgoController;
 import com.bombeiros.siteinterno.message.ArtigoResponseFile;
 import com.bombeiros.siteinterno.message.BgoResponseFile;
 import com.bombeiros.siteinterno.models.Bgo;
-import com.bombeiros.siteinterno.models.Documento;
+import com.bombeiros.siteinterno.models.Document;
 import com.bombeiros.siteinterno.services.BgoServices;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +45,7 @@ public class bgoTest {
 	void caseSalvar() throws Exception {
         Bgo bgo = new Bgo("a", 123);
         MockMultipartFile mmf = new MockMultipartFile("file", new byte[0]);
-        when(bgoServices.salvar(null, null)).thenReturn(new Documento("file", "jpg", new byte[0]));
+        when(bgoServices.salvar(null, null)).thenReturn(new Document("file", "jpg", new byte[0]));
         assertEquals(HttpStatus.OK, bgoController.salvar(bgo, mmf).getStatusCode());
         verify(bgoServices).salvar(bgo, mmf);
 			// Documento imagem = new Documento();

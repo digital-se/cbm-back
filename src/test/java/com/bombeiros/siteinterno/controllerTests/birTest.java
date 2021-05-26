@@ -11,7 +11,7 @@ import com.bombeiros.siteinterno.controllers.BirController;
 import com.bombeiros.siteinterno.message.ArtigoResponseFile;
 import com.bombeiros.siteinterno.message.BirResponseFile;
 import com.bombeiros.siteinterno.models.Bir;
-import com.bombeiros.siteinterno.models.Documento;
+import com.bombeiros.siteinterno.models.Document;
 import com.bombeiros.siteinterno.services.BirServices;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +45,7 @@ public class birTest {
 	void caseSalvar() throws Exception {
         Bir bir = new Bir("a", 123);
         MockMultipartFile mmf = new MockMultipartFile("file", new byte[0]);
-        when(birServices.salvar(null, null)).thenReturn(new Documento("file", "jpg", new byte[0]));
+        when(birServices.salvar(null, null)).thenReturn(new Document("file", "jpg", new byte[0]));
         assertEquals(HttpStatus.OK, birController.salvar(bir, mmf).getStatusCode());
         verify(birServices).salvar(bir, mmf);
 			// Documento imagem = new Documento();
