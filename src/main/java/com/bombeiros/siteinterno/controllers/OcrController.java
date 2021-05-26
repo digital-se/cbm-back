@@ -18,12 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/ocr")
-public class SendToTesseractController {
+public class OcrController {
 
     @Autowired
     private SendToTesseractService tessService;
 
-    public SendToTesseractController(SendToTesseractService tessService) {
+    public OcrController(SendToTesseractService tessService) {
         this.tessService = tessService;
     }
 
