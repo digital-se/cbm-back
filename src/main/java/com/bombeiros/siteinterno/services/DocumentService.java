@@ -25,11 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
-<<<<<<< HEAD:src/main/java/com/bombeiros/siteinterno/services/DocumentService.java
 public class DocumentService {
-=======
-public class BgaServices implements IServices{
->>>>>>> 0df2a9892884b6675974494fd429e2abf7822aa7:src/main/java/com/bombeiros/siteinterno/services/BgaServices.java
 
     // use constructor injection on documentRepository!!!!
     @Autowired
@@ -44,10 +40,6 @@ public class BgaServices implements IServices{
 
     //------ V2 ------
 
-<<<<<<< HEAD:src/main/java/com/bombeiros/siteinterno/services/DocumentService.java
-=======
-    @Override
->>>>>>> 0df2a9892884b6675974494fd429e2abf7822aa7:src/main/java/com/bombeiros/siteinterno/services/BgaServices.java
     public ArquivoDTO salvar(DocumentoDTO artigo, MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Arquivo documento = new Arquivo(fileName, file.getContentType(), file.getBytes());
@@ -59,19 +51,11 @@ public class BgaServices implements IServices{
         return documento
     }
 
-<<<<<<< HEAD:src/main/java/com/bombeiros/siteinterno/services/DocumentService.java
-=======
-    @Override
->>>>>>> 0df2a9892884b6675974494fd429e2abf7822aa7:src/main/java/com/bombeiros/siteinterno/services/BgaServices.java
     public List<DocumentoResponseFile> getDocumentos(Long id) throws IOException {
         // TODO Auto-generated method stub
         return null;
     }
 
-<<<<<<< HEAD:src/main/java/com/bombeiros/siteinterno/services/DocumentService.java
-=======
-    @Override
->>>>>>> 0df2a9892884b6675974494fd429e2abf7822aa7:src/main/java/com/bombeiros/siteinterno/services/BgaServices.java
     public List<ArtigoResponseFile> getArtigos() throws IOException {
         // TODO Auto-generated method stub
         return null;
@@ -124,7 +108,6 @@ public class BgaServices implements IServices{
 
     // LISTAR DOCUMENTOS DE UM ARTIGO
     public List<DocumentoResponseFile> getDocumentosDeUmArtigoV1(Long id) {
-<<<<<<< HEAD:src/main/java/com/bombeiros/siteinterno/services/DocumentService.java
 
         List<DocumentoResponseFile> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
 
@@ -133,16 +116,6 @@ public class BgaServices implements IServices{
             return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
                     documento.getType(), documento.getDocumentoData().length);
 
-=======
-
-        List<DocumentoResponseFile> responseFiles = artigoRepository.getOne(id).getDocumentos().stream().map(documento -> {
-
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
-                    .path(documento.getIdDocumento().toString()).toUriString();
-            return new DocumentoResponseFile(documento.getIdDocumento(), documento.getName(), fileDownloadUri,
-                    documento.getType(), documento.getDocumentoData().length);
-
->>>>>>> 0df2a9892884b6675974494fd429e2abf7822aa7:src/main/java/com/bombeiros/siteinterno/services/BgaServices.java
         }).collect(Collectors.toList());
 
         return responseFiles;
