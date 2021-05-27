@@ -21,65 +21,31 @@ public class Documento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	@Column
-    private String numero; //-registro
+	private String id;
 	@Column
     private String tipo;
 	@Column
-    private String nome; //-relatorio
+    private String nome;
 	@Column
-    private Date dataInclusao; //ficha
-	@Column
-    private Date dataExclusao; //ficha
+    private Date dataHoraCadastro;
 	@Column
     private Boolean visivel;
 	@OneToMany(mappedBy = "arquivo", cascade = CascadeType.ALL)
 	private List<Arquivo> arquivos;
 
-	public Documento() {
-		this.visivel = false;
-	}
-
-	//Bga, bgo, bir, registro
-	public Documento(String numero, String tipo, String nome) {
-		this();
-		this.numero = numero;
+	public Documento(String tipo, String nome, Date dataHoraCadastro, Boolean visivel) {
 		this.tipo = tipo;
 		this.nome = nome;
+		this.dataHoraCadastro = dataHoraCadastro;
+		this.visivel = visivel;
 	}
 
-	//relatorio
-	public Documento(String numero, String tipo) {
-		this();
-		this.numero = numero;
-		this.tipo = tipo;
-	}
-
-	//ficha
-	public Documento(String numero, String tipo, String nome, Date dataInclusao, Date dataExclusao) {
-		this();
-		this.numero = numero;
-		this.tipo = tipo;
-		this.nome = nome;
-		this.dataInclusao = dataInclusao;
-		this.dataExclusao = dataExclusao;
-	}
-
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
 	}
 
 	public String getTipo() {
@@ -98,20 +64,12 @@ public class Documento implements Serializable {
 		this.nome = nome;
 	}
 
-	public Date getDataInclusao() {
-		return dataInclusao;
+	public Date getDataHoraCadastro() {
+		return dataHoraCadastro;
 	}
 
-	public void setDataInclusao(Date dataInclusao) {
-		this.dataInclusao = dataInclusao;
-	}
-
-	public Date getDataExclusao() {
-		return dataExclusao;
-	}
-
-	public void setDataExclusao(Date dataExclusao) {
-		this.dataExclusao = dataExclusao;
+	public void setDataHoraCadastro(Date dataHoraCadastro) {
+		this.dataHoraCadastro = dataHoraCadastro;
 	}
 
 	public Boolean getVisivel() {
@@ -129,5 +87,7 @@ public class Documento implements Serializable {
 	public void setArquivos(List<Arquivo> arquivos) {
 		this.arquivos = arquivos;
 	}
+
+	
 
 }

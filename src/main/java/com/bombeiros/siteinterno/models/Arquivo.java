@@ -1,5 +1,7 @@
 package com.bombeiros.siteinterno.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,58 +23,146 @@ public class Arquivo {
     private String nome;
     @Column
     private String tipo;
+    @Column
+    private Date dataHoraCadastro;
+    @Column
+    private String status;
+    @Column
+    private Boolean noOcr;
+    @Column
+    private long size;
     @Lob
-    private byte[] arquivoData;
+    private byte[] data;
+    @Lob
+    private String texto;
 
     @ManyToOne
     @JoinColumn(name = "id_documento", referencedColumnName = "idDocumento")
     private Documento documento;
 
-    public Arquivo() {
+    
 
+    public Arquivo(String nome, String tipo, Date dataHoraCadastro) {
+        this.nome = nome;
+        this.tipo = tipo;
+        this.dataHoraCadastro = dataHoraCadastro;
     }
 
-    public Arquivo(String name, String type, byte[] arquivoData) {
-        this.nome = name;
-        this.tipo = type;
-        this.arquivoData = arquivoData;
-    }
+
 
     public Long getId() {
         return id;
     }
 
+
+
     public void setId(Long id) {
         this.id = id;
     }
+
+
 
     public String getNome() {
         return nome;
     }
 
+
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+
 
     public String getTipo() {
         return tipo;
     }
 
+
+
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
-    public byte[] getArquivoData() {
-        return arquivoData;
+
+
+    public Date getDataHoraCadastro() {
+        return dataHoraCadastro;
     }
 
-    public void setArquivoData(byte[] arquivoData) {
-        this.arquivoData = arquivoData;
+
+
+    public void setDataHoraCadastro(Date dataHoraCadastro) {
+        this.dataHoraCadastro = dataHoraCadastro;
     }
+
+
+
+    public String getStatus() {
+        return status;
+    }
+
+
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+
+    public Boolean getNoOcr() {
+        return noOcr;
+    }
+
+
+
+    public void setNoOcr(Boolean noOcr) {
+        this.noOcr = noOcr;
+    }
+
+
+
+    public long getSize() {
+        return size;
+    }
+
+
+
+    public void setSize(long size) {
+        this.size = size;
+    }
+
+
+
+    public byte[] getData() {
+        return data;
+    }
+
+
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+
+
+    public String getTexto() {
+        return texto;
+    }
+
+
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+
 
     public Documento getDocumento() {
         return documento;
     }
+
+
 
     public void setDocumento(Documento documento) {
         this.documento = documento;
