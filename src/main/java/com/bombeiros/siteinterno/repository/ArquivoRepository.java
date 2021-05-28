@@ -4,6 +4,6 @@ import com.bombeiros.siteinterno.models.Arquivo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ArtigoRepository extends JpaRepository<Arquivo, Long> {
-    
+public interface ArquivoRepository extends JpaRepository<Arquivo, Long> {
+
 }
