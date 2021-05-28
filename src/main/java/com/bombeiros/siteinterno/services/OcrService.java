@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class SendToTesseractService {
+public class OcrService {
     
     //Em teste
     public MultiValueMap<String,String> send(MultipartFile file) throws IOException {
