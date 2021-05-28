@@ -1,6 +1,4 @@
-FROM openjdk:11-jdk-slim
-RUN addgroup --system spring && adduser --system --group spring
-USER spring:spring
+FROM openjdk:15.0.2-jdk
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
