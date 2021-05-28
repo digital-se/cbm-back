@@ -2,7 +2,7 @@ package com.bombeiros.siteinterno.controllers;
 
 import java.io.IOException;
 
-import com.bombeiros.siteinterno.services.SendToTesseractService;
+import com.bombeiros.siteinterno.services.OcrService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class OcrController {
 
     @Autowired
-    private SendToTesseractService tessService;
+    private OcrService tessService;
 
-    public OcrController(SendToTesseractService tessService) {
+    public OcrController(OcrService tessService) {
         this.tessService = tessService;
     }
 
