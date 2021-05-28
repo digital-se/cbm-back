@@ -42,9 +42,10 @@ public class Documento implements Serializable {
 	@OneToMany(mappedBy = "documento", cascade = CascadeType.ALL)
 	private List<Arquivo> arquivos;
 
-	public Documento(String tipo, String nome, Date dataHoraCadastro, Boolean visivel) {
+	public Documento(String tipo, String nome, String criador, Date dataHoraCadastro, Boolean visivel) {
 		this.tipo = tipo;
 		this.nome = nome;
+		this.criador = criador;
 		this.dataHoraCadastro = dataHoraCadastro;
 		this.visivel = visivel;
 	}
