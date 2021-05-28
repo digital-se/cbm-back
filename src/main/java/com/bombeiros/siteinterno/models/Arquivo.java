@@ -1,5 +1,6 @@
 package com.bombeiros.siteinterno.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,12 +14,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ARQUIVOS")
-public class Arquivo {
+@Table(name = "ARQUIVO")
+public class Arquivo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ManyToOne(optional=false) 
+    @JoinColumn(name="documento_id", nullable=false, updatable=false)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name="documento_id", nullable=false)
+    private Documento documento;
     @Column
     private String nome;
     @Column
@@ -35,10 +43,7 @@ public class Arquivo {
     private byte[] data;
     @Lob
     private String texto;
-
-    @ManyToOne
-    @JoinColumn(name = "id_documento", referencedColumnName = "idDocumento")
-    private Documento documento;
+    
 
     
 

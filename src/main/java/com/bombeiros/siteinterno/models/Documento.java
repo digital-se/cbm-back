@@ -10,27 +10,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "DOCUMENTOS")
+@Table(name = "DOCUMENTO")
 public class Documento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
+	@ManyToMany
+    @JoinTable(name = "FK_Doc_Mil", joinColumns = @JoinColumn(name = "documento_id"), inverseJoinColumns = @JoinColumn(name = "militar_id"))
+	private String documento_id;
 	@Column
     private String tipo;
 	@Column
     private String nome;
+	@ManyToOne(optional=false) 
+	@JoinColumn(name="militar_id", nullable=false, updatable=false)
+    private String criador;
 	@Column
     private Date dataHoraCadastro;
 	@Column
     private Boolean visivel;
-	@OneToMany(mappedBy = "arquivo", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "documento", cascade = CascadeType.ALL)
 	private List<Arquivo> arquivos;
 
 	public Documento(String tipo, String nome, Date dataHoraCadastro, Boolean visivel) {
@@ -41,11 +50,11 @@ public class Documento implements Serializable {
 	}
 
 	public String getId() {
-		return id;
+		return documento_id;
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this.documento_id = id;
 	}
 
 	public String getTipo() {
@@ -87,7 +96,5 @@ public class Documento implements Serializable {
 	public void setArquivos(List<Arquivo> arquivos) {
 		this.arquivos = arquivos;
 	}
-
-	
 
 }
