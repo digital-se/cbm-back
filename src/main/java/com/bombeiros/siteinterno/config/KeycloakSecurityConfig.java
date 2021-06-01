@@ -6,6 +6,7 @@ import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticatio
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 
 @Configuration
 @EnableWebSecurity
+@ComponentScan(basePackageClasses = KeycloakSpringBootConfigResolver.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
@@ -26,10 +28,10 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         super.configure(http);
         http.authorizeRequests()
             .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui","/configuration/security", "/swagger-ui/*").permitAll() //testes
-            // .antMatchers("/documentos/*").hasAnyRole("user","admin")
+            .antMatchers("/v1/documentos/*").permitAll()
             .anyRequest().permitAll();
-            
-        //http.csrf().disable();
+            /* hasAnyRole("user","admin") */
+        // http.csrf().disable();
     }
 
     @Autowired
