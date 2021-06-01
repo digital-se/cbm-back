@@ -24,12 +24,12 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping(value = "/v1/documentos")
-public class DocumentController {
+public class DocumentoController {
 
     @Autowired
     private DocumentoService documentoService;
 
-    public DocumentController(DocumentoService documentoService) {
+    public DocumentoController(DocumentoService documentoService) {
         this.documentoService = documentoService;
     }
 
