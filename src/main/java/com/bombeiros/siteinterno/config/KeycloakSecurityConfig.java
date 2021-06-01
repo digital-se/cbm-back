@@ -26,7 +26,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         super.configure(http);
         http.authorizeRequests()
             .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui","/configuration/security", "/swagger-ui/*").permitAll() //testes
-            .antMatchers("/documentos/*").hasAnyRole("user","admin")
+            // .antMatchers("/documentos/*").hasAnyRole("user","admin")
             .anyRequest().permitAll();
             
         //http.csrf().disable();
