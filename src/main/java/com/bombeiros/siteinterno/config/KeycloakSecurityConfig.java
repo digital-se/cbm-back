@@ -31,7 +31,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
             .antMatchers("/v1/documentos/*").permitAll()
             .anyRequest().permitAll();
             /* hasAnyRole("user","admin") */
-        // http.csrf().disable();
+        //http.csrf().disable();
     }
 
     @Autowired
