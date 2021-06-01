@@ -1,6 +1,7 @@
 package com.bombeiros.siteinterno.services;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class DocumentoService {
 
     public DocumentoDTO criar(DocumentoDTO documentoDTO) throws IOException {
         Documento documento = new Documento(documentoDTO.getTipo(), documentoDTO.getNome(), documentoDTO.getCriador(),
-                documentoDTO.getDataHoraCadastro(), documentoDTO.getVisivel());
+                new Date(), documentoDTO.getVisivel());
         documentoRepository.save(documento);
         return documentoDTO;
     }
