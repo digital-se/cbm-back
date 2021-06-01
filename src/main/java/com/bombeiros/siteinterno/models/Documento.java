@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,24 +26,29 @@ public class Documento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@ManyToMany
-    @JoinTable(name = "FK_Doc_Mil", joinColumns = @JoinColumn(name = "documento_id"), inverseJoinColumns = @JoinColumn(name = "militar_id"))
-	private String documento_id;
+	private long documento_id;
 	@Column
-    private String tipo;
+	private String tipo;
 	@Column
-    private String nome;
-	@ManyToOne(optional=false) 
-	@JoinColumn(name="militar_id", nullable=false, updatable=false)
-    private String criador;
+	private String nome;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "criador_id", nullable = false, updatable = false)
+	private Militar criador;
 	@Column
-    private Date dataHoraCadastro;
+	private Date dataHoraCadastro;
 	@Column
-    private Boolean visivel;
+	private Boolean visivel;
 	@OneToMany(mappedBy = "documento", cascade = CascadeType.ALL)
 	private List<Arquivo> arquivos;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "Documento_Militar", joinColumns = { @JoinColumn(name = "documento_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "militar_id") })
+	private List<Militar> militares;
 
-	public Documento(String tipo, String nome, String criador, Date dataHoraCadastro, Boolean visivel) {
+	public Documento() {
+	}
+
+	public Documento(String tipo, String nome, Militar criador, Date dataHoraCadastro, Boolean visivel) {
 		this.tipo = tipo;
 		this.nome = nome;
 		this.criador = criador;
@@ -50,12 +56,12 @@ public class Documento implements Serializable {
 		this.visivel = visivel;
 	}
 
-	public String getId() {
+	public long getDocumento_id() {
 		return documento_id;
 	}
 
-	public void setId(String id) {
-		this.documento_id = id;
+	public void setDocumento_id(long documento_id) {
+		this.documento_id = documento_id;
 	}
 
 	public String getTipo() {
@@ -72,6 +78,14 @@ public class Documento implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Militar getCriador() {
+		return criador;
+	}
+
+	public void setCriador(Militar criador) {
+		this.criador = criador;
 	}
 
 	public Date getDataHoraCadastro() {
@@ -97,5 +111,15 @@ public class Documento implements Serializable {
 	public void setArquivos(List<Arquivo> arquivos) {
 		this.arquivos = arquivos;
 	}
+
+	public List<Militar> getMilitares() {
+		return militares;
+	}
+
+	public void setMilitares(List<Militar> militares) {
+		this.militares = militares;
+	}
+
+	
 
 }
