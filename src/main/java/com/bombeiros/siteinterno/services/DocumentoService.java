@@ -1,52 +1,49 @@
 package com.bombeiros.siteinterno.services;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import com.bombeiros.siteinterno.DTO.ArquivoDTO;
 import com.bombeiros.siteinterno.DTO.DocumentoDTO;
 import com.bombeiros.siteinterno.models.Documento;
 import com.bombeiros.siteinterno.repository.DocumentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+// import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 public class DocumentoService {
 
-    // use constructor injection on documentRepository!!!!
     @Autowired
     private DocumentRepository documentoRepository;
-
-    // Método de salvar as informações do Bga e uma documento referente ao Bga
-    // Dependendo do banco de dados utilizado, provavelmente deverá ser feito
-    // alterações no "application.properties" para ser feito o upload de documentos
-    // No application.properties você definirá o tamanho máximo que uma documento
-    // pode ter para ser salva no banco de dados
-
-    // ------ V2 ------
 
     public DocumentoDTO criar(DocumentoDTO documentoDTO) throws IOException {
         Documento documento = new Documento(documentoDTO.getTipo(), documentoDTO.getNome(), documentoDTO.getCriador(),
                 documentoDTO.getDataHoraCadastro(), documentoDTO.getVisivel());
-
         documentoRepository.save(documento);
-
         return documentoDTO;
-        // String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        // Arquivo arquivo = new Arquivo(nome, tipo, dataHoraCadastro)
-        // Arquivo arquivo = new Arquivo(fileName, file.getContentType(),
-        // file.getBytes());
     }
 
-    // public List<Arquivo> getArquivos(Long id) throws IOException {
-    // //enviar model para o repository
+    // mudar para string
+    public List<DocumentoDTO> getDocumentos(Long id) throws IOException {
+        List<DocumentoDTO> list = documentoRepository.findAll().stream().map(doc -> {
+            return new DocumentoDTO(doc.getDocumento_id(), doc.getTipo(), doc.getNome(), doc.getCriador(),
+                    doc.getDataHoraCadastro(), doc.getVisivel(), doc.getArquivos());
+        }).collect(Collectors.toList());
+        return list;
+    }
 
-    // return null;
-    // }
-
-    // public List<Documento> getDocumentos() throws IOException {
-    // //enviar model para o repository
-    // return null;
-    // }
+    public List<ArquivoDTO> getArquivosDeDocumento(Long id) {
+        List<ArquivoDTO> arquivoDTO = documentoRepository.getOne(id).getArquivos().stream().map(arquivo -> {
+            // String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
+            //         .path(arquivo.getArquivo_id().toString()).toUriString();
+            return new ArquivoDTO(arquivo.getArquivo_id(), arquivo.getDocumento(), arquivo.getNome(), arquivo.getTipo(),
+            arquivo.getCriador(), arquivo.getDataHoraCadastro(), arquivo.getStatus(), arquivo.getNoOcr(), arquivo.getTamanho());
+        }).collect(Collectors.toList());
+        return arquivoDTO;
+    }
 
     // ------ V1 ------
 
