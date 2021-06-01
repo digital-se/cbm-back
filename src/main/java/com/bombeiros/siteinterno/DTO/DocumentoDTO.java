@@ -4,18 +4,19 @@ import java.util.Date;
 import java.util.List;
 
 import com.bombeiros.siteinterno.models.Arquivo;
+import com.bombeiros.siteinterno.models.Militar;
 
 public class DocumentoDTO {
 	
-	private String documento_id;
+	private long documento_id;
     private String tipo;
     private String nome;
-    private String criador;
+    private Militar criador;
     private Date dataHoraCadastro;
     private Boolean visivel;
 	private List<Arquivo> arquivos;
 
-	public DocumentoDTO(String documento_id, String tipo, String nome, String criador, Date dataHoraCadastro,
+	public DocumentoDTO(long documento_id, String tipo, String nome, Militar criador, Date dataHoraCadastro,
 			Boolean visivel, List<Arquivo> arquivos) {
 		this.documento_id = documento_id;
 		this.tipo = tipo;
@@ -26,11 +27,11 @@ public class DocumentoDTO {
 		this.arquivos = arquivos;
 	}
 
-	public String getDocumento_id() {
+	public long getDocumento_id() {
 		return documento_id;
 	}
 
-	public void setDocumento_id(String documento_id) {
+	public void setDocumento_id(long documento_id) {
 		this.documento_id = documento_id;
 	}
 
@@ -50,11 +51,11 @@ public class DocumentoDTO {
 		this.nome = nome;
 	}
 
-	public String getCriador() {
+	public Militar getCriador() {
 		return criador;
 	}
 
-	public void setCriador(String criador) {
+	public void setCriador(Militar criador) {
 		this.criador = criador;
 	}
 
