@@ -1,62 +1,11 @@
-version: '3'
-services:
-  ocr-konga_dev:
-    container_name: back-dev
-    build:
-      context: .
-    ports:
-      - "9080:80"
-      - "9443:443"
-      - "9000:9000"
-    volumes:
-      - ".:/app"
-    working_dir: "/app"
-    # environment:
-    #   ANBIENT: 2
-    #   TIME_TOKEN: 36000
-    #   JWT_SECRET: asdasdasdasd
-    #   PHP_DATE_TIMEZONE: America/Maceio
-    #   XDEBUG_REMOTE_AUTOSTART: 1
-  ocr-konga_homologa:
-    container_name: back-homologa
-    build:
-      context: .
-    ports:
-      - "9080:80"
-      - "9443:443"
-    volumes:
-      - ".:/app"
-    restart: always
-    # environment:
-    #   ANBIENT: 2
-    #   TIME_TOKEN: 36000
-    #   JWT_SECRET: asdasdasdasd
-    #   PHP_DATE_TIMEZONE: America/Maceio
-    #   XDEBUG_REMOTE_AUTOSTART: 1
+version: '3.7'
 
-  ocr-konga_prod:
-    container_name: back-prod
+services:
+
+  digitalse-cbm-back:
+    container_name: digitalse-cbm-back
     build:
       context: .
-      args:
-        - http_proxy=http://187.17.2.254:8080
-        - https_proxy=http://187.17.2.254:8080
-        # - no_proxy=agatha.cbm.se.gov.br, agiliza.cbm.se.gov.br, api-arbitrium.cbm.se.gov.br, api-safepro.cbm.se.gov.br, arbitrium.cbm.se.gov.br, asplan.cbm.se.gov.br, ava.cbm.se.gov.br, bmrh.cbm.se.gov.br, boletins.cbm.se.gov.br, boletos.cbm.se.gov.br, concurso.cbm.se.gov.br, dat.cbm.se.gov.br, escalas.cbm.se.gov.br, esic.cbm.se.gov.br, git.cbm.se.gov.br, hidrante.cbm.se.gov.br, jenkins.cbm.se.gov.br, jucese.cbm.se.gov.br, k8s.cbm.se.gov.br, pericia.cbm.se.gov.br, seguranca.cbm.se.gov.br
+      dockerfile: dockerfile
     ports:
-      - "9080:80"
-      - "9443:443"
-    volumes:
-      - /deploys-prod/back:/app
-    restart: always
-    environment:
-    #   ANBIENT: 1
-    #   TIME_TOKEN: 36000
-    #   JWT_SECRET: asdasdasdsadsad
-    #   PHP_DATE_TIMEZONE: America/Maceio
-      http_proxy: http://187.17.2.254:8080
-      https_proxy: http://187.17.2.254:8080
-      # no_proxy: agatha.cbm.se.gov.br, agiliza.cbm.se.gov.br, api-arbitrium.cbm.se.gov.br, api-safepro.cbm.se.gov.br, arbitrium.cbm.se.gov.br, asplan.cbm.se.gov.br, ava.cbm.se.gov.br, bmrh.cbm.se.gov.br, boletins.cbm.se.gov.br, boletos.cbm.se.gov.br, concurso.cbm.se.gov.br, dat.cbm.se.gov.br, escalas.cbm.se.gov.br, esic.cbm.se.gov.br, git.cbm.se.gov.br, hidrante.cbm.se.gov.br, jenkins.cbm.se.gov.br, jucese.cbm.se.gov.br, k8s.cbm.se.gov.br, pericia.cbm.se.gov.br, seguranca.cbm.se.gov.br
-networks:
-  default:
-    external:
-      name: internal
+      - '3305:8082'
