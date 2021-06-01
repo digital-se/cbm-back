@@ -55,3 +55,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### CONFIG FILE ###
+.env
