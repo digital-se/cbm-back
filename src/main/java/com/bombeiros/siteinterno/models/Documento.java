@@ -45,7 +45,8 @@ public class Documento implements Serializable {
 			@JoinColumn(name = "militar_id") })
 	private List<Militar> militares;
 
-	public Documento() {
+	public Documento(){
+		
 	}
 
 	public Documento(String tipo, String nome, Militar criador, Date dataHoraCadastro, Boolean visivel) {

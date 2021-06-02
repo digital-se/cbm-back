@@ -16,6 +16,10 @@ public class DocumentoDTO {
     private Boolean visivel;
 	private List<Arquivo> arquivos;
 
+	public DocumentoDTO(){
+		
+	}
+
 	public DocumentoDTO(long documento_id, String tipo, String nome, Militar criador, Date dataHoraCadastro,
 			Boolean visivel, List<Arquivo> arquivos) {
 		this.documento_id = documento_id;
