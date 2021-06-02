@@ -17,7 +17,15 @@ public class DocumentoDTO {
 	private List<Arquivo> arquivos;
 
 	public DocumentoDTO(){
-		
+
+	}
+
+	public DocumentoDTO(String tipo, String nome, Militar criador,
+			Boolean visivel) {
+		this.tipo = tipo;
+		this.nome = nome;
+		this.criador = criador;
+		this.visivel = visivel;
 	}
 
 	public DocumentoDTO(long documento_id, String tipo, String nome, Militar criador, Date dataHoraCadastro,
@@ -30,15 +38,7 @@ public class DocumentoDTO {
 		this.visivel = visivel;
 		this.arquivos = arquivos;
 	}
-
-	public DocumentoDTO(String tipo, String nome, Militar criador,
-			Boolean visivel) {
-		this.tipo = tipo;
-		this.nome = nome;
-		this.criador = criador;
-		this.visivel = visivel;
-	}
-
+	
 	public long getDocumento_id() {
 		return documento_id;
 	}
