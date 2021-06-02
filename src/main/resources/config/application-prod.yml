@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: x
+    properties:
+      hibernate:
+        dialect: x
+        jdbc:
+          lob:
+            '[non_contextual_creation]': true
+  
+  datasource:
+    url: x
+    username: x
+    password: x
+    hikari:
+      auto-commit: false
+keycloak:
+  realm: x
+  auth-server-url: x
+  ssl-required: x
+  resource: x
+  credentials:
+    secret: x
+  use-resource-role-mappings: true
+  bearer-only: true

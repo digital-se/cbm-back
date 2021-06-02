@@ -1,0 +1,13 @@
+server:
+  port: 8082
+
+spring:
+  jpa:
+    open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  profiles:
+    active: dev
+

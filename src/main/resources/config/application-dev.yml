@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            '[non_contextual_creation]': true
+  
+  datasource:
+    url: ${env.DEV_DB_URL}
+    username: ${env.DEV_DB_USERNAME}
+    password: ${env.DEV_DB_PASSWORD}
+    hikari:
+      auto-commit: false
+keycloak:
+  realm: ${env.DEV_KEYCLOAK_REALM}
+  auth-server-url: ${env.DEV_KEYCLOAK_AUTH_SERVER_URL}
+  ssl-required: ${env.DEV_KEYCLOAK_SSL_REQUIRED}
+  resource: ${env.DEV_KEYCLOAK_RESOURCE}
+  credentials:
+    secret: ${env.DEV_KEYCLOAK_CREDENTIALS_SECRET}
+  use-resource-role-mappings: true
+  bearer-only: true

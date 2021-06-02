@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile: hom
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            '[non_contextual_creation]': true
+  
+  datasource:
+    url: ${env.HOM_DB_URL}
+    username: ${env.HOM_DB_USERNAME}
+    password: ${env.HOM_DB_PASSWORD}
+    hikari:
+      auto-commit: false
+keycloak:
+  realm: ${env.HOM_KEYCLOAK_REALM}
+  auth-server-url: ${env.HOM_KEYCLOAK_AUTH_SERVER_URL}
+  ssl-required: ${env.HOM_KEYCLOAK_SSL_REQUIRED}
+  resource: ${env.HOM_KEYCLOAK_RESOURCE}
+  credentials:
+    secret: ${env.HOM_KEYCLOAK_CREDENTIALS_SECRET}
+  use-resource-role-mappings: true
+  bearer-only: true
