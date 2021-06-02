@@ -1,0 +1,6 @@
+target
+.env
+.dockerignore
+dockerfile
+makefile
+jenkinsfile
