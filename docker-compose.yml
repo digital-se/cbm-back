@@ -4,8 +4,22 @@ services:
 
   digitalse-cbm-back:
     container_name: digitalse-cbm-back
+    environment:
+      - DB_URL
+      - DB_USER
+      - DB_PASS
+      - KC_REALM
+      - KC_AUTH_SERVER_URL
+      - KC_SSL_REQUIRED
+      - KC_RESOURCE
+      - KC_CREDENTIALS_SECRET
     build:
       context: .
       dockerfile: dockerfile
     ports:
       - '3305:8082'
+
+networks:
+  default:
+    external:
+      name: internal
