@@ -8,22 +8,24 @@ import java.util.stream.Collectors;
 import com.bombeiros.siteinterno.DTO.ArquivoDTO;
 import com.bombeiros.siteinterno.DTO.DocumentoDTO;
 import com.bombeiros.siteinterno.models.Documento;
-import com.bombeiros.siteinterno.repository.DocumentRepository;
+import com.bombeiros.siteinterno.models.Militar;
+import com.bombeiros.siteinterno.repository.DocumentoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-// import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 public class DocumentoService {
 
     @Autowired
-    private DocumentRepository documentoRepository;
+    private DocumentoRepository documentoRepository;
+
+    @Autowired
+    private MilitarService militarService; 
 
     public DocumentoDTO criar(DocumentoDTO documentoDTO) throws IOException {
-        Documento documento = new Documento(documentoDTO.getTipo(), documentoDTO.getNome(), documentoDTO.getCriador(),
-                new Date(), documentoDTO.getVisivel());
-        documentoRepository.save(documento);
+        Militar militar = new Militar(militarService.getByMatricula(documentoDTO.getCriador().getNumMatricula()));
+        documentoRepository.save(new Documento(documentoDTO.getTipo(), documentoDTO.getNome(), militar, new Date(), documentoDTO.getVisivel()));
         return documentoDTO;
     }
 
@@ -38,8 +40,6 @@ public class DocumentoService {
 
     public List<ArquivoDTO> getArquivosDeDocumento(Long id) {
         List<ArquivoDTO> arquivoDTO = documentoRepository.getOne(id).getArquivos().stream().map(arquivo -> {
-            // String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/todos/listar/")
-            //         .path(arquivo.getArquivo_id().toString()).toUriString();
             return new ArquivoDTO(arquivo.getArquivo_id(), arquivo.getDocumento(), arquivo.getNome(), arquivo.getTipo(),
             arquivo.getCriador(), arquivo.getDataHoraCadastro(), arquivo.getStatus(), arquivo.getNoOcr(), arquivo.getTamanho());
         }).collect(Collectors.toList());
