@@ -6,6 +6,7 @@ import java.util.List;
 import com.bombeiros.siteinterno.DTO.ArquivoDTO;
 import com.bombeiros.siteinterno.DTO.DocumentoDTO;
 import com.bombeiros.siteinterno.services.DocumentoService;
+import com.bombeiros.siteinterno.services.MilitarService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +30,9 @@ public class DocumentoController {
     @Autowired
     private DocumentoService documentoService;
 
+    @Autowired
+    private MilitarService militarService;
+
     public DocumentoController(DocumentoService documentoService) {
         this.documentoService = documentoService;
     }
@@ -40,11 +44,20 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping("/criar")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> criar(@RequestPart("documento") DocumentoDTO documentoDTO) throws IOException {
-
-        documentoService.criar(documentoDTO);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(documentoDTO);
+    public ResponseEntity<DocumentoDTO> criar(@RequestBody DocumentoDTO documentoDTO) throws IOException {
+        try{
+            if(militarService.hasMilitar(documentoDTO.getCriador().getNumMatricula())){
+                return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
+            } else {
+                militarService.save(documentoDTO.getCriador().getNumMatricula());
+                return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
+            }
+        } catch(NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch(Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     // ADICIONAR ARQUIVO A UM DOCUMENTO
