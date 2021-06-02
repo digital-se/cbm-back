@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.bombeiros.siteinterno.DTO.MilitarDTO;
+
 @Entity
 @Table(name = "MILITAR")
 public class Militar implements Serializable {
@@ -17,7 +19,7 @@ public class Militar implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String militar_id;
+    private String numMatricula;
 
     @ManyToMany(mappedBy = "militares", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Documento> documentos;
@@ -25,16 +27,21 @@ public class Militar implements Serializable {
     public Militar() {
     }
 
-    public Militar(String militar_id) {
-        this.militar_id = militar_id;
+    public Militar(String numMatricula) {
+        this.numMatricula = numMatricula;
     }
 
-    public String getMilitar_id() {
-        return militar_id;
+    public Militar(MilitarDTO militar) {
+        this.numMatricula = militar.getNumMatricula();
     }
 
-    public void setMilitar_id(String militar_id) {
-        this.militar_id = militar_id;
+    public String getNumMatricula() {
+        return numMatricula;
     }
 
+    public void setNumMatricula(String numMatricula) {
+        this.numMatricula = numMatricula;
+    }
+
+    
 }
