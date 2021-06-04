@@ -11,9 +11,9 @@ pipeline {
         BRANCH = 'main'
         WEBHOOK = 'https://discord.com/api/webhooks/750364129340162110/gLwZFqrOTulHdOERp4Yv5BZvFkvmvI9JvnpxN1Ir4121hnV_XmUOz4WB6ZfkBbiuFYgs'
     }
-    options {
-        // gitlabBuilds(builds: ['Delete Folder TEMP', 'Clone Project', 'Make Project','Make Permission','Install Deps','Create Version'])
-    }
+    // options {
+    //     // gitlabBuilds(builds: ['Delete Folder TEMP', 'Clone Project', 'Make Project','Make Permission','Install Deps','Create Version'])
+    // }
     stages {
 
         // stage("Teste do marco") {
