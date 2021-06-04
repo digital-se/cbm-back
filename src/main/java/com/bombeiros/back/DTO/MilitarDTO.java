@@ -1,6 +1,6 @@
-package com.bombeiros.siteinterno.DTO;
+package com.bombeiros.back.DTO;
 
-import com.bombeiros.siteinterno.models.Militar;
+import com.bombeiros.back.models.Militar;
 
 public class MilitarDTO {
 

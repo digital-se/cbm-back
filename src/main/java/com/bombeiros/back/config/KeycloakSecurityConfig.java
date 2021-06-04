@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.config;
+package com.bombeiros.back.config;
 
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;

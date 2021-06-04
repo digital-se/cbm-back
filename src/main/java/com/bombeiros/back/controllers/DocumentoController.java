@@ -1,12 +1,12 @@
-package com.bombeiros.siteinterno.controllers;
+package com.bombeiros.back.controllers;
 
 import java.io.IOException;
 import java.util.List;
 
-import com.bombeiros.siteinterno.DTO.ArquivoDTO;
-import com.bombeiros.siteinterno.DTO.DocumentoDTO;
-import com.bombeiros.siteinterno.services.DocumentoService;
-import com.bombeiros.siteinterno.services.MilitarService;
+import com.bombeiros.back.DTO.ArquivoDTO;
+import com.bombeiros.back.DTO.DocumentoDTO;
+import com.bombeiros.back.services.DocumentoService;
+import com.bombeiros.back.services.MilitarService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

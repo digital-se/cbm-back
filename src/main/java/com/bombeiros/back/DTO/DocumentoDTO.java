@@ -1,10 +1,10 @@
-package com.bombeiros.siteinterno.DTO;
+package com.bombeiros.back.DTO;
 
 import java.util.Date;
 import java.util.List;
 
-import com.bombeiros.siteinterno.models.Arquivo;
-import com.bombeiros.siteinterno.models.Militar;
+import com.bombeiros.back.models.Arquivo;
+import com.bombeiros.back.models.Militar;
 
 public class DocumentoDTO {
 	

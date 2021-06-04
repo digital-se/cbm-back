@@ -1,8 +1,8 @@
-package com.bombeiros.siteinterno.controllers;
+package com.bombeiros.back.controllers;
 
 import java.io.IOException;
 
-import com.bombeiros.siteinterno.services.OcrService;
+import com.bombeiros.back.services.OcrService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.services;
+package com.bombeiros.back.services;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.models;
+package com.bombeiros.back.models;
 
 import java.io.Serializable;
 import java.util.Date;

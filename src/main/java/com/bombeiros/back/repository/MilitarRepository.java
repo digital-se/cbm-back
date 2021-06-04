@@ -1,6 +1,6 @@
-package com.bombeiros.siteinterno.repository;
+package com.bombeiros.back.repository;
 
-import com.bombeiros.siteinterno.models.Militar;
+import com.bombeiros.back.models.Militar;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

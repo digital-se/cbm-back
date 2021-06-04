@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno;
+package com.bombeiros.back;
 
 
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

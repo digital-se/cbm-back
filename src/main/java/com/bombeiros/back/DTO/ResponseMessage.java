@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.DTO;
+package com.bombeiros.back.DTO;
 
 public class ResponseMessage {
 

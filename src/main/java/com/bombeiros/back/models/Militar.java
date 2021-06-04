@@ -1,4 +1,4 @@
-package com.bombeiros.siteinterno.models;
+package com.bombeiros.back.models;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.bombeiros.siteinterno.DTO.MilitarDTO;
+import com.bombeiros.back.DTO.MilitarDTO;
 
 @Entity
 @Table(name = "MILITAR")
@@ -31,10 +31,6 @@ public class Militar implements Serializable {
         this.numMatricula = numMatricula;
     }
 
-    public Militar(MilitarDTO militar) {
-        this.numMatricula = militar.getNumMatricula();
-    }
-
     public String getNumMatricula() {
         return numMatricula;
     }
@@ -43,5 +39,7 @@ public class Militar implements Serializable {
         this.numMatricula = numMatricula;
     }
 
-    
+    public void convertFromDTO(MilitarDTO militar){
+        this.numMatricula = militar.getNumMatricula();
+    }
 }

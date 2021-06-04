@@ -1,15 +1,15 @@
-package com.bombeiros.siteinterno.services;
+package com.bombeiros.back.services;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.bombeiros.siteinterno.DTO.ArquivoDTO;
-import com.bombeiros.siteinterno.DTO.DocumentoDTO;
-import com.bombeiros.siteinterno.models.Documento;
-import com.bombeiros.siteinterno.models.Militar;
-import com.bombeiros.siteinterno.repository.DocumentoRepository;
+import com.bombeiros.back.DTO.ArquivoDTO;
+import com.bombeiros.back.DTO.DocumentoDTO;
+import com.bombeiros.back.models.Documento;
+import com.bombeiros.back.models.Militar;
+import com.bombeiros.back.repository.DocumentoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,8 @@ public class DocumentoService {
     private MilitarService militarService; 
 
     public DocumentoDTO criar(DocumentoDTO documentoDTO) throws IOException {
-        Militar militar = new Militar(militarService.getByMatricula(documentoDTO.getCriador().getNumMatricula()));
+        Militar militar = new Militar();
+        militar.convertFromDTO(militarService.getByMatricula(documentoDTO.getCriador().getNumMatricula()));
         documentoRepository.save(new Documento(documentoDTO.getTipo(), documentoDTO.getNome(), militar, new Date(), documentoDTO.getVisivel()));
         return documentoDTO;
     }

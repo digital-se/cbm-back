@@ -1,12 +1,13 @@
-package com.bombeiros.siteinterno.services;
+package com.bombeiros.back.services;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bombeiros.siteinterno.DTO.MilitarDTO;
-import com.bombeiros.siteinterno.models.Militar;
-import com.bombeiros.siteinterno.repository.MilitarRepository;
+import com.bombeiros.back.DTO.MilitarDTO;
+import com.bombeiros.back.models.Militar;
+import com.bombeiros.back.repository.MilitarRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,7 +26,9 @@ public class MilitarService {
     }
 
     public List<MilitarDTO> getListByName(String nome) throws IOException {
-        JsonNode jsonNode = new ObjectMapper().readTree(new RestTemplate().getForObject("https://sandbox-api.cbm.se.gov.br/bmrh/militares/obtermilitares/" + nome, String.class));
+        System.out.println(URLEncoder.encode("https://sandbox-api.cbm.se.gov.br/bmrh/militares/obtermilitares/" + nome, "UTF-8"));
+        String url = "https://sandbox-api.cbm.se.gov.br/bmrh/militares/obtermilitares/" + nome;
+        JsonNode jsonNode = new ObjectMapper().readTree(new RestTemplate().getForObject(URLEncoder.encode(url, "UTF-8"), String.class));
         List<MilitarDTO> listaMilitares = new ArrayList<>();
         for (JsonNode node : jsonNode.findValues("ViewMilitar")) {
             MilitarDTO mdto = new MilitarDTO(node.get("num_matricula").asText(), node.get("nom_completo").asText(), node.get("nom_guerra").asText(), node.get("dsc_cargo").asText());
