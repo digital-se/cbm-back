@@ -3,7 +3,7 @@ RUN mkdir -p /workspace
 WORKDIR /workspace
 COPY pom.xml /workspace
 COPY src /workspace/src
-RUN mvn -B -f pom.xml clean package -DskipTests
+RUN mvn -B -f pom.xml clean package -DskipTests -Dhttps.protocols=TLSv1.2
 
 FROM openjdk:15-jdk-slim
 COPY --from=build /workspace/target/*.jar app.jar
