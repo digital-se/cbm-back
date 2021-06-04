@@ -21,9 +21,9 @@
 	<dependencies>
 		<!-- Depencency for using dotenv -->
 		<dependency>
-  			<groupId>me.paulschwarz</groupId>
-  			<artifactId>spring-dotenv</artifactId>
-  			<version>2.3.0</version>
+			<groupId>me.paulschwarz</groupId>
+			<artifactId>spring-dotenv</artifactId>
+			<version>2.3.0</version>
 		</dependency>
 
 		<dependency>
@@ -35,17 +35,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
-        		<!-- Exclude the Tomcat dependency -->
-        		<exclusion>
-          			<groupId>org.springframework.boot</groupId>
-          			<artifactId>spring-boot-starter-tomcat</artifactId>
-       			</exclusion>
-      		</exclusions>
+				<!-- Exclude the Tomcat dependency -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- Add Jetty as a replacement -->
 		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-jetty</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jetty</artifactId>
 		</dependency>
 
 		<dependency>
@@ -60,7 +60,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -102,7 +102,7 @@
 			<artifactId>springfox-boot-starter</artifactId>
 			<version>3.0.0</version>
 		</dependency>
-		
+
 		<!-- swagger antigo -->
 		<!-- <dependency>
 			<groupId>io.springfox</groupId>
@@ -133,8 +133,8 @@
 			<groupId>org.keycloak</groupId>
 			<artifactId>keycloak-spring-boot-starter</artifactId>
 			<version>${keycloak.version}</version>
-		 </dependency>
-		
+		</dependency>
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -158,15 +158,15 @@
 
 	<dependencyManagement>
 		<dependencies>
-		   <dependency>
-			  <groupId>org.keycloak.bom</groupId>
-			  <artifactId>keycloak-adapter-bom</artifactId>
-			  <version>${keycloak.version}</version>
-			  <type>pom</type>
-			  <scope>import</scope>
-		   </dependency>
+			<dependency>
+				<groupId>org.keycloak.bom</groupId>
+				<artifactId>keycloak-adapter-bom</artifactId>
+				<version>${keycloak.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
-	 </dependencyManagement>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
@@ -175,16 +175,16 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Dependencies>org.keycloak.keycloak-services</Dependencies>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Dependencies>org.keycloak.keycloak-services</Dependencies>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
