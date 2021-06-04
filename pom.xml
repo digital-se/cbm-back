@@ -8,10 +8,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bombeiros</groupId>
-	<artifactId>site-interno</artifactId>
+	<artifactId>back</artifactId>
 	<version>0.0.1</version>
-	<name>site-interno</name>
-	<description>Site interno dos bombeiros</description>
+	<name>back</name>
+	<description>Back do projeto DigitalSE no Corpo de Bombeiros Militar</description>
 
 	<properties>
 		<java.version>15</java.version>
