@@ -13,6 +13,7 @@ services:
       - KC_SSL_REQUIRED
       - KC_RESOURCE
       - KC_CREDENTIALS_SECRET
+      - SECRET
     build:
       context: .
       dockerfile: dockerfile
