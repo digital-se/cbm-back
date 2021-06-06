@@ -23,15 +23,23 @@ public class DocumentoService {
     @Autowired
     private MilitarService militarService; 
 
-    public DocumentoDTO criar(DocumentoDTO documentoDTO) throws IOException {
+    public Documento criar(DocumentoDTO documentoDTO) throws IOException {
         Militar militar = new Militar();
         militar.convertFromDTO(militarService.getByMatricula(documentoDTO.getCriador().getMatricula()));
-        documentoRepository.save(new Documento(documentoDTO.getTipo(), documentoDTO.getNome(), militar, new Date(), documentoDTO.getVisivel()));
-        return documentoDTO;
+        Documento doc = documentoRepository.save(new Documento(documentoDTO.getTipo(), documentoDTO.getNome(), militar, new Date(), documentoDTO.getVisivel()));
+        return doc;
     }
 
     // mudar para string
     public List<DocumentoDTO> getDocumentos(Long id) throws IOException {
+        List<DocumentoDTO> list = documentoRepository.findAll().stream().map(doc -> {
+            return new DocumentoDTO(doc.getDocumento_id(), doc.getTipo(), doc.getNome(), doc.getCriador(),
+                    doc.getDataHoraCadastro(), doc.getVisivel(), doc.getArquivos());
+        }).collect(Collectors.toList());
+        return list;
+    }
+
+    public List<DocumentoDTO> getAllDocumentos() throws IOException {
         List<DocumentoDTO> list = documentoRepository.findAll().stream().map(doc -> {
             return new DocumentoDTO(doc.getDocumento_id(), doc.getTipo(), doc.getNome(), doc.getCriador(),
                     doc.getDataHoraCadastro(), doc.getVisivel(), doc.getArquivos());

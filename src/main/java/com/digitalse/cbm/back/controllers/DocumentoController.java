@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping(value = "/v1/documentos")
+@RequestMapping(value = "/documentos")
 public class DocumentoController {
 
     @Autowired
@@ -38,23 +38,24 @@ public class DocumentoController {
     }
 
     // SALVAR
-    @ApiOperation(value = "Cria um documento vazio")
+    @ApiOperation(value = "Cria um documento")
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Criou um documento e salvou no DB"),
+        @ApiResponse(code = 201, message = "Criou um documento e salvou no DB"),
         @ApiResponse(code = 404, message = "Não encontrado"),
         @ApiResponse(code = 500, message = "Foi gerada uma exceção") 
     })
-    @PostMapping("/")
+    @PostMapping("")
     @ResponseBody
     public ResponseEntity<DocumentoDTO> criar(@RequestBody DocumentoDTO documentoDTO) throws IOException {
         try {
             if (militarService.hasMilitar(documentoDTO.getCriador().getMatricula())) {
-                return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
+                return ResponseEntity.status(HttpStatus.CREATED).body(new DocumentoDTO(documentoService.criar(documentoDTO)));
             } else {
                 militarService.save(documentoDTO.getCriador().getMatricula());
-                return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
+                return ResponseEntity.status(HttpStatus.CREATED).body(new DocumentoDTO(documentoService.criar(documentoDTO)));
             }
         } catch (NullPointerException e) {
+            System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {
             System.out.println(e);
@@ -79,6 +80,16 @@ public class DocumentoController {
     // }
 
     // LISTAR DOCUMENTOS / precisa implementar elastic search
+    @ApiOperation(value = "Retorna uma lista de documentos")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @GetMapping("")
+    public ResponseEntity<List<DocumentoDTO>> listarDocumentos() throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(documentoService.getAllDocumentos());
+    }
+
+    // LISTAR DOCUMENTOS / precisa implementar elastic search
     @ApiOperation(value = "Retorna uma lista de documentos a partir de um id")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos"),
             @ApiResponse(code = 404, message = "Não encontrado"),
@@ -94,7 +105,7 @@ public class DocumentoController {
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/getarquivos/{id}")
-    public ResponseEntity<List<ArquivoDTO>> listarDocumentos(@PathVariable long id) {
+    public ResponseEntity<List<ArquivoDTO>> listarArquivos(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(documentoService.getArquivosDeDocumento(id));
     }
 

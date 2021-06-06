@@ -120,7 +120,4 @@ public class Documento implements Serializable {
 	public void setMilitares(List<Militar> militares) {
 		this.militares = militares;
 	}
-
-	
-
 }
