@@ -25,7 +25,7 @@ public class DocumentoService {
 
     public DocumentoDTO criar(DocumentoDTO documentoDTO) throws IOException {
         Militar militar = new Militar();
-        militar.convertFromDTO(militarService.getByMatricula(documentoDTO.getCriador().getNumMatricula()));
+        militar.convertFromDTO(militarService.getByMatricula(documentoDTO.getCriador().getMatricula()));
         documentoRepository.save(new Documento(documentoDTO.getTipo(), documentoDTO.getNome(), militar, new Date(), documentoDTO.getVisivel()));
         return documentoDTO;
     }

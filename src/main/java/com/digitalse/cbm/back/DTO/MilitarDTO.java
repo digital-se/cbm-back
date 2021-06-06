@@ -4,7 +4,7 @@ import com.digitalse.cbm.back.models.Militar;
 
 public class MilitarDTO {
 
-    private String numMatricula;
+    private String matricula;
     private String nome;
     private String nomeDeGuerra;
     private String cargo;
@@ -14,26 +14,26 @@ public class MilitarDTO {
     }
 
     public MilitarDTO(String numMatricula) {
-        this.numMatricula = numMatricula;
+        this.matricula = numMatricula;
     }
 
     public MilitarDTO(String numMatricula, String nome, String nomeDeGuerra, String cargo) {
-        this.numMatricula = numMatricula;
+        this.matricula = numMatricula;
         this.nome = nome;
         this.nomeDeGuerra = nomeDeGuerra;
         this.cargo = cargo;
     }
 
     public MilitarDTO(Militar militar) {
-        this.numMatricula = militar.getNumMatricula();
+        this.matricula = militar.getMatricula();
     }
 
-    public String getNumMatricula() {
-        return numMatricula;
+    public String getMatricula() {
+        return matricula;
     }
 
-    public void setNumMatricula(String numMatricula) {
-        this.numMatricula = numMatricula;
+    public void setMatricula(String numMatricula) {
+        this.matricula = numMatricula;
     }
 
     public String getNome() {

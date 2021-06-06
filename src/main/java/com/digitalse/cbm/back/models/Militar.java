@@ -19,7 +19,7 @@ public class Militar implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String numMatricula;
+    private String matricula;
 
     @ManyToMany(mappedBy = "militares", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Documento> documentos;
@@ -28,18 +28,18 @@ public class Militar implements Serializable {
     }
 
     public Militar(String numMatricula) {
-        this.numMatricula = numMatricula;
+        this.matricula = numMatricula;
     }
 
-    public String getNumMatricula() {
-        return numMatricula;
+    public String getMatricula() {
+        return matricula;
     }
 
     public void setNumMatricula(String numMatricula) {
-        this.numMatricula = numMatricula;
+        this.matricula = numMatricula;
     }
 
     public void convertFromDTO(MilitarDTO militar){
-        this.numMatricula = militar.getNumMatricula();
+        this.matricula = militar.getMatricula();
     }
 }

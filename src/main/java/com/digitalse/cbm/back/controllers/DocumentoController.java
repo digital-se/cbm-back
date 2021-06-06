@@ -46,10 +46,10 @@ public class DocumentoController {
     @ResponseBody
     public ResponseEntity<DocumentoDTO> criar(@RequestBody DocumentoDTO documentoDTO) throws IOException {
         try{
-            if(militarService.hasMilitar(documentoDTO.getCriador().getNumMatricula())){
+            if(militarService.hasMilitar(documentoDTO.getCriador().getMatricula())){
                 return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
             } else {
-                militarService.save(documentoDTO.getCriador().getNumMatricula());
+                militarService.save(documentoDTO.getCriador().getMatricula());
                 return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
             }
         } catch(NullPointerException e) {

@@ -44,7 +44,7 @@ public class MilitarController {
     @GetMapping("/getMilitarPorMatricula/{matricula}")
     public ResponseEntity<MilitarDTO> getMilitarPorMatricula(@PathVariable String matricula) throws IOException {
         try{
-            MilitarDTO militardto = new MilitarDTO(militarService.getByMatricula(matricula).getNumMatricula());
+            MilitarDTO militardto = new MilitarDTO(militarService.getByMatricula(matricula).getMatricula());
             return ResponseEntity.status(HttpStatus.FOUND).body(militardto);
         } catch(NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
