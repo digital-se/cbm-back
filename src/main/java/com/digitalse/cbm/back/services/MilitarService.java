@@ -21,8 +21,8 @@ public class MilitarService {
     @Autowired
     private MilitarRepository militarRepository;
 
-    public MilitarDTO save(String numMatricula) throws IOException {
-        return new MilitarDTO(militarRepository.save(new Militar(numMatricula)));
+    public MilitarDTO save(String matricula) throws IOException {
+        return new MilitarDTO(militarRepository.save(new Militar(matricula)));
     }
 
     public List<MilitarDTO> getListByName(String nome) throws IOException {
@@ -37,11 +37,11 @@ public class MilitarService {
         return listaMilitares;
     }
 
-    public MilitarDTO getByMatricula(String numMatricula) throws IOException {
-        return new MilitarDTO(militarRepository.findByNumMatricula(numMatricula));
+    public MilitarDTO getByMatricula(String matricula) throws IOException {
+        return new MilitarDTO(militarRepository.findByMatricula(matricula));
     }
     
-    public Boolean hasMilitar(String numMatricula) throws IOException {
-        return militarRepository.findByNumMatricula(numMatricula) != null;
+    public Boolean hasMilitar(String matricula) throws IOException {
+        return militarRepository.findByMatricula(matricula) != null;
     }
 }

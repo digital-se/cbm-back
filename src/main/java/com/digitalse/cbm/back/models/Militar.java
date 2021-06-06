@@ -27,16 +27,16 @@ public class Militar implements Serializable {
     public Militar() {
     }
 
-    public Militar(String numMatricula) {
-        this.matricula = numMatricula;
+    public Militar(String matricula) {
+        this.matricula = matricula;
     }
 
     public String getMatricula() {
         return matricula;
     }
 
-    public void setNumMatricula(String numMatricula) {
-        this.matricula = numMatricula;
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     public void convertFromDTO(MilitarDTO militar){

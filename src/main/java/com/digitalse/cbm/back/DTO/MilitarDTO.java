@@ -13,12 +13,12 @@ public class MilitarDTO {
 
     }
 
-    public MilitarDTO(String numMatricula) {
-        this.matricula = numMatricula;
+    public MilitarDTO(String matricula) {
+        this.matricula = matricula;
     }
 
-    public MilitarDTO(String numMatricula, String nome, String nomeDeGuerra, String cargo) {
-        this.matricula = numMatricula;
+    public MilitarDTO(String matricula, String nome, String nomeDeGuerra, String cargo) {
+        this.matricula = matricula;
         this.nome = nome;
         this.nomeDeGuerra = nomeDeGuerra;
         this.cargo = cargo;
@@ -32,8 +32,8 @@ public class MilitarDTO {
         return matricula;
     }
 
-    public void setMatricula(String numMatricula) {
-        this.matricula = numMatricula;
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     public String getNome() {

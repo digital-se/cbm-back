@@ -39,22 +39,24 @@ public class DocumentoController {
 
     // SALVAR
     @ApiOperation(value = "Cria um documento vazio")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um documento e salvou no DB"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping("/criar")
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Criou um documento e salvou no DB"),
+        @ApiResponse(code = 404, message = "Não encontrado"),
+        @ApiResponse(code = 500, message = "Foi gerada uma exceção") 
+    })
+    @PostMapping("/")
     @ResponseBody
     public ResponseEntity<DocumentoDTO> criar(@RequestBody DocumentoDTO documentoDTO) throws IOException {
-        try{
-            if(militarService.hasMilitar(documentoDTO.getCriador().getMatricula())){
+        try {
+            if (militarService.hasMilitar(documentoDTO.getCriador().getMatricula())) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
             } else {
                 militarService.save(documentoDTO.getCriador().getMatricula());
                 return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
             }
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -62,16 +64,18 @@ public class DocumentoController {
 
     // ADICIONAR ARQUIVO A UM DOCUMENTO
     // @ApiOperation(value = "Cria um BGA e faz o upload de seu documento")
-    // @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um BGA e fez o upload de seu documento"),
-    //         @ApiResponse(code = 404, message = "Não encontrado"),
-    //         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    // @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um BGA e
+    // fez o upload de seu documento"),
+    // @ApiResponse(code = 404, message = "Não encontrado"),
+    // @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     // @PostMapping("/criar")
     // @ResponseBody
-    // public ResponseEntity<DocumentoDTO> criar(@RequestPart("documento") DocumentoDTO documentoDTO) throws IOException {
+    // public ResponseEntity<DocumentoDTO> criar(@RequestPart("documento")
+    // DocumentoDTO documentoDTO) throws IOException {
 
-    //     documentoService.criar(documentoDTO);
+    // documentoService.criar(documentoDTO);
 
-    //     return ResponseEntity.status(HttpStatus.CREATED).body(documentoDTO);
+    // return ResponseEntity.status(HttpStatus.CREATED).body(documentoDTO);
     // }
 
     // LISTAR DOCUMENTOS / precisa implementar elastic search
