@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,22 +40,21 @@ public class DocumentoController {
         this.documentoService = documentoService;
     }
 
-    // SALVAR
     @ApiOperation(value = "Cria um documento")
-    @ApiResponses(value = { 
-        @ApiResponse(code = 201, message = "Criou um documento e salvou no DB"),
-        @ApiResponse(code = 404, message = "Não encontrado"),
-        @ApiResponse(code = 500, message = "Foi gerada uma exceção") 
-    })
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Criou um documento e salvou no DB"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping("")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> criar(@RequestBody DocumentoDTO documentoDTO) throws IOException {
+    public ResponseEntity<DocumentoDTO> cadastrar(@RequestBody DocumentoDTO documentoDTO) throws IOException {
         try {
             if (militarService.hasMilitar(documentoDTO.getCriador().getMatricula())) {
-                return ResponseEntity.status(HttpStatus.CREATED).body(new DocumentoDTO(documentoService.criar(documentoDTO)));
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body(new DocumentoDTO(documentoService.criar(documentoDTO)));
             } else {
                 militarService.save(documentoDTO.getCriador().getMatricula());
-                return ResponseEntity.status(HttpStatus.CREATED).body(new DocumentoDTO(documentoService.criar(documentoDTO)));
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body(new DocumentoDTO(documentoService.criar(documentoDTO)));
             }
         } catch (NullPointerException e) {
             System.out.println(e);
@@ -63,6 +65,65 @@ public class DocumentoController {
         }
     }
 
+    @GetMapping("")
+    @ResponseBody
+    public ResponseEntity<DocumentoDTO> buscar(@RequestParam("palavras") String palavras) throws IOException {
+        try {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        } catch (NullPointerException e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<DocumentoDTO> obter(@PathVariable long id) throws IOException {
+        try {
+            return ResponseEntity.status(HttpStatus.FOUND).body(documentoService.getDocumento(id));
+
+            // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (NullPointerException e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // todo
+    @PutMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<DocumentoDTO> atualizar(@PathVariable long id) throws IOException {
+        try {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        } catch (NullPointerException e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    //documento -> arquivo -> ocr
+    @PatchMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<DocumentoDTO> dadosOcr(@PathVariable long id) throws IOException {
+        try {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        } catch (NullPointerException e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     // ADICIONAR ARQUIVO A UM DOCUMENTO
     // @ApiOperation(value = "Cria um BGA e faz o upload de seu documento")
     // @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um BGA e
@@ -80,34 +141,34 @@ public class DocumentoController {
     // }
 
     // LISTAR DOCUMENTOS / precisa implementar elastic search
-    @ApiOperation(value = "Retorna uma lista de documentos")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("")
-    public ResponseEntity<List<DocumentoDTO>> listarDocumentos() throws IOException {
-        return ResponseEntity.status(HttpStatus.OK).body(documentoService.getAllDocumentos());
-    }
+    // @ApiOperation(value = "Retorna uma lista de documentos")
+    // @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos"),
+    //         @ApiResponse(code = 404, message = "Não encontrado"),
+    //         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    // @GetMapping("")
+    // public ResponseEntity<List<DocumentoDTO>> listarDocumentos() throws IOException {
+    //     return ResponseEntity.status(HttpStatus.OK).body(documentoService.getAllDocumentos());
+    // }
 
-    // LISTAR DOCUMENTOS / precisa implementar elastic search
-    @ApiOperation(value = "Retorna uma lista de documentos a partir de um id")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/getdocumentos/{id}")
-    public ResponseEntity<List<DocumentoDTO>> listarArtigos(@PathVariable long id) throws IOException {
-        return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumentos(id));
-    }
+    // // LISTAR DOCUMENTOS / precisa implementar elastic search
+    // @ApiOperation(value = "Retorna uma lista de documentos a partir de um id")
+    // @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou uma lista de documentos"),
+    //         @ApiResponse(code = 404, message = "Não encontrado"),
+    //         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    // @GetMapping("/getdocumentos/{id}")
+    // public ResponseEntity<List<DocumentoDTO>> listarArtigos(@PathVariable long id) throws IOException {
+    //     return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumentos(id));
+    // }
 
-    // LISTAR ARQUIVOS / precisa implementar elastic search
-    @ApiOperation(value = "Retorna uma lista de arquivos de um respectivo documento")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou umalista dedocumentos deum respectivo BGA"),
-            @ApiResponse(code = 404, message = "Não encontrado"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/getarquivos/{id}")
-    public ResponseEntity<List<ArquivoDTO>> listarArquivos(@PathVariable long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(documentoService.getArquivosDeDocumento(id));
-    }
+    // // LISTAR ARQUIVOS / precisa implementar elastic search
+    // @ApiOperation(value = "Retorna uma lista de arquivos de um respectivo documento")
+    // @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou umalista dedocumentos deum respectivo BGA"),
+    //         @ApiResponse(code = 404, message = "Não encontrado"),
+    //         @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    // @GetMapping("/getarquivos/{id}")
+    // public ResponseEntity<List<ArquivoDTO>> listarArquivos(@PathVariable long id) {
+    //     return ResponseEntity.status(HttpStatus.OK).body(documentoService.getArquivosDeDocumento(id));
+    // }
 
     // // LISTAR DOCUMENTOS
     // @ApiOperation(value = "Retorna uma lista de BGA's")

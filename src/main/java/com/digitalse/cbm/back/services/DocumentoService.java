@@ -39,6 +39,12 @@ public class DocumentoService {
         return list;
     }
 
+    // mudar para string
+    public DocumentoDTO getDocumento(Long id) throws IOException {
+        DocumentoDTO documento = new DocumentoDTO(documentoRepository.getOne(id));
+        return documento;
+    }
+
     public List<DocumentoDTO> getAllDocumentos() throws IOException {
         List<DocumentoDTO> list = documentoRepository.findAll().stream().map(doc -> {
             return new DocumentoDTO(doc.getDocumento_id(), doc.getTipo(), doc.getNome(), doc.getCriador(),

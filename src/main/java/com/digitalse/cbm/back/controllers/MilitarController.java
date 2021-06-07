@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
-@RequestMapping(value = "/v1/militares")
+@RequestMapping(value = "/militar")
 public class MilitarController {
     
     @Autowired
@@ -26,7 +26,7 @@ public class MilitarController {
         this.militarService = militarService;
     }
 
-    @GetMapping("/getMilitarPorNome/{nome}")
+    @GetMapping("/{nome}")
     public ResponseEntity<List<MilitarDTO>> getMilitarPorNome(@PathVariable String nome) throws IOException {
         try{
             return ResponseEntity.status(HttpStatus.FOUND).body(militarService.getListByName(nome));
@@ -41,7 +41,7 @@ public class MilitarController {
         }
     }
 
-    @GetMapping("/getMilitarPorMatricula/{matricula}")
+    @GetMapping("/{matricula}")
     public ResponseEntity<MilitarDTO> getMilitarPorMatricula(@PathVariable String matricula) throws IOException {
         try{
             MilitarDTO militardto = new MilitarDTO(militarService.getByMatricula(matricula).getMatricula());
