@@ -37,8 +37,8 @@ public class MilitarService {
         return listaMilitares;
     }
 
-    public MilitarDTO getByMatricula(String matricula) throws IOException {
-        return new MilitarDTO(militarRepository.findByMatricula(matricula));
+    public Militar getByMatricula(String matricula) throws IOException {
+        return militarRepository.findByMatricula(matricula);
     }
     
     public Boolean hasMilitar(String matricula) throws IOException {

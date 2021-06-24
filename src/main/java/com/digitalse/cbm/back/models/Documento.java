@@ -57,6 +57,16 @@ public class Documento implements Serializable {
 		this.visivel = visivel;
 	}
 
+	public Documento(long documento_id, String tipo, String nome, Militar criador, Date dataHoraCadastro, Boolean visivel, List<Arquivo> arquivos) {
+		this.documento_id = documento_id;
+		this.tipo = tipo;
+		this.nome = nome;
+		this.criador = criador;
+		this.dataHoraCadastro = dataHoraCadastro;
+		this.visivel = visivel;
+		this.arquivos = arquivos;
+	}
+	
 	public long getDocumento_id() {
 		return documento_id;
 	}

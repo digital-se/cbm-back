@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
+import com.digitalse.cbm.back.models.Arquivo;
 import com.digitalse.cbm.back.models.Documento;
 import com.digitalse.cbm.back.models.Militar;
 import com.digitalse.cbm.back.repository.DocumentoRepository;
@@ -23,25 +24,29 @@ public class DocumentoService {
     @Autowired
     private MilitarService militarService; 
 
-    public Documento criar(DocumentoDTO documentoDTO) throws IOException {
-        Militar militar = new Militar();
-        militar.convertFromDTO(militarService.getByMatricula(documentoDTO.getCriador().getMatricula()));
-        Documento doc = documentoRepository.save(new Documento(documentoDTO.getTipo(), documentoDTO.getNome(), militar, new Date(), documentoDTO.getVisivel()));
+    public Documento salvar(Documento documento) throws IOException {
+        Documento doc = documentoRepository.save(documento);
+        return doc;
+    }
+
+    public Documento criar(DocumentoDTO documento) throws IOException {
+        Militar militar = militarService.getByMatricula(documento.getCriador().getMatricula());
+        Documento doc = documentoRepository.save(new Documento(documento.getTipo(), documento.getNome(), militar, new Date(), documento.getVisivel()));
         return doc;
     }
 
     // mudar para string
-    public List<DocumentoDTO> getDocumentos(Long id) throws IOException {
-        List<DocumentoDTO> list = documentoRepository.findAll().stream().map(doc -> {
-            return new DocumentoDTO(doc.getDocumento_id(), doc.getTipo(), doc.getNome(), doc.getCriador(),
+    public List<Documento> getDocumentos(Long id) throws IOException {
+        List<Documento> list = documentoRepository.findAll().stream().map(doc -> {
+            return new Documento(doc.getDocumento_id(), doc.getTipo(), doc.getNome(), doc.getCriador(),
                     doc.getDataHoraCadastro(), doc.getVisivel(), doc.getArquivos());
         }).collect(Collectors.toList());
         return list;
     }
 
     // mudar para string
-    public DocumentoDTO getDocumento(Long id) throws IOException {
-        DocumentoDTO documento = new DocumentoDTO(documentoRepository.getOne(id));
+    public Documento getDocumento(Long id) throws IOException {
+        Documento documento = documentoRepository.getOne(id);
         return documento;
     }
 
@@ -54,11 +59,11 @@ public class DocumentoService {
     }
 
     public List<ArquivoDTO> getArquivosDeDocumento(Long id) {
-        List<ArquivoDTO> arquivoDTO = documentoRepository.getOne(id).getArquivos().stream().map(arquivo -> {
+        List<ArquivoDTO> arquivoPai = documentoRepository.getOne(id).getArquivos().stream().map(arquivo -> {
             return new ArquivoDTO(arquivo.getArquivo_id(), arquivo.getDocumento(), arquivo.getNome(), arquivo.getTipo(),
             arquivo.getCriador(), arquivo.getDataHoraCadastro(), arquivo.getStatus(), arquivo.getNoOcr(), arquivo.getTamanho());
         }).collect(Collectors.toList());
-        return arquivoDTO;
+        return arquivoPai;
     }
 
     // ------ V1 ------

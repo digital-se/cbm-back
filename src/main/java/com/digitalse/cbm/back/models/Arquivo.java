@@ -13,6 +13,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.digitalse.cbm.back.DTO.ArquivoDTO;
+
 @Entity
 @Table(name = "ARQUIVO")
 public class Arquivo implements Serializable {
@@ -169,9 +171,8 @@ public class Arquivo implements Serializable {
     public void setTexto(String texto) {
         this.texto = texto;
     }
-
-    
-
-    
-
+    public static Arquivo convertFromDTO(ArquivoDTO arquivo) {
+        return new Arquivo(arquivo.getArquivo_id(), arquivo.getDocumento(), arquivo.getNome(), arquivo.getTipo(), 
+        arquivo.getCriador(), arquivo.getDataHoraCadastro(), arquivo.getStatus(), arquivo.getNoOcr(), arquivo.getTamanho(), arquivo.getDados(), arquivo.getTexto());
+    }
 }

@@ -2,6 +2,7 @@ package com.digitalse.cbm.back.DTO;
 
 import java.util.Date;
 
+import com.digitalse.cbm.back.models.Arquivo;
 import com.digitalse.cbm.back.models.Documento;
 import com.digitalse.cbm.back.models.Militar;
 
@@ -113,7 +114,10 @@ public class ArquivoDTO {
     public void setTexto(String texto) {
         this.texto = texto;
     }
-    
+    public static ArquivoDTO convertFromModel(Arquivo arquivo) {
+        return new ArquivoDTO(arquivo.getArquivo_id(), arquivo.getDocumento(), arquivo.getNome(), arquivo.getTipo(), 
+        arquivo.getCriador(), arquivo.getDataHoraCadastro(), arquivo.getStatus(), arquivo.getNoOcr(), arquivo.getTamanho(), arquivo.getDados(), arquivo.getTexto());
+    }
     
 
 }

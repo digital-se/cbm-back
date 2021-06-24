@@ -1,10 +1,9 @@
 package com.digitalse.cbm.back.controllers;
 
 import java.io.IOException;
-import java.util.List;
 
-import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
+import com.digitalse.cbm.back.models.Documento;
 import com.digitalse.cbm.back.services.DocumentoService;
 import com.digitalse.cbm.back.services.MilitarService;
 
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,7 +25,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping(value = "/documentos")
+@RequestMapping(value = "documento")
 public class DocumentoController {
 
     @Autowired
@@ -44,7 +42,7 @@ public class DocumentoController {
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Criou um documento e salvou no DB"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping("")
+    @PostMapping("/documentos")
     @ResponseBody
     public ResponseEntity<DocumentoDTO> cadastrar(@RequestBody DocumentoDTO documentoDTO) throws IOException {
         try {
@@ -65,7 +63,11 @@ public class DocumentoController {
         }
     }
 
-    @GetMapping("")
+    @ApiOperation(value = "Busca um documento por palavras")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Busca um documento e retornou o mesmo"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @GetMapping("/documentos")
     @ResponseBody
     public ResponseEntity<DocumentoDTO> buscar(@RequestParam("palavras") String palavras) throws IOException {
         try {
@@ -79,13 +81,18 @@ public class DocumentoController {
         }
     }
 
-    @GetMapping("/{id}")
+    @ApiOperation(value = "Busca um documento pelo id")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Busca um documento e retornou o mesmo"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @GetMapping("/documentos/{id}")
     @ResponseBody
     public ResponseEntity<DocumentoDTO> obter(@PathVariable long id) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.FOUND).body(documentoService.getDocumento(id));
-
-            // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            Documento documento = documentoService.getDocumento(id);
+            DocumentoDTO docDto = new DocumentoDTO(documento.getDocumento_id(), documento.getTipo(),
+                documento.getNome(), documento.getCriador(), documento.getDataHoraCadastro(), documento.getVisivel(), documento.getArquivos());
+            return ResponseEntity.status(HttpStatus.FOUND).body(docDto);
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -96,7 +103,7 @@ public class DocumentoController {
     }
 
     // todo
-    @PutMapping("/{id}")
+    @PutMapping("/documentos/{id}")
     @ResponseBody
     public ResponseEntity<DocumentoDTO> atualizar(@PathVariable long id) throws IOException {
         try {
@@ -110,20 +117,20 @@ public class DocumentoController {
         }
     }
 
-    //documento -> arquivo -> ocr
-    @PatchMapping("/{id}")
-    @ResponseBody
-    public ResponseEntity<DocumentoDTO> dadosOcr(@PathVariable long id) throws IOException {
-        try {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
-        } catch (NullPointerException e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (Exception e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    // //documento -> arquivo -> ocr
+    // @PatchMapping("/documentos/{id}")
+    // @ResponseBody
+    // public ResponseEntity<DocumentoDTO> dadosOcr(@PathVariable long id) throws IOException {
+    //     try {
+    //         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+    //     } catch (NullPointerException e) {
+    //         System.out.println(e);
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    //     } catch (Exception e) {
+    //         System.out.println(e);
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    //     }
+    // }
     // ADICIONAR ARQUIVO A UM DOCUMENTO
     // @ApiOperation(value = "Cria um BGA e faz o upload de seu documento")
     // @ApiResponses(value = { @ApiResponse(code = 200, message = "Criou um BGA e

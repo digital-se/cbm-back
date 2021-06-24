@@ -18,7 +18,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/ocr")
+@RequestMapping
 public class OcrController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class OcrController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PatchMapping
+    @PatchMapping("/documentos/{id}/arquivos/{id}/ocr")
     public ResponseEntity<MultiValueMap<String, String>> receber(@RequestParam(name = "file") MultipartFile file) throws RestClientException, IOException {
         try {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
@@ -43,7 +43,7 @@ public class OcrController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PutMapping
+    @PutMapping("/documentos/{id}/arquivos/{id}/ocr")
     public ResponseEntity<MultiValueMap<String, String>> reenviar(@RequestParam(name = "file") MultipartFile file) throws RestClientException, IOException {
         try {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();

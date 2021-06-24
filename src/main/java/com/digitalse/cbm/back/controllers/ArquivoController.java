@@ -1,29 +1,50 @@
 package com.digitalse.cbm.back.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
+import com.digitalse.cbm.back.models.Arquivo;
+import com.digitalse.cbm.back.models.Documento;
+import com.digitalse.cbm.back.services.DocumentoService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/arquivos")
+@RequestMapping
 public class ArquivoController {
-    
-    
-    @PostMapping
+
+    @Autowired
+    private DocumentoService documentoService;
+
+    /*
+     * @Autowired private ArquivoService arquivoService;
+     */
+
+    @PostMapping("/documentos/{id}/arquivos")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> cadastrar(@PathVariable long id) throws IOException {
+    public ResponseEntity<DocumentoDTO> cadastrar(@PathVariable long documento_id, @RequestBody ArquivoDTO arquivoDTO)
+            throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            Documento doc = documentoService.getDocumento(documento_id);
+            doc.getArquivos()
+                    .add(new Arquivo(arquivoDTO.getArquivo_id(), arquivoDTO.getDocumento(), arquivoDTO.getNome(),
+                            arquivoDTO.getTipo(), arquivoDTO.getCriador(), arquivoDTO.getDataHoraCadastro(),
+                            arquivoDTO.getStatus(), arquivoDTO.getNoOcr(), arquivoDTO.getTamanho(),
+                            arquivoDTO.getDados(), arquivoDTO.getTexto()));
+            documentoService.salvar(doc);
+            return ResponseEntity.status(HttpStatus.OK).build();
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -33,11 +54,11 @@ public class ArquivoController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/documentos/{id}/arquivos")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> listar(@PathVariable long id) throws IOException {
+    public ResponseEntity<List<ArquivoDTO>> listar(@PathVariable long id) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            return ResponseEntity.status(HttpStatus.OK).body(documentoService.getArquivosDeDocumento(id));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -47,7 +68,7 @@ public class ArquivoController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/documentos/{id}/arquivos/{id}")
     @ResponseBody
     public ResponseEntity<DocumentoDTO> obter(@PathVariable long id) throws IOException {
         try {
@@ -61,7 +82,7 @@ public class ArquivoController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/documentos/{id}/arquivos/{id}")
     @ResponseBody
     public ResponseEntity<DocumentoDTO> atualizar(@PathVariable long id) throws IOException {
         try {
@@ -75,7 +96,7 @@ public class ArquivoController {
         }
     }
 
-    @GetMapping("/{id}/arquivo")
+    @GetMapping("/documentos/{id}/arquivos/{id}/arquivo")
     @ResponseBody
     public ResponseEntity<DocumentoDTO> dadosOcr(@PathVariable long id) throws IOException {
         try {
