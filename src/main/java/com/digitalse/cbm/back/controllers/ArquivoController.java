@@ -37,11 +37,12 @@ public class ArquivoController {
 
     @PostMapping("/documentos/{documento_id}/arquivos")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> cadastrar(@PathVariable long documento_id, @RequestBody ArquivoDTO arquivoDTO, @RequestPart MultipartFile file)
+    public ResponseEntity<DocumentoDTO> cadastrar(@PathVariable long documento_id, @RequestBody ArquivoDTO arquivoDTO/* , @RequestPart MultipartFile file */)
             throws IOException {
         try {
             Documento doc = documentoService.getDocumento(documento_id);
-            doc.getArquivos().add(new Arquivo(/* AQUI */doc, arquivoDTO.getCriador(), new Date(), arquivoDTO.getStatus(), arquivoDTO.getNoOcr(), file));
+            doc.getArquivos().add(new Arquivo(/* AQUI */doc, arquivoDTO.getNome(), arquivoDTO.getTipo(), arquivoDTO.getCriador(), arquivoDTO.getDataHoraCadastro(),
+            arquivoDTO.getStatus(), arquivoDTO.getNoOcr(), arquivoDTO.getTamanho()));
             documentoService.salvar(/* AQUI */doc);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (NullPointerException e) {

@@ -48,17 +48,9 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> cadastrar(@RequestBody DocumentoDTO documentoDTO, @RequestPart List<MultipartFile> files) throws IOException {
+    public ResponseEntity<DocumentoDTO> cadastrar(@RequestBody DocumentoDTO documentoDTO/* , @RequestPart List<MultipartFile> files */) throws IOException {
         try {
             if (militarService.hasMilitar(documentoDTO.getCriador().getMatricula())) {
-                files.forEach(file -> {
-                    try {
-                        documentoDTO.getArquivos().add(new Arquivo(arquivoDTO.getDocumento(), arquivoDTO.getCriador(), arquivoDTO.getDataHoraCadastro(), arquivoDTO.getStatus(), arquivoDTO.getNoOcr(), file));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-                
                 return ResponseEntity.status(HttpStatus.CREATED)
                         .body(new DocumentoDTO(documentoService.criar(documentoDTO)));
             } else {

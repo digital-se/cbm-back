@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,6 +47,7 @@ public class Arquivo implements Serializable {
     @Lob
     private String texto;
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "documento_id", nullable = false)
     private Documento documento;
     @Transient

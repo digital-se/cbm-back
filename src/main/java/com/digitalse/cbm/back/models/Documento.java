@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "DOCUMENTO")
 public class Documento implements Serializable {
@@ -36,6 +38,7 @@ public class Documento implements Serializable {
 	@Column
 	private Boolean visivel;
 	@Column
+	@JsonManagedReference
 	@OneToMany(mappedBy = "documento", cascade = CascadeType.ALL)
 	private List<Arquivo> arquivos;
 	@ManyToOne(optional = false)
