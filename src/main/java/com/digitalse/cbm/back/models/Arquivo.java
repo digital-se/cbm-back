@@ -1,5 +1,6 @@
 package com.digitalse.cbm.back.models;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,8 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "ARQUIVO")
@@ -24,16 +28,11 @@ public class Arquivo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long arquivo_id;
-    @ManyToOne
-    @JoinColumn(name = "documento_id", nullable = false)
-    private Documento documento;
+    /* @Transient */
     @Column
     private String nome;
     @Column
     private String tipo;
-    @ManyToOne(optional = false)
-	@JoinColumn(name = "criador_id", nullable = false, updatable = false)
-	private Militar criador;
     @Column
     private Date dataHoraCadastro;
     @Column
@@ -46,6 +45,13 @@ public class Arquivo implements Serializable {
     private byte[] dados;
     @Lob
     private String texto;
+    @ManyToOne
+    @JoinColumn(name = "documento_id", nullable = false)
+    private Documento documento;
+    @Transient
+    @ManyToOne(optional = false)
+	@JoinColumn(name = "criador_id", nullable = true, updatable = false)
+	private Militar criador;
 
     public Arquivo() {
     }
@@ -54,6 +60,31 @@ public class Arquivo implements Serializable {
         this.nome = nome;
         this.tipo = tipo;
         this.dataHoraCadastro = dataHoraCadastro;
+    }
+
+    public Arquivo(Documento documento, String nome, String tipo, Militar criador,
+            Date dataHoraCadastro, String status, Boolean noOcr, long tamanho) {
+        this.documento = documento;
+        this.nome = nome;
+        this.tipo = tipo;
+        this.criador = criador;
+        this.dataHoraCadastro = dataHoraCadastro;
+        this.status = status;
+        this.noOcr = noOcr;
+        this.tamanho = tamanho;
+    }
+    
+    public Arquivo(Documento documento, Militar criador,
+            Date dataHoraCadastro, String status, Boolean noOcr, MultipartFile file) throws IOException {
+        this.documento = documento;
+        this.criador = criador;
+        this.dataHoraCadastro = dataHoraCadastro;
+        this.status = status;
+        this.noOcr = noOcr;
+        this.nome = file.getOriginalFilename();
+        this.tipo = file.getContentType();
+        this.tamanho = file.getSize();
+        this.dados = file.getBytes();
     }
 
     public Arquivo(Long arquivo_id, Documento documento, String nome, String tipo, Militar criador,

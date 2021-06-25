@@ -1,8 +1,11 @@
 package com.digitalse.cbm.back.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
+import com.digitalse.cbm.back.models.Arquivo;
 import com.digitalse.cbm.back.models.Documento;
 import com.digitalse.cbm.back.services.DocumentoService;
 import com.digitalse.cbm.back.services.MilitarService;
@@ -16,16 +19,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping(value = "documento")
+@RequestMapping/* (value = "documento") */
 public class DocumentoController {
 
     @Autowired
@@ -44,9 +48,17 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> cadastrar(@RequestBody DocumentoDTO documentoDTO) throws IOException {
+    public ResponseEntity<DocumentoDTO> cadastrar(@RequestBody DocumentoDTO documentoDTO, @RequestPart List<MultipartFile> files) throws IOException {
         try {
             if (militarService.hasMilitar(documentoDTO.getCriador().getMatricula())) {
+                files.forEach(file -> {
+                    try {
+                        documentoDTO.getArquivos().add(new Arquivo(arquivoDTO.getDocumento(), arquivoDTO.getCriador(), arquivoDTO.getDataHoraCadastro(), arquivoDTO.getStatus(), arquivoDTO.getNoOcr(), file));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                
                 return ResponseEntity.status(HttpStatus.CREATED)
                         .body(new DocumentoDTO(documentoService.criar(documentoDTO)));
             } else {
@@ -56,7 +68,7 @@ public class DocumentoController {
             }
         } catch (NullPointerException e) {
             System.out.println(e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).build();
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -69,7 +81,7 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> buscar(@RequestParam("palavras") String palavras) throws IOException {
+    public ResponseEntity<DocumentoDTO> buscar(@PathVariable(name = "palavras") String palavras) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         } catch (NullPointerException e) {

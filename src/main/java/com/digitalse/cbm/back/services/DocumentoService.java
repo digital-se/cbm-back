@@ -25,8 +25,7 @@ public class DocumentoService {
     private MilitarService militarService; 
 
     public Documento salvar(Documento documento) throws IOException {
-        Documento doc = documentoRepository.save(documento);
-        return doc;
+        return documentoRepository.save(documento);
     }
 
     public Documento criar(DocumentoDTO documento) throws IOException {

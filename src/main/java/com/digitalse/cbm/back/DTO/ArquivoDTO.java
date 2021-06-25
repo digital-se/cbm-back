@@ -20,6 +20,33 @@ public class ArquivoDTO {
     private byte[] dados;
     private String texto;
     
+    public ArquivoDTO(){
+        
+    }
+
+    public ArquivoDTO(String nome, String tipo, Militar criador,
+            Date dataHoraCadastro, String status, Boolean noOcr, long tamanho) {
+        this.nome = nome;
+        this.tipo = tipo;
+        this.criador = criador;
+        this.dataHoraCadastro = dataHoraCadastro;
+        this.status = status;
+        this.noOcr = noOcr;
+        this.tamanho = tamanho;
+    }
+
+    public ArquivoDTO(Documento documento, String nome, String tipo, Militar criador,
+            Date dataHoraCadastro, String status, Boolean noOcr, long tamanho) {
+        this.documento = documento;
+        this.nome = nome;
+        this.tipo = tipo;
+        this.criador = criador;
+        this.dataHoraCadastro = dataHoraCadastro;
+        this.status = status;
+        this.noOcr = noOcr;
+        this.tamanho = tamanho;
+    }
+
     public ArquivoDTO(Long arquivo_id, Documento documento, String nome, String tipo, Militar criador,
             Date dataHoraCadastro, String status, Boolean noOcr, long tamanho) {
         this.arquivo_id = arquivo_id;

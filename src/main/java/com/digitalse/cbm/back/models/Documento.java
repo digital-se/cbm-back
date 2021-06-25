@@ -31,15 +31,16 @@ public class Documento implements Serializable {
 	private String tipo;
 	@Column
 	private String nome;
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "criador_id", nullable = false, updatable = false)
-	private Militar criador;
 	@Column
 	private Date dataHoraCadastro;
 	@Column
 	private Boolean visivel;
+	@Column
 	@OneToMany(mappedBy = "documento", cascade = CascadeType.ALL)
 	private List<Arquivo> arquivos;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "criador_id", nullable = false, updatable = false)
+	private Militar criador;
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "Documento_Militar", joinColumns = { @JoinColumn(name = "documento_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "militar_id") })

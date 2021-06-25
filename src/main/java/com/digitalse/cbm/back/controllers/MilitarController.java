@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -26,7 +27,7 @@ public class MilitarController {
         this.militarService = militarService;
     }
 
-    @GetMapping("/militar/{nome}")
+    @GetMapping("/militares/{nome}")
     public ResponseEntity<List<MilitarDTO>> getMilitarPorNome(@PathVariable String nome) throws IOException {
         try{
             return ResponseEntity.status(HttpStatus.FOUND).body(militarService.getListByName(nome));
@@ -41,9 +42,10 @@ public class MilitarController {
         }
     }
 
-    @GetMapping("/militar/{nome}")
+    @GetMapping("/militar/{matricula}")
     public ResponseEntity<MilitarDTO> getMilitarPorMatricula(@PathVariable String matricula) throws IOException {
         try{
+            System.out.println(matricula);
             MilitarDTO militardto = new MilitarDTO(militarService.getByMatricula(matricula).getMatricula());
             return ResponseEntity.status(HttpStatus.FOUND).body(militardto);
         } catch(NullPointerException e) {
