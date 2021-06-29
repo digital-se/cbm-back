@@ -146,6 +146,13 @@
 			<artifactId>org.apache.servicemix.bundles.spring-security-config</artifactId>
 			<version>3.2.10.RELEASE_1</version>
 		</dependency>
+
+		<!-- Mapper dependency -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.4.2.Final</version> 
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
