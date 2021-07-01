@@ -1,15 +1,14 @@
 package com.digitalse.cbm.back.controllers;
 
 import java.io.IOException;
-import java.util.List;
 
-import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
-import com.digitalse.cbm.back.models.Arquivo;
+import com.digitalse.cbm.back.mappers.DocumentoMapper;
 import com.digitalse.cbm.back.models.Documento;
 import com.digitalse.cbm.back.services.DocumentoService;
 import com.digitalse.cbm.back.services.MilitarService;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -38,6 +35,10 @@ public class DocumentoController {
     @Autowired
     private MilitarService militarService;
 
+    @Autowired
+    private DocumentoMapper mapper = Mappers.getMapper(DocumentoMapper.class);
+
+
     public DocumentoController(DocumentoService documentoService) {
         this.documentoService = documentoService;
     }
@@ -52,11 +53,11 @@ public class DocumentoController {
         try {
             if (militarService.hasMilitar(documentoDTO.getCriador().getMatricula())) {
                 return ResponseEntity.status(HttpStatus.CREATED)
-                        .body(new DocumentoDTO(documentoService.criar(documentoDTO)));
+                        .body(mapper.toDTO(documentoService.criar(documentoDTO)));
             } else {
                 militarService.save(documentoDTO.getCriador().getMatricula());
                 return ResponseEntity.status(HttpStatus.CREATED)
-                        .body(new DocumentoDTO(documentoService.criar(documentoDTO)));
+                        .body(mapper.toDTO(documentoService.criar(documentoDTO)));
             }
         } catch (NullPointerException e) {
             System.out.println(e);
@@ -95,7 +96,7 @@ public class DocumentoController {
         try {
             Documento documento = documentoService.getDocumento(id);
             DocumentoDTO docDto = new DocumentoDTO(documento.getDocumento_id(), documento.getTipo(),
-                documento.getNome(), documento.getCriador(), documento.getDataHoraCadastro(), documento.getVisivel(), documento.getArquivos());
+                documento.getNome(), documento.getCriador(), documento.getDataHoraCadastro(), documento.getVisivel(), documento.getArquivos(), documento.getMilitares());
             return ResponseEntity.status(HttpStatus.FOUND).body(docDto);
         } catch (NullPointerException e) {
             System.out.println(e);
