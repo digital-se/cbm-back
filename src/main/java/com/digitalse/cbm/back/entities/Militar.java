@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "militar")
+@Table(name = "militares")
 public class Militar {
 
     // private static final long serialVersionUID = 1L;

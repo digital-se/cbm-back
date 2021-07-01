@@ -30,7 +30,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "documento")
+@Table(name = "documentos")
 public class Documento {
 
 	// private static final long serialVersionUID = 1L;
@@ -110,7 +110,7 @@ public class Documento {
 	@Setter
 	private Date atualizado;
 
-	@OneToMany(mappedBy = "documento")
+	@OneToMany(mappedBy = "documentos")
 	@Getter
 	@Setter
 	private List<Arquivo> arquivos;

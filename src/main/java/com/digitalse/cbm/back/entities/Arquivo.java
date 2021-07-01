@@ -28,7 +28,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "arquivo")
+@Table(name = "arquivos")
 public class Arquivo {
 
     // private static final long serialVersionUID = 1L;
@@ -82,18 +82,18 @@ public class Arquivo {
     @Column(nullable = false)
     @Getter
     @Setter
-    private String contentType;
+    private String mime;
 
     @Column(nullable = false)
     @Getter
     @Setter
-    private Long size;
+    private Long tamanho;
 
     @Column(nullable = false)
     @Lob
     @Getter
     @Setter
-    private Byte[] data;
+    private Byte[] dados;
 
     @Column(nullable = false)
     @CreationTimestamp
