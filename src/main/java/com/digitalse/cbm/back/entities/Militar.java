@@ -17,7 +17,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "militar")
-public class Militar implements Serializable {
+public class Militar {
 
     // private static final long serialVersionUID = 1L;
 

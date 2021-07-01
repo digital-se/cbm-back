@@ -29,7 +29,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "arquivo")
-public class Arquivo implements Serializable {
+public class Arquivo {
 
     // private static final long serialVersionUID = 1L;
 

@@ -31,7 +31,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "documento")
-public class Documento implements Serializable {
+public class Documento {
 
 	// private static final long serialVersionUID = 1L;
 
