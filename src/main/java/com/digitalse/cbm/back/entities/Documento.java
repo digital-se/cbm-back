@@ -110,7 +110,7 @@ public class Documento {
 	@Setter
 	private Date atualizado;
 
-	@OneToMany(mappedBy = "documentos")
+	@OneToMany(mappedBy = "documento")
 	@Getter
 	@Setter
 	private List<Arquivo> arquivos;
