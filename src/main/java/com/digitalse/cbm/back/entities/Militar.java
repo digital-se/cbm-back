@@ -31,7 +31,7 @@ public class Militar implements Serializable {
     @Id
     @Getter
     @Setter
-    private String id;
+    private String matricula;
 
     @ManyToMany
     @Getter

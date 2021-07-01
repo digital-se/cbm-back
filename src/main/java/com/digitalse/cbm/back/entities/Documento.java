@@ -116,7 +116,7 @@ public class Documento implements Serializable {
 	private List<Arquivo> arquivos;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "fk_documento_militar", joinColumns = @JoinColumn(name = "militar_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "documento_id", referencedColumnName = "id"))
+	@JoinTable(name = "fk_documento_militar", joinColumns = @JoinColumn(name = "militar_matricula", referencedColumnName = "matricula"), inverseJoinColumns = @JoinColumn(name = "documento_id", referencedColumnName = "id"))
 	@Getter
 	@Setter
 	private List<Militar> militares;
