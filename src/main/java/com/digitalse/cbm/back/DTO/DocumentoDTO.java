@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.digitalse.cbm.back.models.Arquivo;
-import com.digitalse.cbm.back.models.Documento;
 import com.digitalse.cbm.back.models.Militar;
 
 public class DocumentoDTO {
@@ -16,9 +15,9 @@ public class DocumentoDTO {
     private Date dataHoraCadastro;
     private Boolean visivel;
 	private List<Arquivo> arquivos;
+	private List<Militar> militares;
 
 	public DocumentoDTO(){
-
 	}
 
 	public DocumentoDTO(String tipo, String nome, Militar criador,
@@ -30,7 +29,7 @@ public class DocumentoDTO {
 	}
 
 	public DocumentoDTO(long documento_id, String tipo, String nome, Militar criador, Date dataHoraCadastro,
-			Boolean visivel, List<Arquivo> arquivos) {
+			Boolean visivel, List<Arquivo> arquivos, List<Militar> militares) {
 		this.documento_id = documento_id;
 		this.tipo = tipo;
 		this.nome = nome;
@@ -38,18 +37,9 @@ public class DocumentoDTO {
 		this.dataHoraCadastro = dataHoraCadastro;
 		this.visivel = visivel;
 		this.arquivos = arquivos;
+		this.militares = militares;
 	}
 
-	public DocumentoDTO(Documento documento) {
-		this.documento_id = documento.getDocumento_id();
-		this.tipo = documento.getTipo();
-		this.nome = documento.getNome();
-		this.criador = documento.getCriador();
-		this.dataHoraCadastro = documento.getDataHoraCadastro();
-		this.visivel = documento.getVisivel();
-		this.arquivos = documento.getArquivos();
-	}
-	
 	public long getDocumento_id() {
 		return documento_id;
 	}

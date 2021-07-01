@@ -50,7 +50,6 @@ public class Documento implements Serializable {
 	private List<Militar> militares;
 
 	public Documento(){
-		
 	}
 
 	public Documento(String tipo, String nome, Militar criador, Date dataHoraCadastro, Boolean visivel) {
@@ -61,7 +60,8 @@ public class Documento implements Serializable {
 		this.visivel = visivel;
 	}
 
-	public Documento(long documento_id, String tipo, String nome, Militar criador, Date dataHoraCadastro, Boolean visivel, List<Arquivo> arquivos) {
+	public Documento(long documento_id, String tipo, String nome, Militar criador, Date dataHoraCadastro,
+			Boolean visivel, List<Arquivo> arquivos, List<Militar> militares) {
 		this.documento_id = documento_id;
 		this.tipo = tipo;
 		this.nome = nome;
@@ -69,6 +69,7 @@ public class Documento implements Serializable {
 		this.dataHoraCadastro = dataHoraCadastro;
 		this.visivel = visivel;
 		this.arquivos = arquivos;
+		this.militares = militares;
 	}
 	
 	public long getDocumento_id() {

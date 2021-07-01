@@ -58,15 +58,10 @@ public class Arquivo implements Serializable {
     public Arquivo() {
     }
 
-    public Arquivo(String nome, String tipo, Date dataHoraCadastro) {
-        this.nome = nome;
-        this.tipo = tipo;
-        this.dataHoraCadastro = dataHoraCadastro;
-    }
-
-    public Arquivo(Documento documento, String nome, String tipo, Militar criador,
+    public Arquivo(Long arquivo_id, Documento documento, String nome, String tipo, Militar criador,
             Date dataHoraCadastro, String status, Boolean noOcr, long tamanho) {
         this.documento = documento;
+        this.arquivo_id = arquivo_id;
         this.nome = nome;
         this.tipo = tipo;
         this.criador = criador;
@@ -76,9 +71,10 @@ public class Arquivo implements Serializable {
         this.tamanho = tamanho;
     }
     
-    public Arquivo(Documento documento, Militar criador,
+    public Arquivo(Long arquivo_id, Documento documento, Militar criador,
             Date dataHoraCadastro, String status, Boolean noOcr, MultipartFile file) throws IOException {
         this.documento = documento;
+        this.arquivo_id = arquivo_id;
         this.criador = criador;
         this.dataHoraCadastro = dataHoraCadastro;
         this.status = status;
@@ -87,19 +83,6 @@ public class Arquivo implements Serializable {
         this.tipo = file.getContentType();
         this.tamanho = file.getSize();
         this.dados = file.getBytes();
-    }
-
-    public Arquivo(Long arquivo_id, Documento documento, String nome, String tipo, Militar criador,
-            Date dataHoraCadastro, String status, Boolean noOcr, long tamanho) {
-        this.arquivo_id = arquivo_id;
-        this.documento = documento;
-        this.nome = nome;
-        this.tipo = tipo;
-        this.criador = criador;
-        this.dataHoraCadastro = dataHoraCadastro;
-        this.status = status;
-        this.noOcr = noOcr;
-        this.tamanho = tamanho;
     }
 
     public Arquivo(Long arquivo_id, Documento documento, String nome, String tipo, Militar criador,
@@ -204,8 +187,5 @@ public class Arquivo implements Serializable {
     public void setTexto(String texto) {
         this.texto = texto;
     }
-    public static Arquivo convertFromDTO(ArquivoDTO arquivo) {
-        return new Arquivo(arquivo.getArquivo_id(), arquivo.getDocumento(), arquivo.getNome(), arquivo.getTipo(), 
-        arquivo.getCriador(), arquivo.getDataHoraCadastro(), arquivo.getStatus(), arquivo.getNoOcr(), arquivo.getTamanho(), arquivo.getDados(), arquivo.getTexto());
-    }
+  
 }

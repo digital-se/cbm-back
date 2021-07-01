@@ -1,12 +1,18 @@
 package com.digitalse.cbm.back.DTO;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 
 import com.digitalse.cbm.back.models.Arquivo;
 import com.digitalse.cbm.back.models.Documento;
 import com.digitalse.cbm.back.models.Militar;
 
-public class ArquivoDTO {
+import org.springframework.web.multipart.MultipartFile;
+
+public class ArquivoDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Long arquivo_id;
     private Documento documento;
@@ -24,17 +30,6 @@ public class ArquivoDTO {
         
     }
 
-    public ArquivoDTO(String nome, String tipo, Militar criador,
-            Date dataHoraCadastro, String status, Boolean noOcr, long tamanho) {
-        this.nome = nome;
-        this.tipo = tipo;
-        this.criador = criador;
-        this.dataHoraCadastro = dataHoraCadastro;
-        this.status = status;
-        this.noOcr = noOcr;
-        this.tamanho = tamanho;
-    }
-
     public ArquivoDTO(Documento documento, String nome, String tipo, Militar criador,
             Date dataHoraCadastro, String status, Boolean noOcr, long tamanho) {
         this.documento = documento;
@@ -45,6 +40,20 @@ public class ArquivoDTO {
         this.status = status;
         this.noOcr = noOcr;
         this.tamanho = tamanho;
+    }
+
+    //No Post para criar arquivo
+    public ArquivoDTO(Documento documento, Militar criador,
+            Date dataHoraCadastro, String status, Boolean noOcr, MultipartFile file) throws IOException {
+        this.documento = documento;
+        this.criador = criador;
+        this.dataHoraCadastro = dataHoraCadastro;
+        this.status = status;
+        this.noOcr = noOcr;
+        this.nome = file.getOriginalFilename();
+        this.tipo = file.getContentType();
+        this.tamanho = file.getSize();
+        this.dados = file.getBytes();
     }
 
     public ArquivoDTO(Long arquivo_id, Documento documento, String nome, String tipo, Militar criador,
@@ -141,10 +150,5 @@ public class ArquivoDTO {
     public void setTexto(String texto) {
         this.texto = texto;
     }
-    public static ArquivoDTO convertFromModel(Arquivo arquivo) {
-        return new ArquivoDTO(arquivo.getArquivo_id(), arquivo.getDocumento(), arquivo.getNome(), arquivo.getTipo(), 
-        arquivo.getCriador(), arquivo.getDataHoraCadastro(), arquivo.getStatus(), arquivo.getNoOcr(), arquivo.getTamanho(), arquivo.getDados(), arquivo.getTexto());
-    }
-    
 
 }
