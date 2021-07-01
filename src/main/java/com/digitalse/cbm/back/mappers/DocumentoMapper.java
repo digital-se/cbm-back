@@ -6,7 +6,8 @@ import com.digitalse.cbm.back.models.Documento;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+
+@Mapper(componentModel = "spring")
 public interface DocumentoMapper {
     DocumentoMapper INSTANCE = Mappers.getMapper(DocumentoMapper.class);
 

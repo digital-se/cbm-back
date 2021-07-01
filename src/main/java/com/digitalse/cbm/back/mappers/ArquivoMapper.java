@@ -5,8 +5,9 @@ import java.util.List;
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.models.Arquivo;
 
+import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-
+@Mapper(componentModel = "spring")
 public interface ArquivoMapper {
     ArquivoMapper INSTANCE = Mappers.getMapper(ArquivoMapper.class);
 
