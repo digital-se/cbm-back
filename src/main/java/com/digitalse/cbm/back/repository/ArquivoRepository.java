@@ -1,6 +1,6 @@
 package com.digitalse.cbm.back.repository;
 
-import com.digitalse.cbm.back.models.Arquivo;
+import com.digitalse.cbm.back.entities.Arquivo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

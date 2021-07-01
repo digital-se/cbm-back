@@ -7,8 +7,8 @@ import java.util.List;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.mappers.ArquivoMapper;
-import com.digitalse.cbm.back.models.Arquivo;
-import com.digitalse.cbm.back.models.Documento;
+import com.digitalse.cbm.back.entities.Arquivo;
+import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.repository.DocumentoRepository;
 
 import org.mapstruct.factory.Mappers;
@@ -35,8 +35,8 @@ public class ArquivoService {
             ArquivoDTO tempArq = arquivosDTO.removeFirst();
             MultipartFile tempFile = files.removeFirst();
 
-            Arquivo finalArq = new Arquivo(tempArq.getArquivo_id(), doc, tempArq.getCriador(), tempArq.getDataHoraCadastro(),
-                    tempArq.getStatus(), tempArq.getNoOcr(), tempFile);
+            Arquivo finalArq = new Arquivo(tempArq.getArquivo_id(), doc, tempArq.getCriador(),
+                    tempArq.getDataHoraCadastro(), tempArq.getStatus(), tempArq.getNoOcr(), tempFile);
 
             doc.getArquivos().add(finalArq);
         }
@@ -45,8 +45,9 @@ public class ArquivoService {
 
         List<Arquivo> arquivos = new ArrayList<>();
         doc.getArquivos().forEach(arquivo -> {
-            arquivos.add(new Arquivo(arquivo.getArquivo_id(), null, arquivo.getNome(), arquivo.getTipo(), arquivo.getCriador(), 
-            arquivo.getDataHoraCadastro(), arquivo.getStatus(), arquivo.getNoOcr(), arquivo.getTamanho()));
+            arquivos.add(new Arquivo(arquivo.getArquivo_id(), null, arquivo.getNome(), arquivo.getTipo(),
+                    arquivo.getCriador(), arquivo.getDataHoraCadastro(), arquivo.getStatus(), arquivo.getNoOcr(),
+                    arquivo.getTamanho()));
         });
 
         return mapper.toDTO(arquivos);

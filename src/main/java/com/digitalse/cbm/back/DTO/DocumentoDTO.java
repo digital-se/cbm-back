@@ -3,25 +3,24 @@ package com.digitalse.cbm.back.DTO;
 import java.util.Date;
 import java.util.List;
 
-import com.digitalse.cbm.back.models.Arquivo;
-import com.digitalse.cbm.back.models.Militar;
+import com.digitalse.cbm.back.entities.Arquivo;
+import com.digitalse.cbm.back.entities.Militar;
 
 public class DocumentoDTO {
-	
+
 	private long documento_id;
-    private String tipo;
-    private String nome;
-    private Militar criador;
-    private Date dataHoraCadastro;
-    private Boolean visivel;
+	private String tipo;
+	private String nome;
+	private Militar criador;
+	private Date dataHoraCadastro;
+	private Boolean visivel;
 	private List<Arquivo> arquivos;
 	private List<Militar> militares;
 
-	public DocumentoDTO(){
+	public DocumentoDTO() {
 	}
 
-	public DocumentoDTO(String tipo, String nome, Militar criador,
-			Boolean visivel) {
+	public DocumentoDTO(String tipo, String nome, Militar criador, Boolean visivel) {
 		this.tipo = tipo;
 		this.nome = nome;
 		this.criador = criador;
@@ -95,8 +94,5 @@ public class DocumentoDTO {
 	public void setArquivos(List<Arquivo> arquivos) {
 		this.arquivos = arquivos;
 	}
-	
-	
-	
 
 }

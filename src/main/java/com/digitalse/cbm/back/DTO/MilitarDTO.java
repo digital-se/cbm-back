@@ -1,6 +1,6 @@
 package com.digitalse.cbm.back.DTO;
 
-import com.digitalse.cbm.back.models.Militar;
+import com.digitalse.cbm.back.entities.Militar;
 
 public class MilitarDTO {
 
@@ -60,5 +60,4 @@ public class MilitarDTO {
         this.cargo = cargo;
     }
 
-    
 }

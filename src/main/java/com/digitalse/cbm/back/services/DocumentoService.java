@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.mappers.DocumentoMapper;
-import com.digitalse.cbm.back.models.Documento;
-import com.digitalse.cbm.back.models.Militar;
+import com.digitalse.cbm.back.entities.Documento;
+import com.digitalse.cbm.back.entities.Militar;
 import com.digitalse.cbm.back.repository.DocumentoRepository;
 
 import org.mapstruct.factory.Mappers;
@@ -37,8 +37,6 @@ public class DocumentoService {
         Documento documento = documentoRepository.findById(id).get();
         return documento;
     }
-
-
 
     public Documento criar(DocumentoDTO documento) throws IOException {
         Militar militar = militarService.getByMatricula(documento.getCriador().getMatricula());

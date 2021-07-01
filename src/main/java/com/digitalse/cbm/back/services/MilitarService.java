@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.MilitarDTO;
-import com.digitalse.cbm.back.models.Militar;
+import com.digitalse.cbm.back.entities.Militar;
 import com.digitalse.cbm.back.repository.MilitarRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,12 +26,14 @@ public class MilitarService {
     }
 
     public List<MilitarDTO> getListByName(String nome) throws IOException {
-        // System.out.println(URLEncoder.encode("https://sandbox-api.cbm.se.gov.br/bmrh/militares/obtermilitares/" + nome, "UTF-8"));
+        // System.out.println(URLEncoder.encode("https://sandbox-api.cbm.se.gov.br/bmrh/militares/obtermilitares/"
+        // + nome, "UTF-8"));
         String url = "https://sandbox-api.cbm.se.gov.br/bmrh/militares/obtermilitares/" + nome;
         JsonNode jsonNode = new ObjectMapper().readTree(new RestTemplate().getForObject(url, String.class));
         List<MilitarDTO> listaMilitares = new ArrayList<>();
         for (JsonNode node : jsonNode.findValues("ViewMilitar")) {
-            MilitarDTO mdto = new MilitarDTO(node.get("num_matricula").asText(), node.get("nom_completo").asText(), node.get("nom_guerra").asText(), node.get("dsc_cargo").asText());
+            MilitarDTO mdto = new MilitarDTO(node.get("num_matricula").asText(), node.get("nom_completo").asText(),
+                    node.get("nom_guerra").asText(), node.get("dsc_cargo").asText());
             listaMilitares.add(mdto);
         }
         return listaMilitares;
@@ -40,7 +42,7 @@ public class MilitarService {
     public Militar getByMatricula(String matricula) throws IOException {
         return militarRepository.findByMatricula(matricula);
     }
-    
+
     public Boolean hasMilitar(String matricula) throws IOException {
         return militarRepository.findByMatricula(matricula) != null;
     }
