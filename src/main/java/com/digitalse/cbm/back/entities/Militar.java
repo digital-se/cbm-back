@@ -33,7 +33,7 @@ public class Militar {
     @Setter
     private String matricula;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "militares")
     @Getter
     @Setter
     private List<Documento> documentos;
