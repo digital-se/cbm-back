@@ -26,7 +26,6 @@ public class ArquivoDTO {
     private String status;
     private String mime;
     private Long tamanho;
-    @NonNull
     private Byte[] dados;
     private String texto;
     private Date criado;
