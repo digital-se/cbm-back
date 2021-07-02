@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ import lombok.Setter;
 @Table(name = "arquivos")
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class Arquivo {
 
@@ -47,6 +49,9 @@ public class Arquivo {
     @Column(nullable = false)
     @Lob
     private Byte[] dados;
+    @Column(nullable = false)
+    @Lob
+    private String texto;
     @Column(nullable = false)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
