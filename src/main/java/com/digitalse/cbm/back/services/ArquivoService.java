@@ -8,10 +8,8 @@ import java.util.stream.Collectors;
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
 import com.digitalse.cbm.back.entities.Documento;
-import com.digitalse.cbm.back.mappers.ArquivoMapper;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,10 +20,7 @@ public class ArquivoService {
     @Autowired
     private DocumentoService documentoService;
 
-    @Autowired
-    private ArquivoMapper mapper = Mappers.getMapper(ArquivoMapper.class);
-
-    public List<ArquivoDTO> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosDTO,
+    public List<Arquivo> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosDTO,
             LinkedList<MultipartFile> files) throws IOException {
         Documento doc = documentoService.getDocumento(documento_id);
         while (!arquivosDTO.isEmpty()) {
@@ -50,7 +45,7 @@ public class ArquivoService {
             arquivo.getAtualizado());
         }).collect(Collectors.toList());
         
-        return mapper.toDTO(arquivos);
+        return arquivos;
     }
 
     // public List<ArquivoDTO> listar(long id) {

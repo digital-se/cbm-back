@@ -1,7 +1,6 @@
 package com.digitalse.cbm.back.services;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +20,9 @@ public class MilitarService {
     @Autowired
     private MilitarRepository militarRepository;
 
-    public MilitarDTO save(String matricula) throws IOException {
-        return new MilitarDTO(militarRepository.save(new Militar(matricula)));
-    }
+    // public MilitarDTO save(String matricula) throws IOException {
+    //     // return new MilitarDTO(militarRepository.save(new Militar(matricula)));
+    // }
 
     public List<MilitarDTO> getListByName(String nome) throws IOException {
         // System.out.println(URLEncoder.encode("https://sandbox-api.cbm.se.gov.br/bmrh/militares/obtermilitares/"
