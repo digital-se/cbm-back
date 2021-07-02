@@ -1,5 +1,7 @@
 package com.digitalse.cbm.back.mappers;
 
+import java.util.List;
+
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.entities.Documento;
 
@@ -13,4 +15,8 @@ public interface DocumentoMapper {
     DocumentoDTO toDTO(Documento documento);
 
     Documento toModel(DocumentoDTO documentoDTO);
+
+    List<DocumentoDTO> toDTO(List<Documento> documentos);
+
+    List<Documento> toModel(List<DocumentoDTO> documentos);
 }
