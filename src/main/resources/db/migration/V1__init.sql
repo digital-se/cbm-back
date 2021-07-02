@@ -19,7 +19,8 @@ CREATE TABLE "arquivos" (
     "status" VARCHAR(255) NOT NULL,
     "mime" VARCHAR(255) NOT NULL,
     "tamanho" BIGINT NOT NULL,
-    "dados" TEXT NOT NULL,
+    "dados" BYTEA NOT NULL,
+    "texto" TEXT NULL,
     "criado" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "atualizado" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY ("id")
