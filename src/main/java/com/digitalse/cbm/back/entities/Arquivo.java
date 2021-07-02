@@ -51,7 +51,7 @@ public class Arquivo {
     private Byte[] dados;
     @Column(nullable = false)
     private String texto;
-    @Column(nullable = false)
+    @Column(nullable = true)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date criado;
