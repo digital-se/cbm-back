@@ -10,6 +10,7 @@ import com.digitalse.cbm.back.entities.Arquivo;
 import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.mappers.ArquivoMapper;
 import com.digitalse.cbm.back.repository.ArquivoRepository;
+import com.digitalse.cbm.back.repository.DocumentoRepository;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class ArquivoService {
 
     @Autowired
-    private DocumentoService documentoService;
+    private ArquivoRepository arquivoRepository;
 
     @Autowired
-    private ArquivoRepository arquivoRepository;
+    private DocumentoRepository documentoRepository;
 
     @Autowired
     private ArquivoMapper mapperArq = Mappers.getMapper(ArquivoMapper.class);
@@ -32,7 +33,7 @@ public class ArquivoService {
             LinkedList<MultipartFile> files) throws IOException {
         List<ArquivoDTO> arquivos = new ArrayList<>();
 
-        Documento doc = documentoService.getDocumento(documento_id);
+        Documento doc = documentoRepository.findById(documento_id).get();
 
         while (!arquivosDTO.isEmpty()) {
             ArquivoDTO tempArq = arquivosDTO.removeFirst();
@@ -53,17 +54,26 @@ public class ArquivoService {
         return arquivos;
     }
 
-    // public List<ArquivoDTO> listar(long id) {
-    // List<ArquivoDTO> lista = new ArrayList<>();
-    // documentoRepository.findById(id).get().getArquivos()
-    // .forEach(arquivo -> lista.add(ArquivoDTO.convertFromModel(arquivo)));
-    // return lista;
-    // }
+    public ArquivoDTO getFile(long arquivo_id){
+        Arquivo arq = arquivoRepository.findById(arquivo_id).get();
+        return mapperArq.toDTO(arq);
+    }
 
-    // public List<ArquivoDTO> info(long idDocumento, long idArquivo) {
-    // List<ArquivoDTO> lista = new ArrayList<>();
-    // documentoRepository.findById(id).get().getArquivos().forEach(arquivo ->
-    // lista.add(ArquivoDTO.convertFromModel(arquivo)));
-    // return lista;
-    // }
+    public ArquivoDTO findArchive(long arquivo_id){
+        Arquivo arq = arquivoRepository.findById(arquivo_id).get();
+        arq.setDados(null);
+        arq.setDocumento(null);
+        return mapperArq.toDTO(arq);
+    }
+
+    public List<ArquivoDTO> getArchivesFromDocument(long documento_id){
+        Documento doc = documentoRepository.findById(documento_id).get();
+        List<ArquivoDTO> list = mapperArq.toDTO(doc.getArquivos());
+        list.forEach(arq ->{
+            arq.setDados(null);
+            arq.setDocumento(null);
+        });
+        return list;
+    }
+
 }
