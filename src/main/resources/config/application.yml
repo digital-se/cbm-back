@@ -11,6 +11,7 @@ spring:
         jdbc:
           lob:
             "[non_contextual_creation]": true
+          "[use_streams_for_binary]": false
     open-in-view: true
   datasource:
     url: ${env.DB_URL}
