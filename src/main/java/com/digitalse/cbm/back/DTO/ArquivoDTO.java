@@ -30,7 +30,7 @@ public class ArquivoDTO {
 
     @Override
     public String toString() {
-        return "ArquivoDTO [atualizado=" + atualizado + ", criado=" + criado + ", dados=" + Arrays.toString(dados)
+        return "ArquivoDTO [atualizado=" + atualizado + ", criado=" + criado + ", dados=" + "rapaz era pra ter mas mt grande..."
                 + ", documento=" + documento + ", id=" + id + ", mime=" + mime + ", nome=" + nome + ", ocr=" + ocr
                 + ", status=" + status + ", tamanho=" + tamanho + ", texto=" + texto + "]";
     }
