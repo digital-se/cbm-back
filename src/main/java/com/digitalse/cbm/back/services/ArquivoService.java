@@ -8,8 +8,10 @@ import java.util.List;
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
 import com.digitalse.cbm.back.entities.Documento;
+import com.digitalse.cbm.back.mappers.ArquivoMapper;
 import com.digitalse.cbm.back.repository.ArquivoRepository;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,9 +25,12 @@ public class ArquivoService {
     @Autowired
     private ArquivoRepository arquivoRepository;
 
-    public List<Arquivo> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosDTO,
+    @Autowired
+    private ArquivoMapper mapperArq = Mappers.getMapper(ArquivoMapper.class);
+
+    public List<ArquivoDTO> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosDTO,
             LinkedList<MultipartFile> files) throws IOException {
-        List<Arquivo> arquivos = new ArrayList<>();
+        List<ArquivoDTO> arquivos = new ArrayList<>();
 
         Documento doc = documentoService.getDocumento(documento_id);
 
@@ -39,8 +44,9 @@ public class ArquivoService {
 
             System.out.println(finalArq.toString());
             arquivoRepository.save(finalArq);
-            finalArq.setDados(null);
-            arquivos.add(finalArq);
+            ArquivoDTO listArq = mapperArq.toDTO(finalArq);
+            listArq.setDados(null);
+            arquivos.add(listArq);
         }
 
         return arquivos;

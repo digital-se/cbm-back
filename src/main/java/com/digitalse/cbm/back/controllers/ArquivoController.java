@@ -50,8 +50,8 @@ public class ArquivoController {
     public ResponseEntity<List<ArquivoDTO>> cadastrar(@PathVariable(required = true) long documento_id,
             @RequestPart(required = true) List<ArquivoDTO> arquivosDTO, @RequestPart(required = true) List<MultipartFile> files) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(mapperArq.toDTO(arquivoService.addAllArchives(documento_id,
-                    new LinkedList<>(arquivosDTO), new LinkedList<>(files))));
+            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.addAllArchives(documento_id,
+                    new LinkedList<>(arquivosDTO), new LinkedList<>(files)));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
