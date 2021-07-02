@@ -91,6 +91,7 @@ public class ArquivoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @ApiOperation(value = "Atualiza um arquivo de um documento")
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Atualizou um arquivo"),
             @ApiResponse(code = 404, message = "Não encontrado"),
