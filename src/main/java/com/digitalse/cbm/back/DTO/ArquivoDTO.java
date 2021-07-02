@@ -16,14 +16,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArquivoDTO {
-    
+
     private Long id;
     private Documento documento;
     private String nome;
     @NonNull
-    private Boolean ocr;
-    @NonNull
-    private String status;
+    private Boolean ocr = false;
+    private String status = "Concluido";
     private String mime;
     private Long tamanho;
     private Byte[] dados;
@@ -37,5 +36,5 @@ public class ArquivoDTO {
                 + ", documento=" + documento + ", id=" + id + ", mime=" + mime + ", nome=" + nome + ", ocr=" + ocr
                 + ", status=" + status + ", tamanho=" + tamanho + ", texto=" + texto + "]";
     }
-    
+
 }
