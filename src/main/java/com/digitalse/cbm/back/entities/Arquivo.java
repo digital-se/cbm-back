@@ -37,6 +37,10 @@ public class Arquivo {
     @Column(nullable = false)
     private String nome;
     @Column(nullable = false)
+    private Boolean ocr = false;
+    @Column(nullable = false)
+    private String status;
+    @Column(nullable = false)
     private String mime;
     @Column(nullable = false)
     private Long tamanho;
