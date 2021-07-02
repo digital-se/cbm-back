@@ -50,7 +50,6 @@ public class Arquivo {
     @Lob
     private Byte[] dados;
     @Column(nullable = false)
-    @Lob
     private String texto;
     @Column(nullable = false)
     @CreationTimestamp

@@ -15,9 +15,12 @@ CREATE TABLE "arquivos" (
     "id" SERIAL NOT NULL,
     "documento_id" INT NOT NULL REFERENCES "documentos" ("id") ON UPDATE CASCADE ON DELETE RESTRICT,
     "nome" VARCHAR(255) NOT NULL,
+    "ocr" BOOLEAN NOT NULL,
+    "status" VARCHAR(255) NOT NULL,
     "mime" VARCHAR(255) NOT NULL,
     "tamanho" BIGINT NOT NULL,
-    "dados" TEXT NOT NULL,
+    "dados" BYTEA NOT NULL,
+    "texto" TEXT NULL,
     "criado" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "atualizado" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY ("id")
