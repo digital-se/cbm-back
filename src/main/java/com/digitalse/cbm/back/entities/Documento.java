@@ -120,8 +120,8 @@ public class Documento {
 	@Setter
 	private List<Militar> militares;
 
-	// public Documento(){
-	// }
+	public Documento() {
+	}
 
 	// public Documento(String tipo, String nome, Militar criador, Date
 	// dataHoraCadastro, Boolean visivel) {

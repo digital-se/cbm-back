@@ -38,8 +38,8 @@ public class Militar {
     @Setter
     private List<Documento> documentos;
 
-    // public Militar() {
-    // }
+    public Militar() {
+    }
 
     // public Militar(String matricula) {
     // this.matricula = matricula;

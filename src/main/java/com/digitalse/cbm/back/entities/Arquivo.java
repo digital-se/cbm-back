@@ -109,8 +109,8 @@ public class Arquivo {
     @Setter
     private Date atualizado;
 
-    // public Arquivo() {
-    // }
+    public Arquivo() {
+    }
 
     // public Arquivo(Long arquivo_id, Documento documento, String nome, String
     // tipo, Militar criador,
