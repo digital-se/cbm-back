@@ -21,7 +21,7 @@ public class ArquivoDTO {
     private Documento documento;
     private String nome;
     @NonNull
-    private Boolean ocr;
+    private Boolean ocr = false;
     private String status = "Concluido";
     private String mime;
     private Long tamanho;
