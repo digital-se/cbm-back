@@ -47,8 +47,8 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping(value = "/documentos/{documento_id}/arquivos", consumes = { "multipart/form-data" })
     @ResponseBody
-    public ResponseEntity<List<ArquivoDTO>> cadastrar(@PathVariable long documento_id,
-            @RequestPart List<ArquivoDTO> arquivosDTO, @RequestPart List<MultipartFile> files) throws IOException {
+    public ResponseEntity<List<ArquivoDTO>> cadastrar(@PathVariable(required = true) long documento_id,
+            @RequestPart(required = true) List<ArquivoDTO> arquivosDTO, @RequestPart(required = true) List<MultipartFile> files) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(mapperArq.toDTO(arquivoService.addAllArchives(documento_id,
                     new LinkedList<>(arquivosDTO), new LinkedList<>(files))));
