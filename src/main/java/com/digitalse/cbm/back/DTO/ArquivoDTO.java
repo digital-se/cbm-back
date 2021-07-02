@@ -8,7 +8,6 @@ import com.digitalse.cbm.back.entities.Documento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
@@ -20,7 +19,6 @@ public class ArquivoDTO {
     private Long id;
     private Documento documento;
     private String nome;
-    @NonNull
     private Boolean ocr = false;
     private String status = "Concluido";
     private String mime;
