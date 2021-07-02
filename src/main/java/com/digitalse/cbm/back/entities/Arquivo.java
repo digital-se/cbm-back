@@ -50,9 +50,9 @@ public class Arquivo {
     @Column(nullable = false)
     @Lob
     private Byte[] dados;
-    @Column(nullable = false)
-    private String texto;
     @Column(nullable = true)
+    private String texto;
+    @Column(nullable = false)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date criado;
@@ -63,9 +63,10 @@ public class Arquivo {
 
     @Override
     public String toString() {
-        return "Arquivo [atualizado=" + atualizado + ", criado=" + criado + ", dados=" + "rapaz era pra ter mas mt grande..."
-                + ", documento=" + documento + ", id=" + id + ", mime=" + mime + ", nome=" + nome + ", ocr=" + ocr
-                + ", status=" + status + ", tamanho=" + tamanho + ", texto=" + texto + "]";
+        return "Arquivo [atualizado=" + atualizado + ", criado=" + criado + ", dados="
+                + "rapaz era pra ter mas mt grande..." + ", documento=" + documento + ", id=" + id + ", mime=" + mime
+                + ", nome=" + nome + ", ocr=" + ocr + ", status=" + status + ", tamanho=" + tamanho + ", texto=" + texto
+                + "]";
     }
 
 }
