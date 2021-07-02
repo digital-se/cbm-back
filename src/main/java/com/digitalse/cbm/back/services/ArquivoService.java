@@ -38,8 +38,9 @@ public class ArquivoService {
                     tempArq.getTexto(), tempArq.getCriado(), tempArq.getAtualizado());
 
             System.out.println(finalArq.toString());
-
-            arquivos.add(arquivoRepository.save(finalArq));
+            arquivoRepository.save(finalArq);
+            finalArq.setDados(null);
+            arquivos.add(finalArq);
         }
 
         return arquivos;
