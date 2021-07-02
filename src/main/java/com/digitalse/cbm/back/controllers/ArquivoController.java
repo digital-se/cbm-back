@@ -24,6 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping
 public class ArquivoController {
@@ -37,6 +41,10 @@ public class ArquivoController {
     @Autowired
     private ArquivoMapper mapperArq = Mappers.getMapper(ArquivoMapper.class);
 
+    @ApiOperation(value = "Adiciona um ou mais arquivos a um documento")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Adicionou um ou mais arquivos a um documento e salvou no DB"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping(value = "/documentos/{documento_id}/arquivos", consumes = { "multipart/form-data" })
     @ResponseBody
     public ResponseEntity<List<ArquivoDTO>> cadastrar(@PathVariable long documento_id,
@@ -53,6 +61,10 @@ public class ArquivoController {
         }
     }
 
+    @ApiOperation(value = "Lista os arquivos de um documento")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Listou os arquivos de um documento"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{id}/arquivos")
     @ResponseBody
     public ResponseEntity<List<ArquivoDTO>> listar(@PathVariable long id) throws IOException {

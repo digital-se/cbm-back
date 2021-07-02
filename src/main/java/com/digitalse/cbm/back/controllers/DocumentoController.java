@@ -95,7 +95,10 @@ public class DocumentoController {
         }
     }
 
-    // todo
+    @ApiOperation(value = "Atualiza um documento")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Atualizou um documento e salvou no DB"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PutMapping("/documentos/{id}")
     @ResponseBody
     public ResponseEntity<DocumentoDTO> atualizar(@PathVariable long id) throws IOException {
