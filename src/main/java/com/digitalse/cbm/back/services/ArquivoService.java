@@ -10,7 +10,6 @@ import com.digitalse.cbm.back.entities.Arquivo;
 import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.repository.ArquivoRepository;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

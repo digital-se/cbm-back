@@ -1,6 +1,5 @@
 package com.digitalse.cbm.back.DTO;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import com.digitalse.cbm.back.entities.Documento;
