@@ -48,6 +48,8 @@ public class Arquivo {
     @Lob
     private Byte[] dados;
     @Column(nullable = false)
+    private String texto;
+    @Column(nullable = false)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date criado;
