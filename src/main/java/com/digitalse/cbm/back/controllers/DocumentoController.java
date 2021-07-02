@@ -1,12 +1,11 @@
 package com.digitalse.cbm.back.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
-import com.digitalse.cbm.back.mappers.DocumentoMapper;
 import com.digitalse.cbm.back.services.DocumentoService;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +29,6 @@ public class DocumentoController {
     @Autowired
     private DocumentoService documentoService;
 
-    /* @Autowired
-    private MilitarService militarService; */
-
-    @Autowired
-    private DocumentoMapper mapper = Mappers.getMapper(DocumentoMapper.class);
-
     public DocumentoController(DocumentoService documentoService) {
         this.documentoService = documentoService;
     }
@@ -49,7 +42,7 @@ public class DocumentoController {
     public ResponseEntity<DocumentoDTO> cadastrar(
             @RequestBody DocumentoDTO documentoDTO/* , @RequestPart List<MultipartFile> files */) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDTO(documentoService.criar(documentoDTO)));
+            return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).build();
@@ -59,15 +52,16 @@ public class DocumentoController {
         }
     }
 
-    @ApiOperation(value = "Busca um documento por palavras")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "Busca um documento e retornou o mesmo"),
+    //Convertido para return all para testes
+    @ApiOperation(value = "Isso aqui não deveria mas lista tudo")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Busca documentos e retornou os mesmos"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> buscar(@PathVariable(name = "palavras") String palavras) throws IOException {
+    public ResponseEntity<List<DocumentoDTO>> buscar(/* @PathVariable(name = "palavras") String palavras */) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            return ResponseEntity.status(HttpStatus.FOUND).body(documentoService.getAllDocumentos());
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -85,7 +79,7 @@ public class DocumentoController {
     @ResponseBody
     public ResponseEntity<DocumentoDTO> obter(@PathVariable long id) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.FOUND).body(mapper.toDTO(documentoService.getDocumento(id)));
+            return ResponseEntity.status(HttpStatus.FOUND).body(documentoService.getDocumento(id));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
