@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -36,6 +38,7 @@ public class Arquivo {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "documento_id")
+    @JsonBackReference
     private Documento documento;
     @Column(nullable = false)
     private String nome;

@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -58,6 +60,7 @@ public class Documento {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date atualizado;
 	@OneToMany(mappedBy = "documento")
+	@JsonManagedReference
 	private List<Arquivo> arquivos;
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "fk_documento_militar", joinColumns = @JoinColumn(name = "militar_matricula"), inverseJoinColumns = @JoinColumn(name = "documento_id"))
