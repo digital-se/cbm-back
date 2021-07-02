@@ -2,9 +2,6 @@ package com.digitalse.cbm.back.controllers;
 
 import java.io.IOException;
 
-import com.digitalse.cbm.back.services.OcrService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
@@ -20,13 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping
 public class OcrController {
-
-    @Autowired
-    private OcrService ocrService;
-
-    public OcrController(OcrService ocrService) {
-        this.ocrService = ocrService;
-    }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PatchMapping("/documentos/{id}/arquivos/{id}/ocr")

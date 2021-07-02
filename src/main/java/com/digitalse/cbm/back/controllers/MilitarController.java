@@ -12,14 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
 @RequestMapping
 public class MilitarController {
-    
+
     @Autowired
     private MilitarService militarService;
 
@@ -29,14 +28,14 @@ public class MilitarController {
 
     @GetMapping("/militares/{nome}")
     public ResponseEntity<List<MilitarDTO>> getMilitarPorNome(@PathVariable String nome) throws IOException {
-        try{
+        try {
             return ResponseEntity.status(HttpStatus.FOUND).body(militarService.getListByName(nome));
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch(HttpClientErrorException e) {
+        } catch (HttpClientErrorException e) {
             System.out.println(e);
             return ResponseEntity.status(e.getStatusCode()).build();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -44,13 +43,16 @@ public class MilitarController {
 
     @GetMapping("/militar/{matricula}")
     public ResponseEntity<MilitarDTO> getMilitarPorMatricula(@PathVariable String matricula) throws IOException {
-        try{
-            System.out.println(matricula);
-            MilitarDTO militardto = new MilitarDTO(militarService.getByMatricula(matricula).getMatricula());
-            return ResponseEntity.status(HttpStatus.FOUND).body(militardto);
-        } catch(NullPointerException e) {
+        try {
+            /*
+             * System.out.println(matricula); MilitarDTO militardto = new
+             * MilitarDTO(militarService.getByMatricula(matricula).getMatricula()); return
+             * ResponseEntity.status(HttpStatus.FOUND).body(militardto);
+             */
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+        } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

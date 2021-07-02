@@ -4,9 +4,7 @@ import java.io.IOException;
 
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.mappers.DocumentoMapper;
-import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.services.DocumentoService;
-import com.digitalse.cbm.back.services.MilitarService;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +30,8 @@ public class DocumentoController {
     @Autowired
     private DocumentoService documentoService;
 
-    @Autowired
-    private MilitarService militarService;
+    /* @Autowired
+    private MilitarService militarService; */
 
     @Autowired
     private DocumentoMapper mapper = Mappers.getMapper(DocumentoMapper.class);
@@ -51,14 +49,7 @@ public class DocumentoController {
     public ResponseEntity<DocumentoDTO> cadastrar(
             @RequestBody DocumentoDTO documentoDTO/* , @RequestPart List<MultipartFile> files */) throws IOException {
         try {
-            if (militarService.hasMilitar(documentoDTO.getCriador().getMatricula())) {
-                return ResponseEntity.status(HttpStatus.CREATED)
-                        .body(mapper.toDTO(documentoService.criar(documentoDTO)));
-            } else {
-                militarService.save(documentoDTO.getCriador().getMatricula());
-                return ResponseEntity.status(HttpStatus.CREATED)
-                        .body(mapper.toDTO(documentoService.criar(documentoDTO)));
-            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDTO(documentoService.criar(documentoDTO)));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).build();
@@ -94,11 +85,7 @@ public class DocumentoController {
     @ResponseBody
     public ResponseEntity<DocumentoDTO> obter(@PathVariable long id) throws IOException {
         try {
-            Documento documento = documentoService.getDocumento(id);
-            DocumentoDTO docDto = new DocumentoDTO(documento.getDocumento_id(), documento.getTipo(),
-                    documento.getNome(), documento.getCriador(), documento.getDataHoraCadastro(),
-                    documento.getVisivel(), documento.getArquivos(), documento.getMilitares());
-            return ResponseEntity.status(HttpStatus.FOUND).body(docDto);
+            return ResponseEntity.status(HttpStatus.FOUND).body(mapper.toDTO(documentoService.getDocumento(id)));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
