@@ -35,9 +35,8 @@ public class ArquivoService {
             MultipartFile tempFile = files.removeFirst();
 
             Arquivo finalArq = new Arquivo(tempArq.getId(), doc, tempFile.getOriginalFilename(), tempArq.getOcr(),
-                    tempArq.getStatus(), tempFile.getContentType(), tempFile.getSize(),
-                    ArrayUtils.toObject(tempFile.getBytes()), tempArq.getTexto(), tempArq.getCriado(),
-                    tempArq.getAtualizado());
+                    tempArq.getStatus(), tempFile.getContentType(), tempFile.getSize(), tempFile.getBytes(),
+                    tempArq.getTexto(), tempArq.getCriado(), tempArq.getAtualizado());
 
             System.out.println(finalArq.toString());
 

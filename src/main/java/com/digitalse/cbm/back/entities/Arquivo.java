@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
@@ -48,8 +49,8 @@ public class Arquivo {
     private Long tamanho;
     @Column(nullable = false)
     @Lob
-    private Byte[] dados;
     @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] dados;
     @Column(nullable = true)
     private String texto;
     @Column(nullable = false)

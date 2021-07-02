@@ -23,16 +23,17 @@ public class ArquivoDTO {
     private String status = "Concluido";
     private String mime;
     private Long tamanho;
-    private Byte[] dados;
+    private byte[] dados;
     private String texto;
     private Date criado;
     private Date atualizado;
 
     @Override
     public String toString() {
-        return "ArquivoDTO [atualizado=" + atualizado + ", criado=" + criado + ", dados=" + "rapaz era pra ter mas mt grande..."
-                + ", documento=" + documento + ", id=" + id + ", mime=" + mime + ", nome=" + nome + ", ocr=" + ocr
-                + ", status=" + status + ", tamanho=" + tamanho + ", texto=" + texto + "]";
+        return "ArquivoDTO [atualizado=" + atualizado + ", criado=" + criado + ", dados="
+                + "rapaz era pra ter mas mt grande..." + ", documento=" + documento + ", id=" + id + ", mime=" + mime
+                + ", nome=" + nome + ", ocr=" + ocr + ", status=" + status + ", tamanho=" + tamanho + ", texto=" + texto
+                + "]";
     }
 
 }
