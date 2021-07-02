@@ -46,6 +46,7 @@ public class ArquivoService {
             arquivoRepository.save(finalArq);
             ArquivoDTO listArq = mapperArq.toDTO(finalArq);
             listArq.setDados(null);
+            listArq.setDocumento(null);
             arquivos.add(listArq);
         }
 
