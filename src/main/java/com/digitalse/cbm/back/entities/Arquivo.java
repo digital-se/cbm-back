@@ -49,6 +49,7 @@ public class Arquivo {
     @Column(nullable = false)
     @Lob
     private Byte[] dados;
+    @Type(type = "org.hibernate.type.BinaryType")
     @Column(nullable = true)
     private String texto;
     @Column(nullable = false)
