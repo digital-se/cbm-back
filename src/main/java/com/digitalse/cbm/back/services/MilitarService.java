@@ -28,19 +28,15 @@ public class MilitarService {
         return listaMilitares;
     }
 
-    public List<MilitarDTO> getListByMatricula(String matricula) throws IOException {
+    public MilitarDTO getListByMatricula(String matricula) throws IOException {
         // System.out.println(URLEncoder.encode("https://sandbox-api.cbm.se.gov.br/bmrh/militares/getMilitaryByMat/"
         // + nome, "UTF-8"));
         String url = "https://sandbox-api.cbm.se.gov.br/bmrh/militares/getMilitaryByMat/" + matricula;
         JsonNode jsonNode = new ObjectMapper().readTree(new RestTemplate().getForObject(url, String.class));
         System.out.println(jsonNode.toString());
-        List<MilitarDTO> listaMilitares = new ArrayList<>();
-        for (JsonNode node : jsonNode.findValues("ViewMilitar")) {
-            MilitarDTO mdto = new MilitarDTO(node.get("num_matricula").asText(), node.get("nom_completo").asText(),
-                    node.get("nom_guerra").asText(), node.get("dsc_cargo").asText());
-            listaMilitares.add(mdto);
-        }
-        return listaMilitares;
+        MilitarDTO militarFound = new MilitarDTO(jsonNode.get("num_matricula").asText(), jsonNode.get("nom_completo").asText(),
+                jsonNode.get("nom_guerra").asText(), jsonNode.get("dsc_cargo").asText());
+        return militarFound;
     }
 
 }

@@ -54,7 +54,7 @@ public class MilitarController {
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/militar/{matricula}")
-    public ResponseEntity<List<MilitarDTO>> getMilitarPorMatricula(@PathVariable String matricula) throws IOException {
+    public ResponseEntity<MilitarDTO> getMilitarPorMatricula(@PathVariable String matricula) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.FOUND).body(militarService.getListByMatricula(matricula));
         } catch (NullPointerException e) {
