@@ -49,17 +49,19 @@ public class MilitarController {
         }
     }
 
+    @ApiOperation(value = "Procura militares por matricula na API do CBM")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Retornou o resultado da busca na API do CBM"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/militar/{matricula}")
-    public ResponseEntity<MilitarDTO> getMilitarPorMatricula(@PathVariable String matricula) throws IOException {
+    public ResponseEntity<List<MilitarDTO>> getMilitarPorMatricula(@PathVariable String matricula) throws IOException {
         try {
-            /*
-             * System.out.println(matricula); MilitarDTO militardto = new
-             * MilitarDTO(militarService.getByMatricula(matricula).getMatricula()); return
-             * ResponseEntity.status(HttpStatus.FOUND).body(militardto);
-             */
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            return ResponseEntity.status(HttpStatus.FOUND).body(militarService.getListByMatricula(matricula));
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (HttpClientErrorException e) {
+            System.out.println(e);
+            return ResponseEntity.status(e.getStatusCode()).build();
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
