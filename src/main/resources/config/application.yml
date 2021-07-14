@@ -1,0 +1,35 @@
+server:
+  port: 8082
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            "[non_contextual_creation]": true
+          "[use_streams_for_binary]": false
+    open-in-view: true
+  datasource:
+    url: ${env.DB_URL}
+    username: ${env.DB_USER}
+    password: ${env.DB_PASS}
+    hikari:
+      auto-commit: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+keycloak:
+  realm: ${env.KC_REALM}
+  auth-server-url: ${env.KC_AUTH_SERVER_URL}
+  ssl-required: ${env.KC_SSL_REQUIRED}
+  resource: ${env.KC_RESOURCE}
+  credentials:
+    secret: ${env.KC_CREDENTIALS_SECRET}
+  use-resource-role-mappings: true
+  bearer-only: true
