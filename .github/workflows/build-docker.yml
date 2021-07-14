@@ -1,0 +1,16 @@
+   name: build-docker
+
+   on:
+     push:
+       branches: [ master, develop ]
+     pull_request:
+       branches: [ master, develop ]
+
+   jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: build application
+        run: make deploy
