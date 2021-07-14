@@ -12,5 +12,7 @@
       steps:
       - name: checkout repo
         uses: actions/checkout@v2
+      - name: create network
+        run: docker network create internal
       - name: build application
         run: make deploy
