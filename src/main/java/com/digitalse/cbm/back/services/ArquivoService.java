@@ -60,9 +60,7 @@ public class ArquivoService {
     }
 
     public ArquivoDTO findArchive(long arquivo_id){
-        Arquivo arq = arquivoRepository.findById(arquivo_id).get();
-        arq.setDados(null);
-        arq.setDocumento(null);
+        Arquivo arq = arquivoRepository.findByIdWithoutDados(arquivo_id).get();
         return mapperArq.toDTO(arq);
     }
 

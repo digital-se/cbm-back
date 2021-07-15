@@ -27,6 +27,18 @@ public class ArquivoDTO {
     private Date criado;
     private Date atualizado;
 
+    public ArquivoDTO(Long id, String nome, Boolean ocr, String status, String mime, Long tamanho, Date criado,
+            Date atualizado) {
+        this.id = id;
+        this.nome = nome;
+        this.ocr = ocr;
+        this.status = status;
+        this.mime = mime;
+        this.tamanho = tamanho;
+        this.criado = criado;
+        this.atualizado = atualizado;
+    }
+
     @Override
     public String toString() {
         return "ArquivoDTO [atualizado=" + atualizado + ", criado=" + criado + ", dados="
