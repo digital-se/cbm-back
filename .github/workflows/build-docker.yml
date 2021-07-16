@@ -1,18 +1,19 @@
+name: Build Docker
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+ build:
    name: Build Docker
-
-   on:
-     push:
-       branches: [ master, develop ]
-     pull_request:
-       branches: [ master, develop ]
-
-   jobs:
-    build:
-      runs-on: ubuntu-latest
-      steps:
-      - name: checkout repo
-        uses: actions/checkout@v2
-      - name: create network
-        run: docker network create internal
-      - name: build application
-        run: make deploy
+   runs-on: ubuntu-latest
+   steps:
+   - name: checkout repo
+     uses: actions/checkout@v2
+   - name: create network
+     run: docker network create internal
+   - name: build application
+     run: make deploy

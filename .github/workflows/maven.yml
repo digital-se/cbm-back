@@ -11,6 +11,8 @@ on:
 
 jobs:
   build:
+  
+    name: Build Maven
 
     runs-on: ubuntu-latest
 
