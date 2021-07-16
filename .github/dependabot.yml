@@ -8,5 +8,7 @@ updates:
   - package-ecosystem: "maven" # See documentation for possible values
     directory: "/" # Location of package manifests
     target-branch: "develop"
+    reviewers:
+      - "raiomarco"
     schedule:
       interval: "daily"
