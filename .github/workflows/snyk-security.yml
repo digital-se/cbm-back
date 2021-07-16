@@ -11,6 +11,7 @@ on:
 
 jobs:
   security:
+    name: Security
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
