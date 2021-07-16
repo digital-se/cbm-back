@@ -8,6 +8,7 @@ on:
 
 jobs:
  build:
+   name: Build Docker
    runs-on: ubuntu-latest
    steps:
    - name: checkout repo
