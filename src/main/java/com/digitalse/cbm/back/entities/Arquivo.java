@@ -65,16 +65,16 @@ public class Arquivo {
     @Temporal(TemporalType.TIMESTAMP)
     private Date atualizado;
 
-    public Arquivo(Long id, String nome, Boolean ocr, String status, String mime, Long tamanho, Date criado,
-            Date atualizado) {
+    //Retorno leve sem dados do arquivo
+    public Arquivo(Long id, String nome, Boolean ocr, String status, Date criado,
+            Date atualizado, String texto) {
         this.id = id;
         this.nome = nome;
         this.ocr = ocr;
         this.status = status;
-        this.mime = mime;
-        this.tamanho = tamanho;
         this.criado = criado;
         this.atualizado = atualizado;
+        this.texto = texto;
     }
 
     @Override
