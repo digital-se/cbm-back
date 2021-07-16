@@ -29,6 +29,7 @@ public class ArquivoService {
     @Autowired
     private ArquivoMapper mapperArq = Mappers.getMapper(ArquivoMapper.class);
 
+    // ISSUE #15 TALVEZ
     public List<ArquivoDTO> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosDTO,
             LinkedList<MultipartFile> files) throws IOException {
         List<ArquivoDTO> arquivos = new ArrayList<>();
@@ -64,6 +65,7 @@ public class ArquivoService {
         return mapperArq.toDTO(arq);
     }
 
+    // ISSUE #15
     public List<ArquivoDTO> getArchivesFromDocument(long documento_id){
         Documento doc = documentoRepository.findById(documento_id).get();
         List<ArquivoDTO> list = mapperArq.toDTO(doc.getArquivos());
