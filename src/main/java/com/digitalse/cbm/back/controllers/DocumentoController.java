@@ -96,9 +96,9 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PutMapping("/documentos/{id}")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> atualizar(@PathVariable long id) throws IOException {
+    public ResponseEntity<DocumentoDTO> atualizar(@PathVariable long id, @RequestBody DocumentoDTO documentoNovo) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            return ResponseEntity.status(HttpStatus.OK).body(documentoService.editar(id, documentoNovo));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
