@@ -89,7 +89,7 @@ public class ArquivoService {
         /* this.criado = criado; */
         arq.setAtualizado(new Date());
         arquivoRepository.save(arq);
-        return mapperArq.toDTO(arq);
+        return mapperArq.toDTO(arquivoRepository.findByIdWithoutDados(id).get());
     }
 
 }
