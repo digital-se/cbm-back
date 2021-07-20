@@ -2,6 +2,7 @@ package com.digitalse.cbm.back.services;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -74,6 +75,21 @@ public class ArquivoService {
             arq.setDocumento(null);
         });
         return list;
+    }
+
+    public ArquivoDTO editar(long id, ArquivoDTO newArquivo/* , MultipartFile newFile */) throws IOException {
+        Arquivo arq = arquivoRepository.findById(id).get();
+        /* this.nome = newFile.getOriginalFilename(); */
+        arq.setOcr(newArquivo.getOcr());
+        arq.setStatus(newArquivo.getStatus());
+        /* this.mime = newFile.getContentType();
+        this.tamanho = newFile.getSize();
+        this.dados = newFile.getBytes(); */
+        arq.setTexto(newArquivo.getTexto());
+        /* this.criado = criado; */
+        arq.setAtualizado(new Date());
+        arquivoRepository.save(arq);
+        return mapperArq.toDTO(arq);
     }
 
 }

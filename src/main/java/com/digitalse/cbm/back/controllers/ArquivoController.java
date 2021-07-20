@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
-import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.services.ArquivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -98,9 +98,9 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PutMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> atualizar(@PathVariable long arquivo_id) throws IOException {
+    public ResponseEntity<ArquivoDTO> atualizar(@PathVariable long arquivo_id, @RequestBody ArquivoDTO arquivodto) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.editar(arquivo_id, arquivodto));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
