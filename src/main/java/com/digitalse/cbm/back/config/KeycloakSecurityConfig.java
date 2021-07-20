@@ -23,16 +23,18 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
-    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-            .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui","/configuration/security", "/swagger-ui/*").permitAll() //testes
-            .antMatchers("/v1/documentos/*").permitAll()
-            .anyRequest().permitAll();
-            /* hasAnyRole("user","admin") */
-        // http.csrf().disable();
+                .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui", "/configuration/security",
+                        "/swagger-ui/*")
+                .permitAll() // testes
+                .antMatchers("/documentos/*").permitAll().anyRequest().permitAll();
+        /* hasAnyRole("user","admin") */
+
+        // TODO: Configurar o csrf CORRETAMENTE o mais rápido possível
+        http.csrf().disable();
     }
 
     @Autowired
