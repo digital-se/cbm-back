@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -135,7 +136,7 @@ public class ArquivoController {
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Deletou um arquivo com sucesso"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/documentos/{documento_id}/arquivos/{arquivo_id}/deletar")
+    @DeleteMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
     public ResponseEntity<InputStreamResource> deletarArquivo(@PathVariable long arquivo_id) throws IOException {
         try {
