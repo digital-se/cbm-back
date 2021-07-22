@@ -76,4 +76,7 @@ public class ArquivoService {
         return list;
     }
 
+    public void deletarArquivo(long id){
+        arquivoRepository.deleteById(id);
+    }
 }
