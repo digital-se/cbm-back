@@ -130,4 +130,23 @@ public class ArquivoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @ApiOperation(value = "Deleta um arquivo pelo seu ID")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Deletou um arquivo com sucesso"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @GetMapping("/documentos/{documento_id}/arquivos/{arquivo_id}/deletar")
+    @ResponseBody
+    public ResponseEntity<InputStreamResource> deletarArquivo(@PathVariable long arquivo_id) throws IOException {
+        try {
+            arquivoService.deletarArquivo(arquivo_id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (NullPointerException e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
