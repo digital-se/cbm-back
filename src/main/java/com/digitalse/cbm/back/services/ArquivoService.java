@@ -7,9 +7,11 @@ import java.util.List;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
+import com.digitalse.cbm.back.entities.Bucket;
 import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.mappers.ArquivoMapper;
 import com.digitalse.cbm.back.repository.ArquivoRepository;
+import com.digitalse.cbm.back.repository.BucketRepository;
 import com.digitalse.cbm.back.repository.DocumentoRepository;
 
 import org.mapstruct.factory.Mappers;
@@ -27,6 +29,9 @@ public class ArquivoService {
     private DocumentoRepository documentoRepository;
 
     @Autowired
+    private BucketRepository bucketRepository;
+
+    @Autowired
     private ArquivoMapper mapperArq = Mappers.getMapper(ArquivoMapper.class);
 
     // ISSUE #15 TALVEZ
@@ -40,9 +45,14 @@ public class ArquivoService {
             ArquivoDTO tempArq = arquivosDTO.removeFirst();
             MultipartFile tempFile = files.removeFirst();
 
+            Bucket bucket = new Bucket(null, tempFile.getOriginalFilename(), tempFile.getContentType(),
+                    tempFile.getSize(), tempFile.getBytes(), null, null);
+
+            bucket = bucketRepository.save(bucket);
+
             Arquivo finalArq = new Arquivo(tempArq.getId(), doc, tempFile.getOriginalFilename(), tempArq.getOcr(),
-                    tempArq.getStatus(), tempFile.getContentType(), tempFile.getSize(), tempFile.getBytes(),
-                    tempArq.getTexto(), tempArq.getCriado(), tempArq.getAtualizado());
+                    tempArq.getStatus(), tempArq.getTexto(), bucket.getId(), tempArq.getCriado(),
+                    tempArq.getAtualizado());
 
             System.out.println(finalArq.toString());
             arquivoRepository.save(finalArq);
@@ -55,21 +65,21 @@ public class ArquivoService {
         return arquivos;
     }
 
-    public ArquivoDTO getFile(long arquivo_id){
+    public ArquivoDTO getFile(long arquivo_id) {
         Arquivo arq = arquivoRepository.findById(arquivo_id).get();
         return mapperArq.toDTO(arq);
     }
 
-    public ArquivoDTO findArchive(long arquivo_id){
+    public ArquivoDTO findArchive(long arquivo_id) {
         Arquivo arq = arquivoRepository.findByIdWithoutDados(arquivo_id).get();
         return mapperArq.toDTO(arq);
     }
 
     // ISSUE #15
-    public List<ArquivoDTO> getArchivesFromDocument(long documento_id){
+    public List<ArquivoDTO> getArchivesFromDocument(long documento_id) {
         Documento doc = documentoRepository.findById(documento_id).get();
         List<ArquivoDTO> list = mapperArq.toDTO(doc.getArquivos());
-        list.forEach(arq ->{
+        list.forEach(arq -> {
             arq.setDados(null);
             arq.setDocumento(null);
         });
