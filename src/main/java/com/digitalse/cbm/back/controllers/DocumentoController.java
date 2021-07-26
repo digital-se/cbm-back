@@ -9,6 +9,7 @@ import com.digitalse.cbm.back.services.DocumentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -106,6 +107,27 @@ public class DocumentoController {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+        
+    }
+
+    @ApiOperation(value = "Deleta um documento")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Deletou um documento com sucesso"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @DeleteMapping("/documentos/{id}")
+    @ResponseBody
+    public ResponseEntity<DocumentoDTO> deletar(@PathVariable long id) throws IOException {
+        try {
+            documentoService.deletarDocumento(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (NullPointerException e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        
     }
 
     // //documento -> arquivo -> ocr
