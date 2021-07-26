@@ -57,22 +57,4 @@ public class Arquivo {
     @Temporal(TemporalType.TIMESTAMP)
     private Date atualizado;
 
-    // Retorno leve sem dados do arquivo
-    public Arquivo(Long id, String nome, Boolean ocr, String status, Date criado, Date atualizado, String texto) {
-        this.id = id;
-        this.nome = nome;
-        this.ocr = ocr;
-        this.status = status;
-        this.criado = criado;
-        this.atualizado = atualizado;
-        this.texto = texto;
-    }
-
-    @Override
-    public String toString() {
-        return "Arquivo [atualizado=" + atualizado + ", criado=" + criado + ", dados="
-                + "rapaz era pra ter mas mt grande..." + ", documento=" + documento + ", id=" + id + ", nome=" + nome
-                + ", ocr=" + ocr + ", status=" + status + ", texto=" + texto + "]";
-    }
-
 }

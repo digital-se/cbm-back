@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
+import com.digitalse.cbm.back.entities.Bucket;
 import com.digitalse.cbm.back.services.ArquivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,9 +118,9 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos/{arquivo_id}/arquivo")
     @ResponseBody
-    public ResponseEntity<InputStreamResource> dadosOcr(@PathVariable long arquivo_id) throws IOException {
+    public ResponseEntity<InputStreamResource> getDados(@PathVariable long arquivo_id) throws IOException {
         try {
-            ArquivoDTO arq = arquivoService.getFile(arquivo_id);
+            Bucket arq = arquivoService.getFile(arquivo_id);
             return ResponseEntity.status(HttpStatus.OK).contentLength(arq.getTamanho())
                     .contentType(org.springframework.http.MediaType.parseMediaType(arq.getMime()))
                     .body(new InputStreamResource(new ByteArrayInputStream(arq.getDados())));
@@ -149,5 +150,5 @@ public class ArquivoController {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
+    } 
 }
