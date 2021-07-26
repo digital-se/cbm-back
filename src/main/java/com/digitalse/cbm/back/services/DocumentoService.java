@@ -23,8 +23,6 @@ public class DocumentoService {
     @Autowired
     private DocumentoMapper mapperDoc = Mappers.getMapper(DocumentoMapper.class);
 
-
-
     public DocumentoDTO salvar(DocumentoDTO documentodto) throws IOException {
         return mapperDoc.toDTO(documentoRepository.save(mapperDoc.toModel(documentodto)));
     }
@@ -33,7 +31,7 @@ public class DocumentoService {
     public DocumentoDTO getDocumento(Long id) throws IOException {
         DocumentoDTO docDTO = mapperDoc.toDTO(documentoRepository.findById(id).get());
         docDTO.getArquivos().forEach(arq -> {
-            arq.setDados(null);
+            // arq.setDados(null);
             arq.setDocumento(null);
         });
         return docDTO;
