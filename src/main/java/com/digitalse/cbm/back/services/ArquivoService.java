@@ -92,9 +92,10 @@ public class ArquivoService {
         /* this.nome = newFile.getOriginalFilename(); */
         arq.setOcr(newArquivo.getOcr());
         arq.setStatus(newArquivo.getStatus());
-        /* this.mime = newFile.getContentType();
-        this.tamanho = newFile.getSize();
-        this.dados = newFile.getBytes(); */
+        /*
+         * this.mime = newFile.getContentType(); this.tamanho = newFile.getSize();
+         * this.dados = newFile.getBytes();
+         */
         arq.setTexto(newArquivo.getTexto());
         /* this.criado = criado; */
         arq.setAtualizado(new Date());
@@ -102,4 +103,7 @@ public class ArquivoService {
         return mapperArq.toDTO(arquivoRepository.findByIdWithoutDados(id).get());
     }
 
+    public void deletarArquivo(long id) {
+        arquivoRepository.deleteById(id);
+    }
 }

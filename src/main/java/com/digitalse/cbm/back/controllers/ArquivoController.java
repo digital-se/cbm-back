@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -122,6 +123,25 @@ public class ArquivoController {
             return ResponseEntity.status(HttpStatus.OK).contentLength(arq.getTamanho())
                     .contentType(org.springframework.http.MediaType.parseMediaType(arq.getMime()))
                     .body(new InputStreamResource(new ByteArrayInputStream(arq.getDados())));
+        } catch (NullPointerException e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @ApiOperation(value = "Deleta um arquivo pelo seu ID")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Deletou um arquivo com sucesso"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @DeleteMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
+    @ResponseBody
+    public ResponseEntity<InputStreamResource> deletarArquivo(@PathVariable long arquivo_id) throws IOException {
+        try {
+            arquivoService.deletarArquivo(arquivo_id);
+            return ResponseEntity.status(HttpStatus.OK).build();
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
