@@ -14,6 +14,7 @@ import com.digitalse.cbm.back.mappers.ArquivoMapper;
 import com.digitalse.cbm.back.repository.ArquivoRepository;
 import com.digitalse.cbm.back.repository.BucketRepository;
 import com.digitalse.cbm.back.repository.DocumentoRepository;
+import com.digitalse.cbm.back.responseFiles.RFCriarArquivo;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,33 +36,28 @@ public class ArquivoService {
     @Autowired
     private ArquivoMapper mapperArq = Mappers.getMapper(ArquivoMapper.class);
 
-    public List<ArquivoDTO> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosDTO,
+    public List<RFCriarArquivo> addAllArchives(long documento_id, LinkedList<RFCriarArquivo> arquivosRF,
             LinkedList<MultipartFile> files) throws IOException {
-        List<ArquivoDTO> arquivos = new ArrayList<>();
+        List<RFCriarArquivo> returnRF = new ArrayList<>();
 
         Documento doc = documentoRepository.findById(documento_id).get();
 
-        while (!arquivosDTO.isEmpty()) {
-            ArquivoDTO tempArq = arquivosDTO.removeFirst();
+        while (!returnRF.isEmpty()) {
+            RFCriarArquivo tempArq = arquivosRF.removeFirst();
             MultipartFile tempFile = files.removeFirst();
 
             Bucket bucket = new Bucket(null, tempFile.getOriginalFilename(), tempFile.getContentType(),
                     tempFile.getSize(), tempFile.getBytes(), null, null);
-
             bucket = bucketRepository.save(bucket);
 
             Arquivo finalArq = new Arquivo(tempArq.getId(), doc, tempFile.getOriginalFilename(), tempArq.getOcr(),
-                    tempArq.getStatus(), tempArq.getTexto(), bucket.getId(), tempArq.getCriado(),
-                    tempArq.getAtualizado());
-
-            System.out.println(finalArq.toString());
+                    tempArq.getStatus(), tempArq.getTexto(), bucket.getId(), null,
+                    null);
             arquivoRepository.save(finalArq);
-            ArquivoDTO listArq = mapperArq.toDTO(finalArq);
-            listArq.setDocumento(null);
-            arquivos.add(listArq);
+            returnRF.add(tempArq);
         }
 
-        return arquivos;
+        return returnRF;
     }
 
     public Bucket getFile(long arquivo_id) {
@@ -75,7 +71,6 @@ public class ArquivoService {
         return mapperArq.toDTO(arq);
     }
 
-    // ISSUE #15
     public List<ArquivoDTO> getArchivesFromDocument(long documento_id) {
         Documento doc = documentoRepository.findById(documento_id).get();
         List<ArquivoDTO> list = mapperArq.toDTO(doc.getArquivos());
