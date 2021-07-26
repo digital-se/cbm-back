@@ -60,7 +60,6 @@ public class DocumentoService {
         return mapperDoc.toDTO(docModel);
     }
 
-    // ISSUE #15
     public List<DocumentoDTO> getAllDocumentos() throws IOException {
         List<DocumentoDTO> list = documentoRepository.findAll().stream().map(documento -> {
             DocumentoDTO docTemp = mapperDoc.toDTO(documento);
