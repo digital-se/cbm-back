@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -17,7 +16,6 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
@@ -46,16 +44,10 @@ public class Arquivo {
     private Boolean ocr = false;
     @Column(nullable = false)
     private String status;
-    @Column(nullable = false)
-    private String mime;
-    @Column(nullable = false)
-    private Long tamanho;
-    @Column(nullable = false)
-    @Lob
-    @Type(type = "org.hibernate.type.BinaryType")
-    private byte[] dados;
     @Column(nullable = true)
     private String texto;
+    @Column(nullable = false)
+    private Long bucket;
     @Column(nullable = false)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -65,9 +57,8 @@ public class Arquivo {
     @Temporal(TemporalType.TIMESTAMP)
     private Date atualizado;
 
-    //Retorno leve sem dados do arquivo
-    public Arquivo(Long id, String nome, Boolean ocr, String status, Date criado,
-            Date atualizado, String texto) {
+    // Retorno leve sem dados do arquivo
+    public Arquivo(Long id, String nome, Boolean ocr, String status, Date criado, Date atualizado, String texto) {
         this.id = id;
         this.nome = nome;
         this.ocr = ocr;
@@ -80,9 +71,8 @@ public class Arquivo {
     @Override
     public String toString() {
         return "Arquivo [atualizado=" + atualizado + ", criado=" + criado + ", dados="
-                + "rapaz era pra ter mas mt grande..." + ", documento=" + documento + ", id=" + id + ", mime=" + mime
-                + ", nome=" + nome + ", ocr=" + ocr + ", status=" + status + ", tamanho=" + tamanho + ", texto=" + texto
-                + "]";
+                + "rapaz era pra ter mas mt grande..." + ", documento=" + documento + ", id=" + id + ", nome=" + nome
+                + ", ocr=" + ocr + ", status=" + status + ", texto=" + texto + "]";
     }
 
 }
