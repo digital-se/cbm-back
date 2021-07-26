@@ -42,7 +42,7 @@ public class ArquivoService {
 
         Documento doc = documentoRepository.findById(documento_id).get();
 
-        while (!returnRF.isEmpty()) {
+        while (!arquivosRF.isEmpty()) {
             RFCriarArquivo tempArq = arquivosRF.removeFirst();
             MultipartFile tempFile = files.removeFirst();
 
