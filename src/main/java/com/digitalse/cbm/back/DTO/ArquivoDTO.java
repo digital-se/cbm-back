@@ -16,13 +16,10 @@ import lombok.Setter;
 public class ArquivoDTO {
 
     private Long id;
-    private Documento documento;
+    private Long documento_id;
     private String nome;
     private Boolean ocr = false;
     private String status = "Concluido";
-    private String mime;
-    private Long tamanho;
-    private byte[] dados;
     private String texto;
     private Long bucket;
     private Date criado;
