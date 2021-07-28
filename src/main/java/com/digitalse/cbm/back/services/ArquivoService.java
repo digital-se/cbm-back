@@ -50,8 +50,8 @@ public class ArquivoService {
             Arquivo finalArq = new Arquivo(tempArq.getId(), doc, tempFile.getOriginalFilename(), tempArq.getOcr(),
                     tempArq.getStatus(), tempArq.getTexto(), bucket.getId(), null,
                     null);
-            arquivoRepository.save(finalArq);
-            returnRF.add(new RFCriarArquivo(tempArq));
+            RFCriarArquivo rfarq = new RFCriarArquivo(arquivoRepository.save(finalArq));
+            returnRF.add(rfarq);
         }
 
         return returnRF;
