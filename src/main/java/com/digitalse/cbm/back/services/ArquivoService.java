@@ -33,7 +33,6 @@ public class ArquivoService {
     @Autowired
     private BucketRepository bucketRepository;
 
-
     public List<RFCriarArquivo> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosRF,
             LinkedList<MultipartFile> files) throws IOException {
         List<RFCriarArquivo> returnRF = new ArrayList<>();
