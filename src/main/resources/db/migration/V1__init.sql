@@ -17,10 +17,19 @@ CREATE TABLE "arquivos" (
     "nome" VARCHAR(255) NOT NULL,
     "ocr" BOOLEAN NOT NULL,
     "status" VARCHAR(255) NOT NULL,
+    "texto" TEXT NULL,
+    "bucket" BIGINT NOT NULL,
+    "criado" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "atualizado" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY ("id")
+);
+
+CREATE TABLE "bucket" (
+    "id" SERIAL NOT NULL,
+    "nome" VARCHAR(255) NOT NULL,
     "mime" VARCHAR(255) NOT NULL,
     "tamanho" BIGINT NOT NULL,
     "dados" BYTEA NOT NULL,
-    "texto" TEXT NULL,
     "criado" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "atualizado" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY ("id")

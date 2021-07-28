@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
+import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
+import com.digitalse.cbm.back.responseFiles.RFDocumento;
 import com.digitalse.cbm.back.services.DocumentoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> cadastrar(
+    public ResponseEntity<RFDocumento> cadastrar(
             @RequestBody DocumentoDTO documentoDTO/* , @RequestPart List<MultipartFile> files */) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
@@ -59,7 +61,7 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<List<DocumentoDTO>> buscar(/* @PathVariable(name = "palavras") String palavras */)
+    public ResponseEntity<List<RFBuscaDocumentos>> buscar(/* @PathVariable(name = "palavras") String palavras */)
             throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(documentoService.getAllDocumentos());
@@ -78,7 +80,7 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{id}")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> obter(@PathVariable long id) throws IOException {
+    public ResponseEntity<RFDocumento> obter(@PathVariable long id) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumento(id));
         } catch (NullPointerException e) {
@@ -96,9 +98,9 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PutMapping("/documentos/{id}")
     @ResponseBody
-    public ResponseEntity<DocumentoDTO> atualizar(@PathVariable long id) throws IOException {
+    public ResponseEntity<RFDocumento> atualizar(@PathVariable long id, @RequestBody DocumentoDTO documentoNovo) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+            return ResponseEntity.status(HttpStatus.OK).body(documentoService.editar(id, documentoNovo));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
