@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
+import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
 import com.digitalse.cbm.back.responseFiles.RFDocumento;
 import com.digitalse.cbm.back.services.DocumentoService;
 
@@ -60,7 +61,7 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<List<RFDocumento>> buscar(/* @PathVariable(name = "palavras") String palavras */)
+    public ResponseEntity<List<RFBuscaDocumentos>> buscar(/* @PathVariable(name = "palavras") String palavras */)
             throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(documentoService.getAllDocumentos());

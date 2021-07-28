@@ -9,6 +9,7 @@ import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.mappers.DocumentoMapper;
 import com.digitalse.cbm.back.repository.DocumentoRepository;
+import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
 import com.digitalse.cbm.back.responseFiles.RFDocumento;
 
 import org.mapstruct.factory.Mappers;
@@ -55,9 +56,9 @@ public class DocumentoService {
 
     
 
-    public List<RFDocumento> getAllDocumentos() throws IOException {
-        List<RFDocumento> rfDocList = documentoRepository.findAll().stream().map(documento -> {
-            RFDocumento newRFDoc = new RFDocumento(documento);
+    public List<RFBuscaDocumentos> getAllDocumentos() throws IOException {
+        List<RFBuscaDocumentos> rfDocList = documentoRepository.findAll().stream().map(documento -> {
+            RFBuscaDocumentos newRFDoc = new RFBuscaDocumentos(documento);
             return newRFDoc;
         }).collect(Collectors.toList());
         return rfDocList;
