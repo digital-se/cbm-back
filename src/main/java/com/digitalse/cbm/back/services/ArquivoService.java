@@ -35,7 +35,6 @@ public class ArquivoService {
     @Autowired
     private ArquivoMapper mapperArq = Mappers.getMapper(ArquivoMapper.class);
 
-    // ISSUE #15 TALVEZ
     public List<ArquivoDTO> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosDTO,
             LinkedList<MultipartFile> files) throws IOException {
         List<ArquivoDTO> arquivos = new ArrayList<>();
@@ -58,7 +57,6 @@ public class ArquivoService {
             System.out.println(finalArq.toString());
             arquivoRepository.save(finalArq);
             ArquivoDTO listArq = mapperArq.toDTO(finalArq);
-            listArq.setDados(null);
             listArq.setDocumento(null);
             arquivos.add(listArq);
         }
@@ -66,13 +64,14 @@ public class ArquivoService {
         return arquivos;
     }
 
-    public ArquivoDTO getFile(long arquivo_id) {
+    public Bucket getFile(long arquivo_id) {
         Arquivo arq = arquivoRepository.findById(arquivo_id).get();
-        return mapperArq.toDTO(arq);
+        
+        return bucketRepository.findById(arq.getId()).get();
     }
 
     public ArquivoDTO findArchive(long arquivo_id) {
-        Arquivo arq = arquivoRepository.findByIdWithoutDados(arquivo_id).get();
+        Arquivo arq = arquivoRepository.findById(arquivo_id).get();
         return mapperArq.toDTO(arq);
     }
 
@@ -81,7 +80,6 @@ public class ArquivoService {
         Documento doc = documentoRepository.findById(documento_id).get();
         List<ArquivoDTO> list = mapperArq.toDTO(doc.getArquivos());
         list.forEach(arq -> {
-            arq.setDados(null);
             arq.setDocumento(null);
         });
         return list;
@@ -89,18 +87,13 @@ public class ArquivoService {
 
     public ArquivoDTO editar(long id, ArquivoDTO newArquivo/* , MultipartFile newFile */) throws IOException {
         Arquivo arq = arquivoRepository.findById(id).get();
-        /* this.nome = newFile.getOriginalFilename(); */
         arq.setOcr(newArquivo.getOcr());
         arq.setStatus(newArquivo.getStatus());
-        /*
-         * this.mime = newFile.getContentType(); this.tamanho = newFile.getSize();
-         * this.dados = newFile.getBytes();
-         */
+        
         arq.setTexto(newArquivo.getTexto());
-        /* this.criado = criado; */
         arq.setAtualizado(new Date());
         arquivoRepository.save(arq);
-        return mapperArq.toDTO(arquivoRepository.findByIdWithoutDados(id).get());
+        return mapperArq.toDTO(arquivoRepository.findById(id).get());
     }
 
     public void deletarArquivo(long id) {
