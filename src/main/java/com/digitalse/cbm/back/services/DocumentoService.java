@@ -54,8 +54,6 @@ public class DocumentoService {
         return rfdoc;
     }
 
-    
-
     public List<RFBuscaDocumentos> getAllDocumentos() throws IOException {
         List<RFBuscaDocumentos> rfDocList = documentoRepository.findAll().stream().map(documento -> {
             RFBuscaDocumentos newRFDoc = new RFBuscaDocumentos(documento);

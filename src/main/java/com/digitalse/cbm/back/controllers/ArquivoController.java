@@ -6,9 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
+
 import com.digitalse.cbm.back.responseFiles.RFArquivo;
 import com.digitalse.cbm.back.responseFiles.RFBucket;
 import com.digitalse.cbm.back.responseFiles.RFCriarArquivo;
+
 import com.digitalse.cbm.back.services.ArquivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,12 +122,14 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos/{arquivo_id}/arquivo")
     @ResponseBody
+
     public ResponseEntity<InputStreamResource> obterDados(@PathVariable long arquivo_id) throws IOException {
         try {
             RFBucket rfbucket = arquivoService.getBucket(arquivo_id);
             return ResponseEntity.status(HttpStatus.OK).contentLength(rfbucket.getTamanho())
                     .contentType(org.springframework.http.MediaType.parseMediaType(rfbucket.getMime()))
                     .body(new InputStreamResource(new ByteArrayInputStream(rfbucket.getDados())));
+
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
