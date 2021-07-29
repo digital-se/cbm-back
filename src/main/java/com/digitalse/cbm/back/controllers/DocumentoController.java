@@ -6,6 +6,7 @@ import java.util.List;
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
 import com.digitalse.cbm.back.responseFiles.RFDocumento;
+import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
 import com.digitalse.cbm.back.services.DocumentoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +99,7 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PutMapping("/documentos/{id}")
     @ResponseBody
-    public ResponseEntity<RFDocumento> atualizar(@PathVariable long id, @RequestBody DocumentoDTO documentoNovo) throws IOException {
+    public ResponseEntity<RFEditarDocumento> atualizar(@PathVariable long id, @RequestBody DocumentoDTO documentoNovo) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(documentoService.editar(id, documentoNovo));
         } catch (NullPointerException e) {
