@@ -6,15 +6,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
-
 import com.digitalse.cbm.back.responseFiles.RFArquivo;
 import com.digitalse.cbm.back.responseFiles.RFBucket;
 import com.digitalse.cbm.back.responseFiles.RFCriarArquivo;
-
+import com.digitalse.cbm.back.security.KeycloakUtils;
 import com.digitalse.cbm.back.services.ArquivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +40,8 @@ public class ArquivoController {
 
     @Autowired
     private ArquivoService arquivoService;
+
+    private KeycloakUtils KCU = new KeycloakUtils();
 
     @ApiOperation(value = "Adiciona um ou mais arquivos a um documento")
     @ApiResponses(value = {
@@ -61,16 +64,23 @@ public class ArquivoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
+    //GEEEEEEEEET
     @ApiOperation(value = "Lista os arquivos de um documento")
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Listou os arquivos de um documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos")
     @ResponseBody
-    public ResponseEntity<List<RFArquivo>> listarArquivos(@PathVariable long documento_id) throws IOException {
+    public ResponseEntity<List<RFArquivo>> listarArquivos(@RequestHeader HttpHeaders header, @PathVariable long documento_id) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArchivesFromDocument(documento_id));
+            System.out.println(header.toString());
+            /* if(KCU.isAuthorized(token)) {
+                return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArchivesFromDocument(documento_id));
+            } else {
+                 */
+                //return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArchivesFromDocumentExternal(documento_id));
+                return null;
+            /* } */
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -79,7 +89,8 @@ public class ArquivoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
+    
+    //TODO: GEEEEEEEEET
     @ApiOperation(value = "Retorna um arquivo especifico de um documento")
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Retornou um arquivo de um documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
@@ -116,6 +127,7 @@ public class ArquivoController {
         }
     }
 
+    //TODO: GEEEEEEEEET
     @ApiOperation(value = "Retorna um InputStreamResource de um arquivo")
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Retornou um InputStreamResource"),
             @ApiResponse(code = 404, message = "Não encontrado"),
