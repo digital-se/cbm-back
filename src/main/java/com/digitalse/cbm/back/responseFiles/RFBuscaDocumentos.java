@@ -1,8 +1,10 @@
 package com.digitalse.cbm.back.responseFiles;
 
 import java.util.Date;
+import java.util.List;
 
 import com.digitalse.cbm.back.entities.Documento;
+import com.digitalse.cbm.back.entities.Militar;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +24,7 @@ public class RFBuscaDocumentos {
 	private String descricao;
 	private Date criado;
 	private Date atualizado;
+    private List<Militar> militares;
 
     public RFBuscaDocumentos(Documento doc) {
         this.id = doc.getId();
@@ -32,6 +35,7 @@ public class RFBuscaDocumentos {
         this.data = doc.getData();
         this.descricao = doc.getDescricao();
         this.criado = doc.getCriado();
-        this.atualizado = doc.getAtualizado();         
+        this.atualizado = doc.getAtualizado();     
+        this.militares = doc.getMilitares();     
     }
 }
