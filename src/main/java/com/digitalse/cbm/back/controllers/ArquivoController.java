@@ -6,7 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
-import com.digitalse.cbm.back.entities.Bucket;
+
+import com.digitalse.cbm.back.responseFiles.RFArquivo;
+import com.digitalse.cbm.back.responseFiles.RFBucket;
+import com.digitalse.cbm.back.responseFiles.RFCriarArquivo;
+
 import com.digitalse.cbm.back.services.ArquivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +47,7 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PostMapping(value = "/documentos/{documento_id}/arquivos", consumes = { "multipart/form-data" })
     @ResponseBody
-    public ResponseEntity<List<ArquivoDTO>> cadastrar(@PathVariable(required = true) long documento_id,
+    public ResponseEntity<List<RFCriarArquivo>> criarArquivo(@PathVariable(required = true) long documento_id,
             @RequestPart(required = true) List<ArquivoDTO> arquivosDTO,
             @RequestPart(required = true) List<MultipartFile> files) throws IOException {
         try {
@@ -64,7 +68,7 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos")
     @ResponseBody
-    public ResponseEntity<List<ArquivoDTO>> listar(@PathVariable long documento_id) throws IOException {
+    public ResponseEntity<List<RFArquivo>> listarArquivos(@PathVariable long documento_id) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArchivesFromDocument(documento_id));
         } catch (NullPointerException e) {
@@ -82,9 +86,9 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
-    public ResponseEntity<ArquivoDTO> obter(@PathVariable long arquivo_id) throws IOException {
+    public ResponseEntity<RFArquivo> obterArquivos(@PathVariable long arquivo_id) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.findArchive(arquivo_id));
+            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArquivo(arquivo_id));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -100,7 +104,7 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PutMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
-    public ResponseEntity<ArquivoDTO> atualizar(@PathVariable long arquivo_id, @RequestBody ArquivoDTO arquivodto) throws IOException {
+    public ResponseEntity<RFArquivo> atualizarArquivos(@PathVariable long arquivo_id, @RequestBody ArquivoDTO arquivodto) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(arquivoService.editar(arquivo_id, arquivodto));
         } catch (NullPointerException e) {
@@ -118,12 +122,14 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos/{arquivo_id}/arquivo")
     @ResponseBody
-    public ResponseEntity<InputStreamResource> getDados(@PathVariable long arquivo_id) throws IOException {
+
+    public ResponseEntity<InputStreamResource> obterDados(@PathVariable long arquivo_id) throws IOException {
         try {
-            Bucket arq = arquivoService.getFile(arquivo_id);
-            return ResponseEntity.status(HttpStatus.OK).contentLength(arq.getTamanho())
-                    .contentType(org.springframework.http.MediaType.parseMediaType(arq.getMime()))
-                    .body(new InputStreamResource(new ByteArrayInputStream(arq.getDados())));
+            RFBucket rfbucket = arquivoService.getBucket(arquivo_id);
+            return ResponseEntity.status(HttpStatus.OK).contentLength(rfbucket.getTamanho())
+                    .contentType(org.springframework.http.MediaType.parseMediaType(rfbucket.getMime()))
+                    .body(new InputStreamResource(new ByteArrayInputStream(rfbucket.getDados())));
+
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -139,7 +145,7 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @DeleteMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
-    public ResponseEntity<InputStreamResource> deletarArquivo(@PathVariable long arquivo_id) throws IOException {
+    public ResponseEntity<String> deletarArquivos(@PathVariable long arquivo_id) throws IOException {
         try {
             arquivoService.deletarArquivo(arquivo_id);
             return ResponseEntity.status(HttpStatus.OK).build();

@@ -23,19 +23,29 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
+    
+    /* @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
+        SimpleAuthorityMapper grantedAuthorityMapper = new SimpleAuthorityMapper();
+        grantedAuthorityMapper.setPrefix("ROLE_");
+        grantedAuthorityMapper.setConvertToUpperCase(true);
+        keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(grantedAuthorityMapper);
+        auth.authenticationProvider(keycloakAuthenticationProvider);
+    } */
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui", "/configuration/security",
-                        "/swagger-ui/*")
-                .permitAll() // testes
-                .antMatchers("/documentos/*").permitAll().anyRequest().permitAll();
-        /* hasAnyRole("user","admin") */
-
-        // TODO: Configurar o csrf CORRETAMENTE o mais rápido possível
+            .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui","/configuration/security", "/swagger-ui/*").permitAll() //testes
+            //.antMatchers("/documentos/*").hasAnyRole("user")
+            .anyRequest().permitAll();
+            /* hasAnyRole("user","admin") */
         http.csrf().disable();
     }
+
+    
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
