@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
@@ -49,14 +50,15 @@ public class KeycloakSecurity extends KeycloakWebSecurityConfigurerAdapter {
         super.configure(http);
         http.authorizeRequests()
             .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui","/configuration/security", "/swagger-ui/*").permitAll() //swagger
-            .antMatchers(HttpMethod.GET).permitAll() //
-            .antMatchers(HttpMethod.POST).hasAnyRole("brmh.user")
-            .antMatchers(HttpMethod.PUT).hasAnyRole("brmh.user")
+            //.antMatchers("/documentos/*").permitAll() 
+            .antMatchers(HttpMethod.GET).permitAll()
+            .antMatchers(HttpMethod.POST, "/documentos/*").hasRole("bmrh.user");
+            /*.antMatchers(HttpMethod.PUT).hasAnyRole("brmh.user")
             .antMatchers(HttpMethod.DELETE).hasAnyRole("brmh.user")
-            .antMatchers(HttpMethod.PATCH).hasAnyRole("brmh.user")
-            .anyRequest().denyAll();
+            .antMatchers(HttpMethod.PATCH).hasAnyRole("brmh.user") */
             
-        http.csrf().disable();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.cors().and().csrf().disable();
     }
 
     @Bean

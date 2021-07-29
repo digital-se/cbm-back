@@ -1,12 +1,8 @@
 package com.digitalse.cbm.back.security;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 public class KeycloakUtils {
     @Value("keycloak.auth-server-url")
@@ -14,20 +10,35 @@ public class KeycloakUtils {
     @Value("keycloak.realm")
     private String realm;
 
-    public Boolean isAuthorized(String token){
-        String url = "https://"+auth_server_url+"/realms/"+realm+"/protocol/openid-connect/userinfo";
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
+    public Boolean isAuthorized(Optional<String> token){
+        try{
 
-        headers.setBearerAuth(token);
+            if(token == null){
+                return false;
+            } else {
+                System.out.println(token.get());
+                return true;
+            }
 
-        ResponseEntity<String> response = restTemplate.exchange(
-        url,
-        HttpMethod.GET,
-        new HttpEntity<>(headers),
-        String.class
-        );
+            /* String url = "https://"+auth_server_url+"/realms/"+realm+"/protocol/openid-connect/userinfo";
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
     
-        return response.getStatusCode().equals(HttpStatus.OK);
+            headers.setBearerAuth(token);
+    
+            ResponseEntity<String> response = restTemplate.exchange(
+            url,
+            HttpMethod.GET,
+            new HttpEntity<>(headers),
+            String.class
+            );
+        
+            return response.getStatusCode().equals(HttpStatus.OK); */
+        } catch (NullPointerException e) {
+            return false;
+        } catch (Exception e) {
+            //TODO: Tratar exceção melhor
+            return false;
+        }
     }
 }

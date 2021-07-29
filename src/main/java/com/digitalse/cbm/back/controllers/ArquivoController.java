@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.responseFiles.RFArquivo;
@@ -14,9 +15,9 @@ import com.digitalse.cbm.back.services.ArquivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,9 +72,9 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos")
     @ResponseBody
-    public ResponseEntity<List<RFArquivo>> listarArquivos(@RequestHeader HttpHeaders header, @PathVariable long documento_id) throws IOException {
+    public ResponseEntity<List<RFArquivo>> listarArquivos(@RequestHeader("authorization") Optional<String> token, @PathVariable long documento_id) throws IOException {
         try {
-            System.out.println(header.toString());
+            System.out.println(KCU.isAuthorized(token));
             /* if(KCU.isAuthorized(token)) {
                 return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArchivesFromDocument(documento_id));
             } else {
