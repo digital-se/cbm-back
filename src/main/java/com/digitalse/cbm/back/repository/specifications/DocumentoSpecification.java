@@ -1,24 +1,35 @@
 package com.digitalse.cbm.back.repository.specifications;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.entities.Documento;
 
 import org.springframework.data.jpa.domain.Specification;
 
-public class DocumentoSpecification {
-    
-    //TODO: getFilterText não existe?
-    /**
-	 * Builds and return specification object that filters data based on search
-	 * string
-	 *
-	 * @param documentoRequestDTO Employee Projects Request DTO object
-	 *
-	 * @return Specification with Employee Id and Filter Text
-	 */
-	private Specification<Documento> getSpecification(DocumentoDTO documentoRequestDTO) {
+public class DocumentoSpecification implements Specification<Documento> {
+
+	private Documento filter;
+
+    public DocumentoSpecification(Documento filter) {
+        super();
+        this.filter = filter;
+    }
+
+	@Override
+	public Predicate toPredicate(Root<Documento> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+		Predicate p = criteriaBuilder.disjunction();
+		if (filter.getNumeracao() != null) {
+            p.getExpressions()
+                    .add(criteriaBuilder.equal(root.get("numeracao"), filter.getNumeracao()));
+        }
+		return p;
+	}
+
+	/* private Specification<Documento> getSpecification(DocumentoDTO documentoRequestDTO) {
 		
 		// Build Specification with Employee Id and Filter Text
 		return (root, criteriaQuery, criteriaBuilder) -> {
@@ -26,7 +37,7 @@ public class DocumentoSpecification {
 			// Predicate for Employee Id
 			Predicate predicateForDocumento = criteriaBuilder.equal(root.get("id"), documentoRequestDTO.getId());
 
-			/* if (isNotNullOrEmpty(documentoRequestDTO.getFilterText())) { */
+			 if (isNotNullOrEmpty(documentoRequestDTO.getFilterText())) { 
 			// Predicate for Employee Projects data
 			Predicate predicateForData = criteriaBuilder.or(
 					criteriaBuilder.like(root.get("firstName"), "%" + documentoRequestDTO.getFilterText() + "%"),
@@ -35,20 +46,14 @@ public class DocumentoSpecification {
 
 			// Combine both predicates
 			return criteriaBuilder.and(predicateForDocumento, predicateForData);
-			/* } */
+			 }
 			return criteriaBuilder.and(predicateForDocumento);
 		};
-	}
-
+	} */
 
 
     
-    /* private Person filter;
-
-    public PersonSpecification(Person filter) {
-        super();
-        this.filter = filter;
-    }
+    /* 
 
     public Predicate toPredicate(Root<Person> root, CriteriaQuery<?> cq,
             CriteriaBuilder cb) {
