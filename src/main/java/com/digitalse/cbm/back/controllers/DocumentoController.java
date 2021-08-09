@@ -32,6 +32,9 @@ public class DocumentoController {
     @Autowired
     private DocumentoService documentoService;
 
+    public DocumentoController() {
+    }
+
     public DocumentoController(DocumentoService documentoService) {
         this.documentoService = documentoService;
     }

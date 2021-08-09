@@ -1,13 +1,9 @@
 Feature: Criar documento
 
     Documento Criado
-
-    Scenario: Documento está correto
-        Given o documento está correto
-        When tento criar o documento
-        Then devo retornar o documento
-    
-    Scenario: Documento está incorreto
-        Given o documento está incorreto
-        When tento criar o documento
-        Then devo retornar um erro
+ 
+    Scenario: Criar documento corretamente
+        Given usuario cria um documento
+        When usuario envia o {DocumentoDTO} pelo endpoint
+        Then devo retornar o {documento} corretamente
+        
