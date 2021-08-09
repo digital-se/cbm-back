@@ -7,12 +7,12 @@ import com.digitalse.cbm.back.entities.Arquivo;
 import com.digitalse.cbm.back.entities.Militar;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DocumentoDTO {
