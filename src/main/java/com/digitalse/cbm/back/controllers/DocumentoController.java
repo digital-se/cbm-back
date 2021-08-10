@@ -56,8 +56,8 @@ public class DocumentoController {
     }
 
     // Convertido para return all para testes
-    @ApiOperation(value = "Isso aqui não deveria mas lista tudo")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "Busca documentos e retornou os mesmos"),
+    @ApiOperation(value = "Busca documentos por campos")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Buscou documentos e retornou os que se encaixam"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos")
