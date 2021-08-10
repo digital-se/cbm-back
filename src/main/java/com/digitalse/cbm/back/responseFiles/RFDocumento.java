@@ -1,6 +1,7 @@
 package com.digitalse.cbm.back.responseFiles;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.digitalse.cbm.back.entities.Arquivo;
@@ -21,10 +22,10 @@ public class RFDocumento {
 	private String numeracao;
 	private Boolean publico;
 	private String tipo;
-	private Date data;
+	private LocalDate data;
 	private String descricao;
-	private Date criado;
-	private Date atualizado;
+	private OffsetDateTime criado;
+	private OffsetDateTime atualizado;
 	private List<Arquivo> arquivos;
 	private List<Militar> militares;
 

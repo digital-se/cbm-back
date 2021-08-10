@@ -1,6 +1,6 @@
 package com.digitalse.cbm.back.entities;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
@@ -49,12 +47,10 @@ public class Bucket {
 
     @Column(nullable = false)
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date criado;
+    private OffsetDateTime criado;
 
     @Column(nullable = false)
     @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date atualizado;
+    private OffsetDateTime atualizado;
 
 }
