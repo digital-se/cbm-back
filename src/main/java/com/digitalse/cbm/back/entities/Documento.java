@@ -1,6 +1,7 @@
 package com.digitalse.cbm.back.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,8 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -45,18 +44,15 @@ public class Documento {
 	@Column(nullable = false)
 	private String tipo;
 	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date data;
+	private LocalDate data;
 	@Column(nullable = false)
 	private String descricao;
 	@Column(nullable = false)
 	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date criado;
+	private OffsetDateTime criado;
 	@Column(nullable = false)
 	@UpdateTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date atualizado;
+	private OffsetDateTime atualizado;
 	@OneToMany(mappedBy = "documento")
 	@JsonManagedReference
 	private List<Arquivo> arquivos;

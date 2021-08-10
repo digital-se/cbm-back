@@ -1,6 +1,6 @@
 package com.digitalse.cbm.back.DTO;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,11 +20,11 @@ public class ArquivoDTO {
     private String status = "Concluido";
     private String texto;
     private Long bucket;
-    private Date criado;
-    private Date atualizado;
+    private OffsetDateTime criado;
+    private OffsetDateTime atualizado;
 
-    public ArquivoDTO(Long id, String nome, Boolean ocr, String status, Date criado,
-            Date atualizado) {
+    public ArquivoDTO(Long id, String nome, Boolean ocr, String status, OffsetDateTime criado,
+    OffsetDateTime atualizado) {
         this.id = id;
         this.nome = nome;
         this.ocr = ocr;
