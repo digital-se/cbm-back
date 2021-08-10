@@ -1,102 +1,75 @@
 package com.digitalse.cbm.back.repository.specifications;
 
+import java.time.OffsetDateTime;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.digitalse.cbm.back.entities.Documento;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import org.springframework.data.jpa.domain.Specification;
 
 public class DocumentoSpecification implements Specification<Documento> {
 
-	private Documento filter;
+	private JsonNode filter;
 
-    public DocumentoSpecification(Documento filter) {
+    public DocumentoSpecification(JsonNode filter) {
         super();
         this.filter = filter;
     }
 
+     //TODO: matricula do militar, nome do militar e palavras-chave
 	@Override
 	public Predicate toPredicate(Root<Documento> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
 		query.distinct(true);
 		Predicate p = criteriaBuilder.and();
-
-		if (filter.getNumeracao() != null) {
+       
+		if (filter.has("numeracao") && !filter.get("numeracao").isNull()) {
             p.getExpressions()
-                    .add(criteriaBuilder.equal(root.get("numeracao"), filter.getNumeracao()));
+                    .add(criteriaBuilder.equal(root.get("numeracao"), filter.get("numeracao").asText()));
         }
 
-		if (filter.getTipo() != null) {
+		if (filter.has("tipo") && !filter.get("tipo").isNull()) {
             p.getExpressions()
-                    .add(criteriaBuilder.equal(root.get("tipo"), filter.getTipo()));
+                    .add(criteriaBuilder.equal(root.get("tipo"), filter.get("tipo").asText()));
         }
+        
+		if ((filter.has("data inicial") || filter.has("data final")) && (!filter.get("data inicial").isNull() || !filter.get("data final").isNull())) {
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss.SSSXXX");
+            OffsetDateTime dataInicial;
+            OffsetDateTime dataFinal;
 
-		if (filter.getPublico() != null) {
-            p.getExpressions()
-                    .add(criteriaBuilder.equal(root.get("publico"), filter.getPublico()));
-        }
+            if(filter.has("data inicial")){
+                dataInicial = OffsetDateTime.parse(filter.get("data inicial").asText());
+            } else {
+                dataInicial = null;
+            }
 
-		if (filter.getData() != null) {
-            p.getExpressions()
-                    .add(criteriaBuilder.equal(root.get("data"), filter.getData()));
-        }
+            if(filter.has("data final")){
+                dataFinal = OffsetDateTime.parse(filter.get("data final").asText());
+            } else {
+                dataFinal = null;
+            }
 
-		if (filter.getDescricao() != null) {
-            p.getExpressions()
-                    .add(criteriaBuilder.like(root.get("descricao"), filter.getDescricao()));
-        }
-
-		if (filter.getCriado() != null) {
-            p.getExpressions()
-                    .add(criteriaBuilder.equal(root.get("criado"), filter.getCriado()));
+            if(filter.has("data inicial") && filter.has("data final")){
+                p.getExpressions()
+                    .add(criteriaBuilder.between(root.<OffsetDateTime>get("criado"), dataInicial, dataFinal));
+            }
+            if(filter.has("data inicial") && !filter.has("data final")){
+                p.getExpressions()
+                    .add(criteriaBuilder.greaterThanOrEqualTo(root.<OffsetDateTime>get("criado"), dataInicial));
+            }
+            if(!filter.has("data inicial") && filter.has("data final")){
+                p.getExpressions()
+                    .add(criteriaBuilder.lessThanOrEqualTo(root.<OffsetDateTime>get("criado"), dataFinal));
+            }
+            System.out.println(dataInicial+"\n"+dataFinal);
         }
 
 		return p;
 	}
 
-	/* private Specification<Documento> getSpecification(DocumentoDTO documentoRequestDTO) {
-		
-		// Build Specification with Employee Id and Filter Text
-		return (root, criteriaQuery, criteriaBuilder) -> {
-			criteriaQuery.distinct(true);
-			// Predicate for Employee Id
-			Predicate predicateForDocumento = criteriaBuilder.equal(root.get("id"), documentoRequestDTO.getId());
-
-			 if (isNotNullOrEmpty(documentoRequestDTO.getFilterText())) { 
-			// Predicate for Employee Projects data
-			Predicate predicateForData = criteriaBuilder.or(
-					criteriaBuilder.like(root.get("firstName"), "%" + documentoRequestDTO.getFilterText() + "%"),
-					criteriaBuilder.like(root.get("lastName"), "%" + documentoRequestDTO.getFilterText() + "%"),
-					criteriaBuilder.like(root.get("projectLocation"), "%" + documentoRequestDTO.getFilterText() + "%"));
-
-			// Combine both predicates
-			return criteriaBuilder.and(predicateForDocumento, predicateForData);
-			 }
-			return criteriaBuilder.and(predicateForDocumento);
-		};
-	} */
-
-
-    
-    /* 
-
-    public Predicate toPredicate(Root<Person> root, CriteriaQuery<?> cq,
-            CriteriaBuilder cb) {
-        Predicate p = cb.disjunction();
-
-        if (filter.getName() != null) {
-            p.getExpressions()
-                    .add(cb.equal(root.get("name"), filter.getName()));
-        }
-
-        if (filter.getSurname() != null && filter.getAge() != null) {
-            p.getExpressions().add(
-                    cb.and(cb.equal(root.get("surname"), filter.getSurname()),
-                            cb.equal(root.get("age"), filter.getAge())));
-        }
-
-        return p;
-    } */
 }
