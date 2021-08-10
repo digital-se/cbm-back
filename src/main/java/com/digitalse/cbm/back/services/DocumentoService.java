@@ -9,6 +9,7 @@ import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.mappers.DocumentoMapper;
 import com.digitalse.cbm.back.repository.DocumentoRepository;
+import com.digitalse.cbm.back.repository.specifications.DocumentoSpecification;
 import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
 import com.digitalse.cbm.back.responseFiles.RFDocumento;
 import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
@@ -55,11 +56,17 @@ public class DocumentoService {
         return rfdoc;
     }
 
-    public List<RFBuscaDocumentos> getAllDocumentos() throws IOException {
-        List<RFBuscaDocumentos> rfDocList = documentoRepository.findAll().stream().map(documento -> {
+    public List<RFBuscaDocumentos> getDocumento(DocumentoDTO docDto) throws IOException {
+        DocumentoSpecification ds = new DocumentoSpecification(mapperDoc.toModel(docDto));
+        
+        List<RFBuscaDocumentos> rfDocList = documentoRepository.findAll(ds).stream().map(documento -> {
             RFBuscaDocumentos newRFDoc = new RFBuscaDocumentos(documento);
             return newRFDoc;
         }).collect(Collectors.toList());
+        /* List<RFBuscaDocumentos> rfDocList = documentoRepository.findAll().stream().map(documento -> {
+            RFBuscaDocumentos newRFDoc = new RFBuscaDocumentos(documento);
+            return newRFDoc;
+        }).collect(Collectors.toList()); */
         return rfDocList;
     }
 

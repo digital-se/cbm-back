@@ -62,10 +62,10 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<List<RFBuscaDocumentos>> buscar(/* @PathVariable(name = "palavras") String palavras */)
+    public ResponseEntity<List<RFBuscaDocumentos>> buscar(@RequestBody DocumentoDTO documentoDTO/* @PathVariable(name = "palavras") String palavras */)
             throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(documentoService.getAllDocumentos());
+            return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumento(documentoDTO));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

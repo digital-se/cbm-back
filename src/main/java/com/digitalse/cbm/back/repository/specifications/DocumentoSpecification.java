@@ -5,7 +5,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.entities.Documento;
 
 import org.springframework.data.jpa.domain.Specification;
@@ -21,11 +20,39 @@ public class DocumentoSpecification implements Specification<Documento> {
 
 	@Override
 	public Predicate toPredicate(Root<Documento> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-		Predicate p = criteriaBuilder.disjunction();
+		query.distinct(true);
+		Predicate p = criteriaBuilder.and();
+
 		if (filter.getNumeracao() != null) {
             p.getExpressions()
                     .add(criteriaBuilder.equal(root.get("numeracao"), filter.getNumeracao()));
         }
+
+		if (filter.getTipo() != null) {
+            p.getExpressions()
+                    .add(criteriaBuilder.equal(root.get("tipo"), filter.getTipo()));
+        }
+
+		if (filter.getPublico() != null) {
+            p.getExpressions()
+                    .add(criteriaBuilder.equal(root.get("publico"), filter.getPublico()));
+        }
+
+		if (filter.getData() != null) {
+            p.getExpressions()
+                    .add(criteriaBuilder.equal(root.get("data"), filter.getData()));
+        }
+
+		if (filter.getDescricao() != null) {
+            p.getExpressions()
+                    .add(criteriaBuilder.like(root.get("descricao"), filter.getDescricao()));
+        }
+
+		if (filter.getCriado() != null) {
+            p.getExpressions()
+                    .add(criteriaBuilder.equal(root.get("criado"), filter.getCriado()));
+        }
+
 		return p;
 	}
 
