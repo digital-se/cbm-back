@@ -8,6 +8,7 @@ import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
 import com.digitalse.cbm.back.responseFiles.RFDocumento;
 import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
 import com.digitalse.cbm.back.services.DocumentoService;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,10 +63,10 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<List<RFBuscaDocumentos>> buscar(@RequestBody DocumentoDTO documentoDTO/* @PathVariable(name = "palavras") String palavras */)
+    public ResponseEntity<List<RFBuscaDocumentos>> buscar(@RequestBody JsonNode jsonBusca/* @PathVariable(name = "palavras") String palavras */)
             throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumento(documentoDTO));
+            return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumento(jsonBusca));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

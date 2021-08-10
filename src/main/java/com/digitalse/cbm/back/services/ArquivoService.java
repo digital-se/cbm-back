@@ -1,8 +1,8 @@
 package com.digitalse.cbm.back.services;
 
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -87,7 +87,7 @@ public class ArquivoService {
         arq.setStatus(newArquivo.getStatus());
         
         arq.setTexto(newArquivo.getTexto());
-        arq.setAtualizado(new Date());
+        arq.setAtualizado(OffsetDateTime.now());
         arquivoRepository.save(arq);
         return new RFArquivo(arq);
     }
