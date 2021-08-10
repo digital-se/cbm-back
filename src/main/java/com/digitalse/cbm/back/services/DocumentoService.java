@@ -1,7 +1,7 @@
 package com.digitalse.cbm.back.services;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +13,7 @@ import com.digitalse.cbm.back.repository.specifications.DocumentoSpecification;
 import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
 import com.digitalse.cbm.back.responseFiles.RFDocumento;
 import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class DocumentoService {
         doc.setNome(documentodto.getNome());
         doc.setDescricao(documentodto.getDescricao());
         doc.setData(documentodto.getData());
-        doc.setAtualizado(new Date());
+        doc.setAtualizado(OffsetDateTime.now());
         doc.setMilitares(documentodto.getMilitares());
         doc.setPublico(documentodto.getPublico());
         documentoRepository.save(doc);
@@ -56,8 +57,8 @@ public class DocumentoService {
         return rfdoc;
     }
 
-    public List<RFBuscaDocumentos> getDocumento(DocumentoDTO docDto) throws IOException {
-        DocumentoSpecification ds = new DocumentoSpecification(mapperDoc.toModel(docDto));
+    public List<RFBuscaDocumentos> getDocumento(JsonNode docJson) throws IOException {
+        DocumentoSpecification ds = new DocumentoSpecification(docJson);
         
         List<RFBuscaDocumentos> rfDocList = documentoRepository.findAll(ds).stream().map(documento -> {
             RFBuscaDocumentos newRFDoc = new RFBuscaDocumentos(documento);
