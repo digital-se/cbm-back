@@ -58,6 +58,7 @@ public class Documento {
 	private List<Arquivo> arquivos;
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "fk_documento_militar", joinColumns = @JoinColumn(name = "militar_matricula"), inverseJoinColumns = @JoinColumn(name = "documento_id"))
+	@JsonManagedReference
 	private List<Militar> militares;
 
 }
