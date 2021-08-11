@@ -2,13 +2,14 @@ package com.digitalse.cbm.back.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
 import com.digitalse.cbm.back.responseFiles.RFDocumento;
 import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
 import com.digitalse.cbm.back.services.DocumentoService;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -63,10 +65,11 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<List<RFBuscaDocumentos>> buscar(@RequestBody JsonNode jsonBusca/* @PathVariable(name = "palavras") String palavras */)
+    public ResponseEntity<List<RFBuscaDocumentos>> buscar(@RequestParam Map<String, String> dadosDeBusca)
             throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumento(jsonBusca));
+            ObjectMapper mapper = new ObjectMapper();
+            return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumento(mapper.readTree(mapper.writeValueAsString(dadosDeBusca))));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -100,7 +103,8 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PutMapping("/documentos/{id}")
     @ResponseBody
-    public ResponseEntity<RFEditarDocumento> atualizar(@PathVariable long id, @RequestBody DocumentoDTO documentoNovo) throws IOException {
+    public ResponseEntity<RFEditarDocumento> atualizar(@PathVariable long id, @RequestBody DocumentoDTO documentoNovo)
+            throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(documentoService.editar(id, documentoNovo));
         } catch (NullPointerException e) {
