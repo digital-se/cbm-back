@@ -45,7 +45,7 @@ public class MilitarController {
             System.out.println(e);
             return ResponseEntity.status(e.getStatusCode()).build();
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage(), e.getCause());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
     }
 
@@ -63,7 +63,7 @@ public class MilitarController {
             System.out.println(e);
             return ResponseEntity.status(e.getStatusCode()).build();
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage(), e.getCause());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
     }
 }

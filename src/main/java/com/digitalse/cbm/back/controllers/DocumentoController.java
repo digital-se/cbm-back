@@ -3,6 +3,7 @@ package com.digitalse.cbm.back.controllers;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
@@ -51,11 +52,10 @@ public class DocumentoController {
             @RequestBody DocumentoDTO documentoDTO/* , @RequestPart List<MultipartFile> files */) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
-        } catch (NullPointerException e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).build();
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage(), e.getCause());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
     }
 
@@ -84,11 +84,10 @@ public class DocumentoController {
             System.out.println(mapper.valueToTree(node).toString());
             return ResponseEntity.status(HttpStatus.OK)
                     .body(documentoService.getDocumento(mapper.valueToTree(node)));
-        } catch (NullPointerException e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage(), e.getCause());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
     }
 
@@ -101,11 +100,10 @@ public class DocumentoController {
     public ResponseEntity<RFDocumento> obter(@PathVariable long id) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumento(id));
-        } catch (NullPointerException e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage(), e.getCause());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
     }
 
@@ -119,11 +117,10 @@ public class DocumentoController {
             throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(documentoService.editar(id, documentoNovo));
-        } catch (NullPointerException e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage(), e.getCause());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
     }
 
