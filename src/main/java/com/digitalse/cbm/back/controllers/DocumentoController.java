@@ -65,11 +65,25 @@ public class DocumentoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos")
     @ResponseBody
-    public ResponseEntity<List<RFBuscaDocumentos>> buscar(@RequestParam Map<String, String> dadosDeBusca)
-            throws IOException {
+    public ResponseEntity<List<RFBuscaDocumentos>> buscar(@RequestParam(required = false) String nome,
+            @RequestParam(required = false) String tipo, @RequestParam(required = false) String numeracao,
+            @RequestParam(required = false) LocalDate dataInicial, @RequestParam(required = false) LocalDate dataFinal,
+            @RequestParam(required = false) String matriculaMilitar, @RequestParam(required = false) String nomeMilitar,
+            @RequestParam(required = false) String palavras) throws IOException {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumento(mapper.readTree(mapper.writeValueAsString(dadosDeBusca))));
+            ObjectNode node = mapper.createObjectNode();
+            node.put("nome", nome);
+            node.put("tipo", tipo);
+            node.put("numeracao", numeracao);
+            node.put("dataInicial", dataInicial.toString());
+            node.put("dataFinal", dataFinal.toString());
+            node.put("matriculaMilitar", matriculaMilitar);
+            node.put("nomeMilitar", nomeMilitar);
+            node.put("palavras", palavras);
+            System.out.println(mapper.valueToTree(node).toString());
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(documentoService.getDocumento(mapper.valueToTree(node)));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
