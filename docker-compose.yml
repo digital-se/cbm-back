@@ -1,7 +1,6 @@
-version: '3.7'
+version: "3.7"
 
 services:
-
   digitalse-cbm-back:
     container_name: digitalse-cbm-back
     environment:
@@ -12,13 +11,12 @@ services:
       - KC_AUTH_SERVER_URL
       - KC_SSL_REQUIRED
       - KC_RESOURCE
-      - KC_CREDENTIALS_SECRET
       - SECRET
     build:
       context: .
       dockerfile: dockerfile
     ports:
-      - '3305:8082'
+      - "3305:8082"
 
 networks:
   default:

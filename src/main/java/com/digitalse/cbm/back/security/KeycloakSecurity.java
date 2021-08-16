@@ -35,7 +35,7 @@ public class KeycloakSecurity extends KeycloakWebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public KeycloakSpringBootConfigResolver KeycloakConfigResolver() {
+    public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
         return new KeycloakSpringBootConfigResolver();
     }
 
@@ -49,19 +49,22 @@ public class KeycloakSecurity extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-                .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui", "/configuration/security",
-                        "/swagger-ui/*")
-                .permitAll() // swagger
-                .antMatchers(HttpMethod.GET, "/documentos/*").permitAll()
-                .antMatchers("/documentos/*").hasRole("bmrh.user")
-                .anyRequest().permitAll();
+                // .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui",
+                // "/configuration/security",
+                // "/swagger-ui/*")
+                // .permitAll() // swagger
+                // .antMatchers(HttpMethod.GET,
+                // "/documentos/*").permitAll().antMatchers("/documentos/*")
+                // .hasRole("bmrh.user")
+                .antMatchers(HttpMethod.GET, "/**").permitAll().anyRequest().authenticated();
         /*
          * .antMatchers(HttpMethod.PUT).hasAnyRole("brmh.user")
          * .antMatchers(HttpMethod.DELETE).hasAnyRole("brmh.user")
          * .antMatchers(HttpMethod.PATCH).hasAnyRole("brmh.user")
          */
 
-        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        }
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.cors().and().csrf().disable();
+    }
 
 }
