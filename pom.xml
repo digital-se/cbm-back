@@ -15,7 +15,7 @@
 
 	<properties>
 		<java.version>15</java.version>
-		<keycloak.version>14.0.0</keycloak.version>
+		<keycloak.version>15.0.1</keycloak.version>
 	</properties>
 
 	<dependencies>
@@ -53,10 +53,7 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -106,6 +103,7 @@
 			<version>3.0.0</version>
 		</dependency>
 
+		<!-- Keycloak -->
 		<dependency>
 			<groupId>org.keycloak</groupId>
 			<artifactId>keycloak-spring-boot-starter</artifactId>
@@ -113,23 +111,15 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- Database -->
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-
-		<!-- Keycloak?? -->
-
-		<dependency>
-			<groupId>org.beangle.commons</groupId>
-			<artifactId>beangle-commons-web</artifactId>
-			<version>4.2.5</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.servicemix.bundles</groupId>
-			<artifactId>org.apache.servicemix.bundles.spring-security-config</artifactId>
-			<version>5.5.0_2</version>
 		</dependency>
 
 		<!-- Mapper dependency -->
@@ -175,6 +165,7 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- Keycloak -->
 			<dependency>
 				<groupId>org.keycloak.bom</groupId>
 				<artifactId>keycloak-adapter-bom</artifactId>

@@ -35,37 +35,33 @@ public class KeycloakSecurity extends KeycloakWebSecurityConfigurerAdapter {
     }
 
     @Bean
-    @Override
-    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-        return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
+    public KeycloakSpringBootConfigResolver KeycloakConfigResolver() {
+        return new KeycloakSpringBootConfigResolver();
     }
 
     @Bean
-    public KeycloakConfigResolver KeycloakConfigResolver() {
-        return new KeycloakSpringBootConfigResolver();
+    @Override
+    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+        return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.authorizeRequests()
-            .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui","/configuration/security", "/swagger-ui/*").permitAll() //swagger
-            //.antMatchers("/documentos/*").permitAll() 
-            .antMatchers(HttpMethod.GET).permitAll()
-            .antMatchers(HttpMethod.POST, "/documentos/*").hasRole("bmrh.user");
-            /*.antMatchers(HttpMethod.PUT).hasAnyRole("brmh.user")
-            .antMatchers(HttpMethod.DELETE).hasAnyRole("brmh.user")
-            .antMatchers(HttpMethod.PATCH).hasAnyRole("brmh.user") */
-            
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.cors().and().csrf().disable();
-    }
+                .antMatchers("/v2/api-docs", "/swagger-resources/**", "/configuration/ui", "/configuration/security",
+                        "/swagger-ui/*")
+                .permitAll() // swagger
+                .antMatchers(HttpMethod.GET, "/documentos/*").permitAll()
+                .antMatchers("/documentos/*").hasRole("bmrh.user")
+                .anyRequest().permitAll();
+        /*
+         * .antMatchers(HttpMethod.PUT).hasAnyRole("brmh.user")
+         * .antMatchers(HttpMethod.DELETE).hasAnyRole("brmh.user")
+         * .antMatchers(HttpMethod.PATCH).hasAnyRole("brmh.user")
+         */
 
-    @Bean
-    @Override
-    @ConditionalOnMissingBean(HttpSessionManager.class)
-    protected HttpSessionManager httpSessionManager() {
-        return new HttpSessionManager();
-    }
-    
+        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        }
+
 }
