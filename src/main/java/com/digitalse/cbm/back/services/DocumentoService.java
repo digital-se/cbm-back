@@ -50,6 +50,7 @@ public class DocumentoService {
      * @throws IOException
      */
     public RFEditarDocumento editar(long id, DocumentoDTO documentodto) throws IOException {
+
         Documento doc = documentoRepository.findById(id).get();
 
         doc.setTipo(documentodto.getTipo());
