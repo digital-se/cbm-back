@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.MilitarDTO;
+import com.digitalse.cbm.back.responseFiles.RFMilitar;
 import com.digitalse.cbm.back.services.MilitarService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class MilitarController {
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/militares/{nome}")
-    public ResponseEntity<List<MilitarDTO>> getMilitarPorNome(@PathVariable String nome) throws IOException {
+    public ResponseEntity<List<RFMilitar>> getMilitarPorNome(@PathVariable String nome) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.FOUND).body(militarService.getListByName(nome));
         } catch (NullPointerException e) {
@@ -54,7 +55,7 @@ public class MilitarController {
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/militar/{matricula}")
-    public ResponseEntity<MilitarDTO> getMilitarPorMatricula(@PathVariable String matricula) throws IOException {
+    public ResponseEntity<RFMilitar> getMilitarPorMatricula(@PathVariable String matricula) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(militarService.getListByMatricula(matricula));
         } catch (NullPointerException e) {
