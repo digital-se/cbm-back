@@ -43,8 +43,6 @@ public class ArquivoController {
     @Autowired
     private ArquivoService arquivoService;
 
-    private KeycloakUtils KCU = new KeycloakUtils();
-
     @ApiOperation(value = "Adiciona um ou mais arquivos a um documento")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Adicionou um ou mais arquivos a um documento e salvou no DB"),
@@ -74,14 +72,7 @@ public class ArquivoController {
     @ResponseBody
     public ResponseEntity<List<RFArquivo>> listarArquivos(@RequestHeader("authorization") Optional<String> token, @PathVariable long documento_id) throws IOException {
         try {
-            System.out.println(KCU.isAuthorized(token));
-            /* if(KCU.isAuthorized(token)) {
-                return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArchivesFromDocument(documento_id));
-            } else {
-                 */
-                //return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArchivesFromDocumentExternal(documento_id));
-                return null;
-            /* } */
+            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArchivesFromDocument(documento_id));
         } catch (NullPointerException e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
