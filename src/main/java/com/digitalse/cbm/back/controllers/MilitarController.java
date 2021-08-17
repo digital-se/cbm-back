@@ -3,7 +3,6 @@ package com.digitalse.cbm.back.controllers;
 import java.io.IOException;
 import java.util.List;
 
-import com.digitalse.cbm.back.DTO.MilitarDTO;
 import com.digitalse.cbm.back.responseFiles.RFMilitar;
 import com.digitalse.cbm.back.services.MilitarService;
 
