@@ -34,8 +34,5 @@ keycloak:
   auth-server-url: ${env.KC_AUTH_SERVER_URL}
   ssl-required: ${env.KC_SSL_REQUIRED}
   resource: ${env.KC_RESOURCE}
-  verify-token-audience: true
-  credentials:
-    secret: ${env.KC_CREDENTIALS_SECRET}
-  use-resource-role-mappings: true
-  bearer-only: true
+  public-client: true
+  confidential-port: 0

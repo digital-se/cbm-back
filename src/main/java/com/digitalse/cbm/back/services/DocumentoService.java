@@ -37,6 +37,7 @@ public class DocumentoService {
 
     //TODO: correção para não adicionar valores nulos
     public RFEditarDocumento editar(long id, DocumentoDTO documentodto) throws IOException {
+
         Documento doc = documentoRepository.findById(id).get();
 
         doc.setTipo(documentodto.getTipo());

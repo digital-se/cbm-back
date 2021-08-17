@@ -4,23 +4,27 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.responseFiles.RFArquivo;
 import com.digitalse.cbm.back.responseFiles.RFBucket;
 import com.digitalse.cbm.back.responseFiles.RFCriarArquivo;
+
 import com.digitalse.cbm.back.services.ArquivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,14 +63,14 @@ public class ArquivoController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
     }
-
+    //GEEEEEEEEET
     @ApiOperation(value = "Lista os arquivos de um documento")
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Listou os arquivos de um documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos")
     @ResponseBody
-    public ResponseEntity<List<RFArquivo>> listarArquivos(@PathVariable long documento_id) throws IOException {
+    public ResponseEntity<List<RFArquivo>> listarArquivos(@RequestHeader("authorization") Optional<String> token, @PathVariable long documento_id) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArchivesFromDocument(documento_id));
         } catch (NullPointerException e) {
@@ -76,7 +80,8 @@ public class ArquivoController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
     }
-
+    
+    //TODO: GEEEEEEEEET
     @ApiOperation(value = "Retorna um arquivo especifico de um documento")
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Retornou um arquivo de um documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
@@ -111,6 +116,7 @@ public class ArquivoController {
         }
     }
 
+    //TODO: GEEEEEEEEET
     @ApiOperation(value = "Retorna um InputStreamResource de um arquivo")
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Retornou um InputStreamResource"),
             @ApiResponse(code = 404, message = "Não encontrado"),
