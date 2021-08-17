@@ -1,6 +1,6 @@
 package com.digitalse.cbm.back.responseFiles;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
@@ -19,8 +19,8 @@ public class RFCriarArquivo {
     private Boolean ocr;
     private String status;
     private Long bucket;
-    private Date criado;
-    private Date atualizado;
+    private OffsetDateTime criado;
+    private OffsetDateTime atualizado;
 
     public RFCriarArquivo(ArquivoDTO dto) {
         this.id = dto.getId();

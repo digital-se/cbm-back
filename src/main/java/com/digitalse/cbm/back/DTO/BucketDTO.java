@@ -1,6 +1,6 @@
 package com.digitalse.cbm.back.DTO;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class BucketDTO {
     private String mime;
     private Long tamanho;
     private byte[] dados;
-    private Date criado;
-    private Date atualizado;
+    private OffsetDateTime criado;
+    private OffsetDateTime atualizado;
     
 }

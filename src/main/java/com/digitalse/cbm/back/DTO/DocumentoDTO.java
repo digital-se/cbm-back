@@ -1,18 +1,17 @@
 package com.digitalse.cbm.back.DTO;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.digitalse.cbm.back.entities.Arquivo;
 import com.digitalse.cbm.back.entities.Militar;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DocumentoDTO {
@@ -22,10 +21,10 @@ public class DocumentoDTO {
 	private String numeracao;
 	private Boolean publico;
 	private String tipo;
-	private Date data;
+	private LocalDate data;
 	private String descricao;
-	private Date criado;
-	private Date atualizado;
+	private OffsetDateTime criado;
+	private OffsetDateTime atualizado;
 	private List<Arquivo> arquivos;
 	private List<Militar> militares;
 
