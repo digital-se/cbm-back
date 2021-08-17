@@ -33,6 +33,14 @@ public class ArquivoService {
     @Autowired
     private BucketRepository bucketRepository;
 
+    /**
+     * Adiciona varios arquivos simultaneamente a um documento.
+     * @param documento_id id do documento no qual serão adicionados os arquivos.
+     * @param arquivosRF Lista de DTOs de arquivo com suas informações básicas.
+     * @param files Lista de MultipartFiles (imagens) para cada DTO.
+     * @return retorna uma lista de responde files com os arquivos adicionados.
+     * @throws IOException
+     */
     public List<RFCriarArquivo> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosRF,
             LinkedList<MultipartFile> files) throws IOException {
         List<RFCriarArquivo> returnRF = new ArrayList<>();
@@ -56,20 +64,32 @@ public class ArquivoService {
 
         return returnRF;
     }
-
-    /* Retorna a imagem do bucket */
+    /**
+     * Busca um arquivo e retorna a imagem do mesmo que está contida no bucket.
+     * @param arquivo_id id do arquivo para retornar a imagem do mesmo.
+     * @return uma imagem.
+     */
     public RFBucket getBucket(long arquivo_id) {
         Arquivo arq = arquivoRepository.findById(arquivo_id).get();
         Bucket bucket = bucketRepository.findById(arq.getBucket()).get();
         return new RFBucket(bucket);
     }
 
-    /* Retorna a infomração do arquivo */
+    /**
+     * Busca um arquivo e retorna suas informações exceto os dados (bytes).
+     * @param arquivo_id id do arquivo para retornar suas informações.
+     * @return um responsefile com as informações do arquivo.
+     */
     public RFArquivo getArquivo(long arquivo_id) {
         Arquivo arq = arquivoRepository.findById(arquivo_id).get();
         return new RFArquivo(arq);
     }
 
+    /**
+     * Busca todos os arquivos de um documento.
+     * @param documento_id id do documento no qual se buscará os arquivos.
+     * @return retorna uma lista com response files dos arquivos contidos no documento.
+     */
     public List<RFArquivo> getArchivesFromDocument(long documento_id) {
         List<RFArquivo> list = new ArrayList<>();
 
@@ -80,7 +100,14 @@ public class ArquivoService {
 
         return list;
     }
-
+    
+    /**
+     * Método incompleto no momento!!!
+     * @param id
+     * @param newArquivo
+     * @return
+     * @throws IOException
+     */
     public RFArquivo editar(long id, ArquivoDTO newArquivo/* , MultipartFile newFile */) throws IOException {
         Arquivo arq = arquivoRepository.findById(id).get();
         arq.setOcr(newArquivo.getOcr());

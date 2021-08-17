@@ -28,6 +28,12 @@ public class DocumentoService {
     @Autowired
     private DocumentoMapper mapperDoc = Mappers.getMapper(DocumentoMapper.class);
 
+    /**
+     * Cria um novo documento
+     * @param documento DTO do documento a ser salvo
+     * @return retorna um response file do documento salvo
+     * @throws IOException
+     */
     public RFDocumento criar(DocumentoDTO documento) throws IOException {
         // militarService.getByMatricula(documento.getCriador().getMatricula());
         Documento docModel = mapperDoc.toModel(documento);
@@ -36,6 +42,13 @@ public class DocumentoService {
     }
 
     //TODO: correção para não adicionar valores nulos
+    /**
+     * Edita um documento a partir de um id e DTO
+     * @param id
+     * @param documentodto
+     * @return
+     * @throws IOException
+     */
     public RFEditarDocumento editar(long id, DocumentoDTO documentodto) throws IOException {
 
         Documento doc = documentoRepository.findById(id).get();
@@ -52,12 +65,24 @@ public class DocumentoService {
         return new RFEditarDocumento(doc);
     }
 
+    /**
+     * Busca um documento pelo id
+     * @param id id do documento a ser procurado
+     * @return retorna um response file do documento
+     * @throws IOException
+     */
     public RFDocumento getDocumento(Long id) throws IOException {
         Documento doc = documentoRepository.findById(id).get();
         RFDocumento rfdoc = new RFDocumento(doc);
         return rfdoc;
     }
 
+    /**
+     * Busca um documento utilizando multiplos campos e uma specification
+     * @param docJson jsonNode gerada com os campos de busca
+     * @return uma lista de responsefiles de documentos
+     * @throws IOException
+     */
     public List<RFBuscaDocumentos> getDocumento(JsonNode docJson) throws IOException {
         DocumentoSpecification ds = new DocumentoSpecification(docJson);
         
