@@ -1,7 +1,6 @@
 package com.digitalse.cbm.back.services;
 
 import java.io.IOException;
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,26 +40,23 @@ public class DocumentoService {
         return rfdoc;
     }
 
-    //TODO: correção para não adicionar valores nulos
     /**
-     * Edita um documento a partir de um id e DTO
+     * Edita um documento a par
      * @param id
      * @param documentodto
      * @return
      * @throws IOException
      */
     public RFEditarDocumento editar(long id, DocumentoDTO documentodto) throws IOException {
-
         Documento doc = documentoRepository.findById(id).get();
 
-        doc.setTipo(documentodto.getTipo());
-        doc.setNumeracao(documentodto.getNumeracao());
-        doc.setNome(documentodto.getNome());
-        doc.setDescricao(documentodto.getDescricao());
-        doc.setData(documentodto.getData());
-        doc.setAtualizado(OffsetDateTime.now());
-        doc.setMilitares(documentodto.getMilitares());
-        doc.setPublico(documentodto.getPublico());
+        if(!documentodto.getTipo().equals(null) && !documentodto.getTipo().isEmpty() && !documentodto.getTipo().isBlank()) doc.setTipo(documentodto.getTipo());
+        if(!documentodto.getNumeracao().equals(null) && !documentodto.getNumeracao().isEmpty() && !documentodto.getNumeracao().isBlank()) doc.setNumeracao(documentodto.getNumeracao());
+        if(!documentodto.getNome().equals(null) && !documentodto.getNome().isEmpty() && !documentodto.getNome().isBlank()) doc.setNome(documentodto.getNome());
+        if(!documentodto.getDescricao().equals(null) && !documentodto.getDescricao().isEmpty() && !documentodto.getDescricao().isBlank()) doc.setDescricao(documentodto.getDescricao());
+        if(!documentodto.getData().equals(null)) doc.setData(documentodto.getData());
+        if(!documentodto.getMilitares().equals(null) && !documentodto.getMilitares().isEmpty()) doc.setMilitares(documentodto.getMilitares());
+        if(!documentodto.getPublico().equals(null))doc.setPublico(documentodto.getPublico());
         documentoRepository.save(doc);
         return new RFEditarDocumento(doc);
     }
@@ -96,5 +92,4 @@ public class DocumentoService {
         }).collect(Collectors.toList()); */
         return rfDocList;
     }
-
 }
