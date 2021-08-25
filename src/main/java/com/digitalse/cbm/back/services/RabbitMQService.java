@@ -1,21 +1,26 @@
 package com.digitalse.cbm.back.services;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
+import com.digitalse.cbm.back.responseFiles.RFBucket;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class RabbitMQService {
@@ -45,5 +50,24 @@ public class RabbitMQService {
             System.out.println(" [x] Sent '" + message + "'");
         }
 
+    }
+
+    public void serialize(MultipartFile image) throws FileNotFoundException, IOException {
+        FileOutputStream file = new FileOutputStream("image.ser");
+        ObjectOutputStream out = new ObjectOutputStream(file);
+        out.writeObject(image);
+        out.close();
+        file.close();
+        System.out.println("Object has been serialized");
+    }
+
+    public RFBucket deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+        FileInputStream file = new FileInputStream("rfbucket.ser");
+        ObjectInputStream in = new ObjectInputStream(file);
+        RFBucket rf = (RFBucket) in.readObject();
+        in.close();
+        file.close();
+        System.out.println("Object has been deserialized");
+        return rf;
     }
 }
