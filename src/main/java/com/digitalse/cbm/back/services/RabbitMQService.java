@@ -10,6 +10,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -20,24 +21,27 @@ import org.springframework.stereotype.Service;
 public class RabbitMQService {
 
     public Connection connection;
-    
+
     @EventListener(ApplicationReadyEvent.class)
-    public void startConnection() throws IOException, TimeoutException, KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
+    public void startConnection(@Value("${rabbit.host}") String host, @Value("${rabbit.port}") int port,
+            @Value("${rabbit.username}") String username, @Value("${rabbit.password}") String password)
+            throws IOException, TimeoutException, KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        factory.setPort(3309);
-        factory.setUsername("back");
-        factory.setPassword("cbm");
+        factory.setHost(host);
+        factory.setPort(port);
+        factory.setUsername(username);
+        factory.setPassword(password);
         connection = factory.newConnection();
-		sendMessage();
+        sendMessage();
     }
 
-    public void sendMessage() throws IOException, TimeoutException, KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
+    public void sendMessage()
+            throws IOException, TimeoutException, KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
         try (Channel channel = connection.createChannel()) {
-            String message = "Hello World!";
-            //channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-            channel.basicPublish("digital-se-cbm", "ocr_1", false, null, "teste do rabbit".getBytes());
-            //channel.basicPublish("ocr", QUEUE_NAME, null, message.getBytes());
+            String message = "teste do rabbit!";
+            // channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+            channel.basicPublish("digital-se-cbm", "ocr_1", false, null, message.getBytes());
+            // channel.basicPublish("ocr", QUEUE_NAME, null, message.getBytes());
             System.out.println(" [x] Sent '" + message + "'");
         }
 
