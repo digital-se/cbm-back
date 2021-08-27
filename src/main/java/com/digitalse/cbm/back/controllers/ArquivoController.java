@@ -100,7 +100,7 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PutMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
-    public ResponseEntity<RFArquivo> atualizarArquivos(@PathVariable long arquivo_id, @RequestBody ArquivoDTO arquivodto) throws IOException {
+    public ResponseEntity<RFArquivo> atualizarArquivos(@PathVariable(name = "arquivo_id") long arquivo_id, @RequestBody ArquivoDTO arquivodto) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(arquivoService.editar(arquivo_id, arquivodto));
         } catch (NoSuchElementException e) {
