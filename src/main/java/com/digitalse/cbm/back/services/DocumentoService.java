@@ -24,18 +24,13 @@ public class DocumentoService {
     @Autowired
     private DocumentoRepository documentoRepository;
 
-    @Autowired
-    private DocumentoMapper mapperDoc = Mappers.getMapper(DocumentoMapper.class);
-
     /**
      * Cria um novo documento
      * @param documento DTO do documento a ser salvo
      * @return retorna um response file do documento salvo
      * @throws IOException
      */
-    public RFDocumento criar(DocumentoDTO documento) throws IOException {
-        // militarService.getByMatricula(documento.getCriador().getMatricula());
-        Documento docModel = mapperDoc.toModel(documento);
+        Documento docModel = DocumentoMapper.toModel(documentodto);
         RFDocumento rfdoc = new RFDocumento(documentoRepository.save(docModel));
         return rfdoc;
     }
@@ -67,6 +62,7 @@ public class DocumentoService {
 
     /**
      * Busca um documento pelo id
+     * 
      * @param id id do documento a ser procurado
      * @return retorna um response file do documento
      * @throws IOException
@@ -79,21 +75,24 @@ public class DocumentoService {
 
     /**
      * Busca um documento utilizando multiplos campos e uma specification
+     * 
      * @param docJson jsonNode gerada com os campos de busca
      * @return uma lista de responsefiles de documentos
      * @throws IOException
      */
     public List<RFBuscaDocumentos> getDocumento(JsonNode docJson) throws IOException {
         DocumentoSpecification ds = new DocumentoSpecification(docJson);
-        
+
         List<RFBuscaDocumentos> rfDocList = documentoRepository.findAll(ds).stream().map(documento -> {
             RFBuscaDocumentos newRFDoc = new RFBuscaDocumentos(documento);
             return newRFDoc;
         }).collect(Collectors.toList());
-        /* List<RFBuscaDocumentos> rfDocList = documentoRepository.findAll().stream().map(documento -> {
-            RFBuscaDocumentos newRFDoc = new RFBuscaDocumentos(documento);
-            return newRFDoc;
-        }).collect(Collectors.toList()); */
+        /*
+         * List<RFBuscaDocumentos> rfDocList =
+         * documentoRepository.findAll().stream().map(documento -> { RFBuscaDocumentos
+         * newRFDoc = new RFBuscaDocumentos(documento); return newRFDoc;
+         * }).collect(Collectors.toList());
+         */
         return rfDocList;
     }
 }

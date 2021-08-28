@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.responseFiles.RFArquivo;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,7 +45,7 @@ public class ArquivoController {
             @ApiResponse(code = 201, message = "Adicionou um ou mais arquivos a um documento e salvou no DB"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping(value = "/documentos/{documento_id}/arquivos", consumes = { "multipart/form-data" })
+    @PostMapping(value = "/documentos/{documento_id}/arquivos")
     @ResponseBody
     public ResponseEntity<List<RFCriarArquivo>> criarArquivo(@PathVariable(required = true) long documento_id,
             @RequestPart(required = true) List<ArquivoDTO> arquivosDTO,
@@ -68,7 +66,7 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos")
     @ResponseBody
-    public ResponseEntity<List<RFArquivo>> listarArquivos(@RequestHeader("authorization") Optional<String> token, @PathVariable long documento_id) throws IOException {
+    public ResponseEntity<List<RFArquivo>> listarArquivos(@PathVariable long documento_id) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArchivesFromDocument(documento_id));
         } catch (NoSuchElementException e) {
@@ -84,7 +82,7 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
-    public ResponseEntity<RFArquivo> obterArquivos(@PathVariable long arquivo_id) throws IOException {
+    public ResponseEntity<RFArquivo> obterArquivo(@PathVariable long arquivo_id /* Exploit? */) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(arquivoService.getArquivo(arquivo_id));
         } catch (NoSuchElementException e) {
@@ -100,9 +98,9 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PutMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
-    public ResponseEntity<RFArquivo> atualizarArquivos(@PathVariable(name = "arquivo_id") long arquivo_id, @RequestBody ArquivoDTO arquivodto) throws IOException {
+    public ResponseEntity<RFArquivo> atualizarArquivos(@PathVariable(name = "documento_id") long documento_id, @PathVariable(name = "arquivo_id") long arquivo_id, @RequestBody ArquivoDTO arquivodto) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.editar(arquivo_id, arquivodto));
+            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.editar(documento_id, arquivo_id, arquivodto));
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {
@@ -117,7 +115,7 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos/{arquivo_id}/arquivo")
     @ResponseBody
-    public ResponseEntity<InputStreamResource> obterDados(@PathVariable long arquivo_id) throws IOException {
+    public ResponseEntity<InputStreamResource> obterDados(@PathVariable long arquivo_id /* Exploit? */) throws IOException {
         try {
             RFBucket rfbucket = arquivoService.getBucket(arquivo_id);
             return ResponseEntity.status(HttpStatus.OK).contentLength(rfbucket.getTamanho())

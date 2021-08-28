@@ -64,19 +64,22 @@ public class ArquivoService {
 
         return returnRF;
     }
+
     /**
      * Busca um arquivo e retorna a imagem do mesmo que está contida no bucket.
+     * 
      * @param arquivo_id id do arquivo para retornar a imagem do mesmo.
      * @return uma imagem.
      */
     public RFBucket getBucket(long arquivo_id) {
-        Arquivo arq = arquivoRepository.findById(arquivo_id).get();
-        Bucket bucket = bucketRepository.findById(arq.getBucket()).get();
+        Arquivo arquivo = arquivoRepository.findById(arquivo_id).get();
+        Bucket bucket = bucketRepository.findById(arquivo.getBucket()).get();
         return new RFBucket(bucket);
     }
 
     /**
      * Busca um arquivo e retorna suas informações exceto os dados (bytes).
+     * 
      * @param arquivo_id id do arquivo para retornar suas informações.
      * @return um responsefile com as informações do arquivo.
      */
@@ -87,8 +90,10 @@ public class ArquivoService {
 
     /**
      * Busca todos os arquivos de um documento.
+     * 
      * @param documento_id id do documento no qual se buscará os arquivos.
-     * @return retorna uma lista com response files dos arquivos contidos no documento.
+     * @return retorna uma lista com response files dos arquivos contidos no
+     *         documento.
      */
     public List<RFArquivo> getArchivesFromDocument(long documento_id) {
         List<RFArquivo> list = new ArrayList<>();
