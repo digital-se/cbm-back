@@ -1,10 +1,11 @@
 package com.digitalse.cbm.back.services;
 
 import java.io.IOException;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.xml.bind.ValidationException;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
