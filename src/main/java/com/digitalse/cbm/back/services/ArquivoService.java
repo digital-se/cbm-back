@@ -35,33 +35,33 @@ public class ArquivoService {
 
     /**
      * Adiciona varios arquivos simultaneamente a um documento.
+     * 
      * @param documento_id id do documento no qual serão adicionados os arquivos.
-     * @param arquivosRF Lista de DTOs de arquivo com suas informações básicas.
-     * @param files Lista de MultipartFiles (imagens) para cada DTO.
-     * @return retorna uma lista de responde files com os arquivos adicionados.
+     * @param arquivosList Lista de DTOs de arquivo com suas informações básicas.
+     * @param filesList    Lista de MultipartFiles (imagens) para cada DTO.
+     * @return retorna uma lista de response files com os arquivos adicionados.
      * @throws IOException
      */
-    public List<RFCriarArquivo> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosRF,
-            LinkedList<MultipartFile> files) throws IOException {
+    public List<RFCriarArquivo> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosList,
+            LinkedList<MultipartFile> filesList) throws IOException {
         List<RFCriarArquivo> returnRF = new ArrayList<>();
 
-        Documento doc = documentoRepository.findById(documento_id).get();
+        Documento documento = documentoRepository.findById(documento_id).get();
 
-        while (!arquivosRF.isEmpty()) {
-            ArquivoDTO tempArq = arquivosRF.removeFirst();
-            MultipartFile tempFile = files.removeFirst();
+        while (!arquivosList.isEmpty()) {
+            ArquivoDTO arquivoBubble = arquivosList.removeFirst();
+            MultipartFile fileBubble = filesList.removeFirst();
 
-            Bucket bucket = new Bucket(null, tempFile.getOriginalFilename(), tempFile.getContentType(),
-                    tempFile.getSize(), tempFile.getBytes(), null, null);
+            Bucket bucket = new Bucket(null, fileBubble.getOriginalFilename(), fileBubble.getContentType(),
+                    fileBubble.getSize(), fileBubble.getBytes(), null, null);
             bucket = bucketRepository.save(bucket);
 
-            Arquivo finalArq = new Arquivo(tempArq.getId(), doc, tempFile.getOriginalFilename(), tempArq.getOcr(),
-                    tempArq.getStatus(), tempArq.getTexto(), bucket.getId(), null,
+            Arquivo finalArq = new Arquivo(0L, documento, fileBubble.getOriginalFilename(),
+                    arquivoBubble.getOcr(), arquivoBubble.getStatus(), arquivoBubble.getTexto(), bucket.getId(), null,
                     null);
-            RFCriarArquivo rfarq = new RFCriarArquivo(arquivoRepository.save(finalArq));
-            returnRF.add(rfarq);
+            RFCriarArquivo responseFile = new RFCriarArquivo(arquivoRepository.save(finalArq));
+            returnRF.add(responseFile);
         }
-
         return returnRF;
     }
 
