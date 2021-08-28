@@ -14,7 +14,7 @@ import com.digitalse.cbm.back.responseFiles.RFDocumento;
 import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import org.mapstruct.factory.Mappers;
+import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,22 +41,26 @@ public class DocumentoService {
     }
 
     /**
-     * Edita um documento a par
-     * @param id
-     * @param documentodto
+     * Edita um documento e salva no banco
+     * 
+     * @param id id do documento a ser editado
+     * @param documentodto dto com documento atualizado
      * @return
      * @throws IOException
+     * @throws ValidationException
      */
-    public RFEditarDocumento editar(long id, DocumentoDTO documentodto) throws IOException {
+    public RFEditarDocumento editar(long id, DocumentoDTO documentodto) throws IOException, ValidationException {
+        if (!documentodto.isValidationOk()) throw new ValidationException("erro");
+
         Documento doc = documentoRepository.findById(id).get();
 
-        if(!documentodto.getTipo().equals(null) && !documentodto.getTipo().isEmpty() && !documentodto.getTipo().isBlank()) doc.setTipo(documentodto.getTipo());
-        if(!documentodto.getNumeracao().equals(null) && !documentodto.getNumeracao().isEmpty() && !documentodto.getNumeracao().isBlank()) doc.setNumeracao(documentodto.getNumeracao());
-        if(!documentodto.getNome().equals(null) && !documentodto.getNome().isEmpty() && !documentodto.getNome().isBlank()) doc.setNome(documentodto.getNome());
-        if(!documentodto.getDescricao().equals(null) && !documentodto.getDescricao().isEmpty() && !documentodto.getDescricao().isBlank()) doc.setDescricao(documentodto.getDescricao());
-        if(!documentodto.getData().equals(null)) doc.setData(documentodto.getData());
-        if(!documentodto.getMilitares().equals(null) && !documentodto.getMilitares().isEmpty()) doc.setMilitares(documentodto.getMilitares());
-        if(!documentodto.getPublico().equals(null))doc.setPublico(documentodto.getPublico());
+        doc.setTipo(documentodto.getTipo());
+        doc.setNumeracao(documentodto.getNumeracao());
+        doc.setNome(documentodto.getNome());
+        doc.setDescricao(documentodto.getDescricao());
+        doc.setData(documentodto.getData());
+        doc.setMilitares(documentodto.getMilitares());
+        doc.setPublico(documentodto.getPublico());
         documentoRepository.save(doc);
         return new RFEditarDocumento(doc);
     }

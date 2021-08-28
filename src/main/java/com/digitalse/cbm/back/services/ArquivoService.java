@@ -100,23 +100,26 @@ public class ArquivoService {
 
         return list;
     }
-    
+
     /**
-     * Método incompleto no momento!!!
-     * @param id
-     * @param newArquivo
+     * Edita um documento, validando se foi enviado corretamente
+     * 
+     * @param arquivodto
      * @return
      * @throws IOException
+     * @throws ValidationException
      */
-    public RFArquivo editar(long id, ArquivoDTO newArquivo/* , MultipartFile newFile */) throws IOException {
-        Arquivo arq = arquivoRepository.findById(id).get();
-        arq.setOcr(newArquivo.getOcr());
-        arq.setStatus(newArquivo.getStatus());
+    public RFArquivo editar(long documento_id, long arquivo_id, ArquivoDTO arquivodto) throws IOException, ValidationException {
+        if (!arquivodto.isValidationOk()) throw new ValidationException("erro");
+
+        Arquivo arq = arquivoRepository.findById(arquivo_id).get();
+
+            arq.setOcr(arquivodto.getOcr());
+            arq.setStatus(arquivodto.getStatus());
+            arq.setTexto(arquivodto.getTexto());
+            arquivoRepository.save(arq);
+            return new RFArquivo(arq);
         
-        arq.setTexto(newArquivo.getTexto());
-        arq.setAtualizado(OffsetDateTime.now());
-        arquivoRepository.save(arq);
-        return new RFArquivo(arq);
     }
 
     public void deletarArquivo(long id) {
