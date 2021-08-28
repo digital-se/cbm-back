@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.xml.bind.ValidationException;
+
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
 import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.mappers.DocumentoMapper;
@@ -26,10 +28,15 @@ public class DocumentoService {
 
     /**
      * Cria um novo documento
+     * 
      * @param documento DTO do documento a ser salvo
      * @return retorna um response file do documento salvo
      * @throws IOException
+     * @throws HttpException
      */
+    public RFDocumento criar(DocumentoDTO documentodto) throws IOException, HttpException {
+        if (!documentodto.isValidationOk()) throw new HttpException("validation failed");
+
         Documento docModel = DocumentoMapper.toModel(documentodto);
         RFDocumento rfdoc = new RFDocumento(documentoRepository.save(docModel));
         return rfdoc;
@@ -42,10 +49,10 @@ public class DocumentoService {
      * @param documentodto dto com documento atualizado
      * @return
      * @throws IOException
-     * @throws ValidationException
+     * @throws HttpException
      */
-    public RFEditarDocumento editar(long id, DocumentoDTO documentodto) throws IOException, ValidationException {
-        if (!documentodto.isValidationOk()) throw new ValidationException("erro");
+    public RFEditarDocumento editar(long id, DocumentoDTO documentodto) throws IOException, ValidationException, HttpException {
+        if (!documentodto.isValidationOk()) throw new HttpException("erro");
 
         Documento doc = documentoRepository.findById(id).get();
 
