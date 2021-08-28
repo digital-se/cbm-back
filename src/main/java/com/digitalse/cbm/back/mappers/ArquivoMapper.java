@@ -1,23 +1,62 @@
 package com.digitalse.cbm.back.mappers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+public class ArquivoMapper {
+    static public ArquivoDTO toDTO(Arquivo arquivo) {
+        if ( arquivo == null ) {
+            return null;
+        }
 
-@Mapper(componentModel = "spring")
-public interface ArquivoMapper {
-    ArquivoMapper INSTANCE = Mappers.getMapper(ArquivoMapper.class);
+        ArquivoDTO arquivoDTO = new ArquivoDTO();
 
-    ArquivoDTO toDTO(Arquivo arquivo);
+        arquivoDTO.setOcr( arquivo.getOcr() );
+        arquivoDTO.setStatus( arquivo.getStatus() );
+        arquivoDTO.setTexto( arquivo.getTexto() );
+        return arquivoDTO;
+    }
 
-    Arquivo toModel(ArquivoDTO arquivoDTO);
+    static public Arquivo toModel(ArquivoDTO arquivoDTO) {
+        if ( arquivoDTO == null ) {
+            return null;
+        }
 
-    List<ArquivoDTO> toDTO(List<Arquivo> arquivos);
+        Arquivo arquivo = new Arquivo();
 
-    List<Arquivo> toModel(List<ArquivoDTO> arquivos);
+        arquivo.setOcr( arquivoDTO.getOcr() );
+        arquivo.setStatus( arquivoDTO.getStatus() );
+        arquivo.setTexto( arquivoDTO.getTexto() );
+        return arquivo;
+    }
+
+    static public List<ArquivoDTO> toDTO(List<Arquivo> arquivos) {
+        if ( arquivos == null ) {
+            return null;
+        }
+
+        List<ArquivoDTO> list = new ArrayList<ArquivoDTO>( arquivos.size() );
+        for ( Arquivo arquivo : arquivos ) {
+            list.add( toDTO( arquivo ) );
+        }
+
+        return list;
+    }
+
+    static public List<Arquivo> toModel(List<ArquivoDTO> arquivos) {
+        if ( arquivos == null ) {
+            return null;
+        }
+
+        List<Arquivo> list = new ArrayList<Arquivo>( arquivos.size() );
+        for ( ArquivoDTO arquivoDTO : arquivos ) {
+            list.add( toModel( arquivoDTO ) );
+        }
+
+        return list;
+    }
 
 }
