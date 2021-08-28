@@ -75,8 +75,13 @@ public class DocumentoController {
             node.put("nome", nome);
             node.put("tipo", tipo);
             node.put("numeracao", numeracao);
-            node.put("dataInicial", dataInicial.toString());
-            node.put("dataFinal", dataFinal.toString());
+
+            if (dataInicial == null) node.put("dataInicial", "");
+            else node.put("dataInicial", dataInicial.toString());
+
+            if (dataInicial == null) node.put("dataFinal", "");
+            else node.put("dataFinal", dataFinal.toString());
+            
             node.put("matriculaMilitar", matriculaMilitar);
             node.put("nomeMilitar", nomeMilitar);
             node.put("palavras", palavras);
