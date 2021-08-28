@@ -1,14 +1,11 @@
 package com.digitalse.cbm.back.security;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.IDToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
