@@ -46,16 +46,15 @@ public class DocumentoController {
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Criou um documento e salvou no DB"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping("/documentos")
+    @PostMapping(path = "/documentos")
     @ResponseBody
-    public ResponseEntity<RFDocumento> cadastrar(
-            @RequestBody DocumentoDTO documentoDTO/* , @RequestPart List<MultipartFile> files */) throws IOException {
+    public ResponseEntity<RFDocumento> cadastrar(@RequestBody DocumentoDTO documentoDTO) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
         }
     }
 
