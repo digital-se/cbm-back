@@ -83,7 +83,21 @@ public class DocumentoService {
         doc.setNome(documentodto.getNome());
         doc.setDescricao(documentodto.getDescricao());
         doc.setData(documentodto.getData());
-        doc.setMilitares(MilitarMapper.toModelList(documentodto.getMilitares()));
+
+        List<Militar> militares = new ArrayList<Militar>();
+    
+
+        if(documentodto.getMilitares() != null){
+            documentodto.getMilitares().forEach(element -> {
+                if(!militarRepository.existsByMatricula(element.getMatricula())){
+                    militares.add(militarRepository.save(new Militar(element.getMatricula(), null)));
+                } else {
+                    militares.add(militarRepository.findByMatricula(element.getMatricula()));
+                }
+            });
+        }
+
+        doc.setMilitares(militares);
         doc.setPublico(documentodto.getPublico());
         documentoRepository.save(doc);
         return new RFEditarDocumento(doc);

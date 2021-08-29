@@ -3,8 +3,8 @@ package com.digitalse.cbm.back.DTO.DTOsDocumento;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.digitalse.cbm.back.DTO.DTOsMilitar.MilitarDTO;
 import com.digitalse.cbm.back.DTO.Interfaces.IValidation;
-import com.digitalse.cbm.back.entities.Militar;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class DocumentoDTO implements IValidation {
 	private String tipo;
 	private LocalDate data;
 	private String descricao;
-	private List<Militar> militares;
+	private List<MilitarDTO> militares;
 
 	@Override
 	public boolean isValidationOk() {
