@@ -35,11 +35,15 @@ public class DocumentoSpecification implements Specification<Documento> {
         Predicate p = criteriaBuilder.and();
 
         if (filter.containsKey("nome")) {
-            p.getExpressions().add(criteriaBuilder.equal(root.get("numeracao"), filter.get("numeracao")));
+            p.getExpressions().add(criteriaBuilder.like(root.get("nome"), "%" + ((String)filter.get("nome")) + "%" ));
+        }
+
+        if (filter.containsKey("numeracao")) {
+            p.getExpressions().add(criteriaBuilder.equal(root.get("numeracao"), (String)filter.get("numeracao")));
         }
 
         if (filter.containsKey("tipo")) {
-            p.getExpressions().add(criteriaBuilder.equal(root.get("tipo"), filter.get("tipo")));
+            p.getExpressions().add(criteriaBuilder.equal(root.get("tipo"), (String)filter.get("tipo")));
         }
 
         if (filter.containsKey("datainicial") || filter.containsKey("datafinal")) {
