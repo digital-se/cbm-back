@@ -45,9 +45,9 @@ public class ArquivoController {
             @ApiResponse(code = 201, message = "Adicionou um ou mais arquivos a um documento e salvou no DB"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping(value = "/documentos/{documento_id}/arquivos")
+    @PostMapping(value = "/documentos/{documento_id}/arquivos/")
     @ResponseBody
-    public ResponseEntity<List<RFCriarArquivo>> criarArquivo(@PathVariable(required = true) long documento_id,
+    public ResponseEntity<List<RFCriarArquivo>> adicionarArquivos(@PathVariable(required = true) long documento_id,
             @RequestPart(required = true) List<ArquivoDTO> arquivosDTO,
             @RequestPart(required = true) List<MultipartFile> files) throws IOException {
         try {
@@ -59,7 +59,25 @@ public class ArquivoController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
     }
-    
+
+    @ApiOperation(value = "Adiciona um arquivo a um documento")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Adicionou um arquivo a um documento e salvou no DB"),
+            @ApiResponse(code = 404, message = "Não encontrado"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
+    @PostMapping(value = "/v2/documentos/{documento_id}/arquivos")
+    @ResponseBody
+    public ResponseEntity<RFCriarArquivo> adicionarArquivo(@PathVariable(required = true) long documento_id,
+            @RequestPart(required = true) ArquivoDTO arquivoDTO, @RequestPart(required = true) MultipartFile file)
+            throws IOException {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.addArchive(documento_id, arquivoDTO, file));
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
+        }
+    }
+
     @ApiOperation(value = "Lista os arquivos de um documento")
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Listou os arquivos de um documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
@@ -75,7 +93,7 @@ public class ArquivoController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
     }
-    
+
     @ApiOperation(value = "Retorna um arquivo especifico de um documento")
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Retornou um arquivo de um documento"),
             @ApiResponse(code = 404, message = "Não encontrado"),
@@ -98,9 +116,11 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PutMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
-    public ResponseEntity<RFArquivo> atualizarArquivos(@PathVariable(name = "documento_id") long documento_id, @PathVariable(name = "arquivo_id") long arquivo_id, @RequestBody ArquivoDTO arquivodto) throws IOException {
+    public ResponseEntity<RFArquivo> atualizarArquivos(@PathVariable(name = "documento_id") long documento_id,
+            @PathVariable(name = "arquivo_id") long arquivo_id, @RequestBody ArquivoDTO arquivodto) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.editar(documento_id, arquivo_id, arquivodto));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(arquivoService.editar(documento_id, arquivo_id, arquivodto));
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {
@@ -108,14 +128,14 @@ public class ArquivoController {
         }
     }
 
-    
     @ApiOperation(value = "Retorna um InputStreamResource de um arquivo")
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Retornou um InputStreamResource"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @GetMapping("/documentos/{documento_id}/arquivos/{arquivo_id}/arquivo")
     @ResponseBody
-    public ResponseEntity<InputStreamResource> obterDados(@PathVariable long arquivo_id /* Exploit? */) throws IOException {
+    public ResponseEntity<InputStreamResource> obterDados(@PathVariable long arquivo_id /* Exploit? */)
+            throws IOException {
         try {
             RFBucket rfbucket = arquivoService.getBucket(arquivo_id);
             return ResponseEntity.status(HttpStatus.OK).contentLength(rfbucket.getTamanho())
@@ -144,5 +164,5 @@ public class ArquivoController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
-    } 
+    }
 }
