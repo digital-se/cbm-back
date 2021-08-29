@@ -6,10 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.digitalse.cbm.back.DTO.ArquivoDTO;
-import com.digitalse.cbm.back.responseFiles.RFArquivo;
-import com.digitalse.cbm.back.responseFiles.RFBucket;
-import com.digitalse.cbm.back.responseFiles.RFCriarArquivo;
+import com.digitalse.cbm.back.DTO.DTOsArquivo.ArquivoDTO;
+import com.digitalse.cbm.back.DTO.DTOsArquivo.ArquivoEditarDTO;
+import com.digitalse.cbm.back.responseFiles.RFsArquivo.RFArquivo;
+import com.digitalse.cbm.back.responseFiles.RFsArquivo.RFCriarArquivo;
+import com.digitalse.cbm.back.responseFiles.RFsBucket.RFBucket;
 import com.digitalse.cbm.back.services.ArquivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +118,7 @@ public class ArquivoController {
     @PutMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
     public ResponseEntity<RFArquivo> atualizarArquivos(@PathVariable(name = "documento_id") long documento_id,
-            @PathVariable(name = "arquivo_id") long arquivo_id, @RequestBody ArquivoDTO arquivodto) throws IOException {
+            @PathVariable(name = "arquivo_id") long arquivo_id, @RequestBody ArquivoEditarDTO arquivodto) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(arquivoService.editar(documento_id, arquivo_id, arquivodto));

@@ -3,7 +3,7 @@ package com.digitalse.cbm.back.mappers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.digitalse.cbm.back.DTO.DocumentoDTO;
+import com.digitalse.cbm.back.DTO.DTOsDocumento.DocumentoDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
 import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.entities.Militar;

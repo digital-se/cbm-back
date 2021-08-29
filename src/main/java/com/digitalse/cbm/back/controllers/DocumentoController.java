@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import com.digitalse.cbm.back.DTO.DocumentoDTO;
-import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
-import com.digitalse.cbm.back.responseFiles.RFDocumento;
-import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
+import com.digitalse.cbm.back.DTO.DTOsDocumento.DocumentoDTO;
+import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFBuscaDocumentos;
+import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFDocumento;
+import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFEditarDocumento;
 import com.digitalse.cbm.back.services.DocumentoService;
 
 import org.springframework.beans.factory.annotation.Autowired;

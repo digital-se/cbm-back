@@ -1,4 +1,4 @@
-package com.digitalse.cbm.back.responseFiles;
+package com.digitalse.cbm.back.responseFiles.RFsDocumento;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;

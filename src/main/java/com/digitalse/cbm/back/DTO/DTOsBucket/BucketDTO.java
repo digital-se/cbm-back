@@ -1,4 +1,6 @@
-package com.digitalse.cbm.back.DTO;
+package com.digitalse.cbm.back.DTO.DTOsBucket;
+
+import com.digitalse.cbm.back.DTO.Interfaces.IValidation;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

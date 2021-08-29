@@ -7,14 +7,14 @@ import java.util.stream.Collectors;
 
 import javax.xml.bind.ValidationException;
 
-import com.digitalse.cbm.back.DTO.DocumentoDTO;
+import com.digitalse.cbm.back.DTO.DTOsDocumento.DocumentoDTO;
 import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.mappers.DocumentoMapper;
 import com.digitalse.cbm.back.repository.DocumentoRepository;
 import com.digitalse.cbm.back.repository.specifications.DocumentoSpecification;
-import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
-import com.digitalse.cbm.back.responseFiles.RFDocumento;
-import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
+import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFBuscaDocumentos;
+import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFDocumento;
+import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFEditarDocumento;
 
 import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;

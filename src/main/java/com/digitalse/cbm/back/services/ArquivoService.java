@@ -7,16 +7,17 @@ import java.util.List;
 
 import javax.xml.bind.ValidationException;
 
-import com.digitalse.cbm.back.DTO.ArquivoDTO;
+import com.digitalse.cbm.back.DTO.DTOsArquivo.ArquivoDTO;
+import com.digitalse.cbm.back.DTO.DTOsArquivo.ArquivoEditarDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
 import com.digitalse.cbm.back.entities.Bucket;
 import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.repository.ArquivoRepository;
 import com.digitalse.cbm.back.repository.BucketRepository;
 import com.digitalse.cbm.back.repository.DocumentoRepository;
-import com.digitalse.cbm.back.responseFiles.RFArquivo;
-import com.digitalse.cbm.back.responseFiles.RFBucket;
-import com.digitalse.cbm.back.responseFiles.RFCriarArquivo;
+import com.digitalse.cbm.back.responseFiles.RFsArquivo.RFArquivo;
+import com.digitalse.cbm.back.responseFiles.RFsArquivo.RFCriarArquivo;
+import com.digitalse.cbm.back.responseFiles.RFsBucket.RFBucket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,8 +52,13 @@ public class ArquivoService {
                 file.getBytes(), null, null);
         bucket = bucketRepository.save(bucket);
 
-        Arquivo finalArq = new Arquivo(null, documento, file.getOriginalFilename(), arquivodto.getOcr(),
-                arquivodto.getStatus(), arquivodto.getTexto(), bucket.getId(), null, null);
+        Arquivo finalArq = new Arquivo(null, documento, file.getOriginalFilename(), arquivodto.getOcr(), null, "",
+                bucket.getId(), null, null);
+
+        if (arquivodto.getOcr() == false)
+            finalArq.setStatus("Concluido");
+        if (arquivodto.getOcr() == true)
+            finalArq.setStatus("Em pre-processamento");
 
         RFCriarArquivo responseFile = new RFCriarArquivo(arquivoRepository.save(finalArq));
 
@@ -83,7 +89,13 @@ public class ArquivoService {
             bucket = bucketRepository.save(bucket);
 
             Arquivo finalArq = new Arquivo(0L, documento, fileBubble.getOriginalFilename(), arquivoBubble.getOcr(),
-                    arquivoBubble.getStatus(), arquivoBubble.getTexto(), bucket.getId(), null, null);
+                    null, null, bucket.getId(), null, null);
+
+            if (arquivoBubble.getOcr() == false)
+                finalArq.setStatus("Concluido");
+            if (arquivoBubble.getOcr() == true)
+                finalArq.setStatus("Em pre-processamento");
+
             RFCriarArquivo responseFile = new RFCriarArquivo(arquivoRepository.save(finalArq));
             returnRF.add(responseFile);
         }
@@ -139,7 +151,7 @@ public class ArquivoService {
      * @throws IOException
      * @throws ValidationException
      */
-    public RFArquivo editar(long documento_id, long arquivo_id, ArquivoDTO arquivodto)
+    public RFArquivo editar(long documento_id, long arquivo_id, ArquivoEditarDTO arquivodto)
             throws IOException, ValidationException {
         if (!arquivodto.isValidationOk())
             throw new ValidationException("erro");
@@ -147,7 +159,12 @@ public class ArquivoService {
         Arquivo arq = arquivoRepository.findById(arquivo_id).get();
 
         arq.setOcr(arquivodto.getOcr());
-        arq.setStatus(arquivodto.getStatus());
+
+        if (arquivodto.getOcr() == false)
+            arq.setStatus("Concluido");
+        if (arquivodto.getOcr() == true)
+            arq.setStatus("Em pre-processamento");
+
         arq.setTexto(arquivodto.getTexto());
         arquivoRepository.save(arq);
         return new RFArquivo(arq);

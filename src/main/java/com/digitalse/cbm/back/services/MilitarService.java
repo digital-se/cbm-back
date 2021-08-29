@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.digitalse.cbm.back.responseFiles.RFMilitar;
+import com.digitalse.cbm.back.responseFiles.RFsMilitar.RFMilitar;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

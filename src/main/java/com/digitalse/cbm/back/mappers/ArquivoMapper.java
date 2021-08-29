@@ -3,7 +3,7 @@ package com.digitalse.cbm.back.mappers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.digitalse.cbm.back.DTO.ArquivoDTO;
+import com.digitalse.cbm.back.DTO.DTOsArquivo.ArquivoDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
 
 public class ArquivoMapper {
@@ -15,8 +15,6 @@ public class ArquivoMapper {
         ArquivoDTO arquivoDTO = new ArquivoDTO();
 
         arquivoDTO.setOcr( arquivo.getOcr() );
-        arquivoDTO.setStatus( arquivo.getStatus() );
-        arquivoDTO.setTexto( arquivo.getTexto() );
         return arquivoDTO;
     }
 
@@ -28,8 +26,6 @@ public class ArquivoMapper {
         Arquivo arquivo = new Arquivo();
 
         arquivo.setOcr( arquivoDTO.getOcr() );
-        arquivo.setStatus( arquivoDTO.getStatus() );
-        arquivo.setTexto( arquivoDTO.getTexto() );
         return arquivo;
     }
 

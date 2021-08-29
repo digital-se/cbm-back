@@ -1,8 +1,9 @@
-package com.digitalse.cbm.back.DTO;
+package com.digitalse.cbm.back.DTO.DTOsDocumento;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import com.digitalse.cbm.back.DTO.Interfaces.IValidation;
 import com.digitalse.cbm.back.entities.Militar;
 
 import lombok.AllArgsConstructor;
