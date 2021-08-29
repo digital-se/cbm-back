@@ -45,7 +45,7 @@ public class ArquivoController {
             @ApiResponse(code = 201, message = "Adicionou um ou mais arquivos a um documento e salvou no DB"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping(value = "/documentos/{documento_id}/arquivos/")
+    @PostMapping(value = "/documentos/{documento_id}/arquivos")
     @ResponseBody
     public ResponseEntity<List<RFCriarArquivo>> adicionarArquivos(@PathVariable(required = true) long documento_id,
             @RequestPart(required = true) List<ArquivoDTO> arquivosDTO,
