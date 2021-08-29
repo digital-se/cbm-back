@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.DTOsDocumento.DocumentoDTO;
+import com.digitalse.cbm.back.DTO.DTOsMilitar.MilitarDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
 import com.digitalse.cbm.back.entities.Documento;
 import com.digitalse.cbm.back.entities.Militar;
@@ -22,9 +23,9 @@ public class DocumentoMapper {
         documentoDTO.setTipo( documento.getTipo() );
         documentoDTO.setData( documento.getData() );
         documentoDTO.setDescricao( documento.getDescricao() );
-        List<Militar> list1 = documento.getMilitares();
+        List<MilitarDTO> list1 = MilitarMapper.toDTOList(documento.getMilitares());
         if ( list1 != null ) {
-            documentoDTO.setMilitares( new ArrayList<Militar>( list1 ) );
+            documentoDTO.setMilitares( new ArrayList<MilitarDTO>( list1 ) );
         }
 
         return documentoDTO;
@@ -44,7 +45,7 @@ public class DocumentoMapper {
         documento.setData( documentoDTO.getData() );
         documento.setDescricao( documentoDTO.getDescricao() );
         documento.setArquivos(new ArrayList<Arquivo>());
-        List<Militar> list1 = documentoDTO.getMilitares();
+        List<Militar> list1 = MilitarMapper.toModelList(documentoDTO.getMilitares());
         if ( list1 != null ) {
             documento.setMilitares( new ArrayList<Militar>( list1 ) );
         }

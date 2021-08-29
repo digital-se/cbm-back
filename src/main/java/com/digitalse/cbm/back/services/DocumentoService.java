@@ -1,6 +1,7 @@
 package com.digitalse.cbm.back.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -9,8 +10,11 @@ import javax.xml.bind.ValidationException;
 
 import com.digitalse.cbm.back.DTO.DTOsDocumento.DocumentoDTO;
 import com.digitalse.cbm.back.entities.Documento;
+import com.digitalse.cbm.back.entities.Militar;
 import com.digitalse.cbm.back.mappers.DocumentoMapper;
+import com.digitalse.cbm.back.mappers.MilitarMapper;
 import com.digitalse.cbm.back.repository.DocumentoRepository;
+import com.digitalse.cbm.back.repository.MilitarRepository;
 import com.digitalse.cbm.back.repository.specifications.DocumentoSpecification;
 import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFBuscaDocumentos;
 import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFDocumento;
@@ -26,6 +30,9 @@ public class DocumentoService {
     @Autowired
     private DocumentoRepository documentoRepository;
 
+    @Autowired
+    private MilitarRepository militarRepository;
+
     /**
      * Cria um novo documento
      * 
@@ -37,7 +44,22 @@ public class DocumentoService {
     public RFDocumento criar(DocumentoDTO documentodto) throws IOException, HttpException {
         if (!documentodto.isValidationOk()) throw new HttpException("validation failed");
 
+        List<Militar> militares = new ArrayList<Militar>();
+    
+
+        if(documentodto.getMilitares() != null){
+            documentodto.getMilitares().forEach(element -> {
+                if(!militarRepository.existsByMatricula(element.getMatricula())){
+                    militares.add(militarRepository.save(new Militar(element.getMatricula(), null)));
+                } else {
+                    militares.add(militarRepository.findByMatricula(element.getMatricula()));
+                }
+            });
+        }
         Documento docModel = DocumentoMapper.toModel(documentodto);
+
+        docModel.setMilitares(militares);
+
         RFDocumento rfdoc = new RFDocumento(documentoRepository.save(docModel));
         return rfdoc;
     }
@@ -61,7 +83,7 @@ public class DocumentoService {
         doc.setNome(documentodto.getNome());
         doc.setDescricao(documentodto.getDescricao());
         doc.setData(documentodto.getData());
-        doc.setMilitares(documentodto.getMilitares());
+        doc.setMilitares(MilitarMapper.toModelList(documentodto.getMilitares()));
         doc.setPublico(documentodto.getPublico());
         documentoRepository.save(doc);
         return new RFEditarDocumento(doc);
