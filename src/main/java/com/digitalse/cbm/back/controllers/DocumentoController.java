@@ -2,7 +2,9 @@ package com.digitalse.cbm.back.controllers;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.digitalse.cbm.back.DTO.DocumentoDTO;
@@ -10,8 +12,6 @@ import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
 import com.digitalse.cbm.back.responseFiles.RFDocumento;
 import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
 import com.digitalse.cbm.back.services.DocumentoService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,24 +70,22 @@ public class DocumentoController {
             @RequestParam(required = false) String matriculaMilitar, @RequestParam(required = false) String nomeMilitar,
             @RequestParam(required = false) String palavras) throws IOException {
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            ObjectNode node = mapper.createObjectNode();
-            node.put("nome", nome);
-            node.put("tipo", tipo);
-            node.put("numeracao", numeracao);
+            Map<String, Object> map = new HashMap<>();
+            if (nome != null)
+                if (!nome.isBlank())
+                    map.put("nome", nome);
+            if (tipo != null)
+                if (!tipo.isBlank())
+                    map.put("tipo", tipo);
+            if (numeracao != null)
+                if (!numeracao.isBlank())
+                    map.put("numeracao", numeracao);
+            if (dataInicial != null)
+                map.put("dataInicial", dataInicial);
+            if (dataFinal != null)
+                map.put("dataFinal", dataFinal);
 
-            if (dataInicial == null) node.put("dataInicial", "");
-            else node.put("dataInicial", dataInicial.toString());
-
-            if (dataInicial == null) node.put("dataFinal", "");
-            else node.put("dataFinal", dataFinal.toString());
-            
-            node.put("matriculaMilitar", matriculaMilitar);
-            node.put("nomeMilitar", nomeMilitar);
-            node.put("palavras", palavras);
-            System.out.println(mapper.valueToTree(node).toString());
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(documentoService.getDocumento(mapper.valueToTree(node)));
+            return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumento(map));
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.digitalse.cbm.back.services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.ValidationException;
@@ -14,7 +15,6 @@ import com.digitalse.cbm.back.repository.specifications.DocumentoSpecification;
 import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
 import com.digitalse.cbm.back.responseFiles.RFDocumento;
 import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +87,8 @@ public class DocumentoService {
      * @return uma lista de responsefiles de documentos
      * @throws IOException
      */
-    public List<RFBuscaDocumentos> getDocumento(JsonNode docJson) throws IOException {
-        DocumentoSpecification ds = new DocumentoSpecification(docJson);
+    public List<RFBuscaDocumentos> getDocumento(Map<String, Object> map) throws IOException {
+        DocumentoSpecification ds = new DocumentoSpecification(map);
 
         List<RFBuscaDocumentos> rfDocList = documentoRepository.findAll(ds).stream().map(documento -> {
             RFBuscaDocumentos newRFDoc = new RFBuscaDocumentos(documento);

@@ -1,6 +1,7 @@
 package com.digitalse.cbm.back.repository.specifications;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -8,7 +9,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.digitalse.cbm.back.entities.Documento;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import org.springframework.data.jpa.domain.Specification;
 
@@ -17,13 +17,13 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class DocumentoSpecification implements Specification<Documento> {
 
-    private JsonNode filter;
+    private Map<String, Object> filter;
 
     /**
      * Instancia um specification para realizar uma busca com multiplos campos.
      * @param jsonNode Um jsonNode gerado a partir dos multiplos campos enviados pelo endpoint.
      */
-    public DocumentoSpecification(JsonNode filter) {
+    public DocumentoSpecification(Map<String, Object> filter) {
         super();
         this.filter = filter;
     }
@@ -34,40 +34,39 @@ public class DocumentoSpecification implements Specification<Documento> {
         query.distinct(true);
         Predicate p = criteriaBuilder.and();
 
-        if (filter.has("numeracao") && !filter.get("numeracao").isNull()) {
-            p.getExpressions().add(criteriaBuilder.equal(root.get("numeracao"), filter.get("numeracao").asText()));
+        if (filter.containsKey("nome")) {
+            p.getExpressions().add(criteriaBuilder.equal(root.get("numeracao"), filter.get("numeracao")));
         }
 
-        if (filter.has("tipo") && !filter.get("tipo").isNull()) {
-            p.getExpressions().add(criteriaBuilder.equal(root.get("tipo"), filter.get("tipo").asText()));
+        if (filter.containsKey("tipo")) {
+            p.getExpressions().add(criteriaBuilder.equal(root.get("tipo"), filter.get("tipo")));
         }
 
-        if ((filter.has("datainicial") || filter.has("datafinal"))
-                && (!filter.get("datainicial").isNull() || !filter.get("datafinal").isNull())) {
+        if (filter.containsKey("datainicial") || filter.containsKey("datafinal")) {
             // DateTimeFormatter formatter =
             // DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss.SSSXXX");
             LocalDate dataInicial;
             LocalDate dataFinal;
 
-            if (filter.has("datainicial")) {
-                dataInicial = LocalDate.parse(filter.get("datainicial").asText());
+            if (filter.containsKey("datainicial")) {
+                dataInicial = LocalDate.parse(((LocalDate)filter.get("datainicial")).toString());
             } else {
                 dataInicial = null;
             }
 
-            if (filter.has("datafinal")) {
-                dataFinal = LocalDate.parse(filter.get("datafinal").asText());
+            if (filter.containsKey("datafinal")) {
+                dataFinal = LocalDate.parse(((LocalDate)filter.get("dataFinal")).toString());
             } else {
                 dataFinal = null;
             }
 
-            if (filter.has("datainicial") && filter.has("datafinal")) {
+            if (filter.containsKey("datainicial") && filter.containsKey("datafinal")) {
                 p.getExpressions().add(criteriaBuilder.between(root.<LocalDate>get("data"), dataInicial, dataFinal));
             }
-            if (filter.has("datainicial") && !filter.has("datafinal")) {
+            if (filter.containsKey("datainicial") && !filter.containsKey("datafinal")) {
                 p.getExpressions().add(criteriaBuilder.greaterThanOrEqualTo(root.<LocalDate>get("data"), dataInicial));
             }
-            if (!filter.has("datainicial") && filter.has("datafinal")) {
+            if (!filter.containsKey("datainicial") && filter.containsKey("datafinal")) {
                 p.getExpressions().add(criteriaBuilder.lessThanOrEqualTo(root.<LocalDate>get("data"), dataFinal));
             }
 
