@@ -22,10 +22,6 @@ public class DocumentoMapper {
         documentoDTO.setTipo( documento.getTipo() );
         documentoDTO.setData( documento.getData() );
         documentoDTO.setDescricao( documento.getDescricao() );
-        List<Arquivo> list = documento.getArquivos();
-        if ( list != null ) {
-            documentoDTO.setArquivos( new ArrayList<Arquivo>( list ) );
-        }
         List<Militar> list1 = documento.getMilitares();
         if ( list1 != null ) {
             documentoDTO.setMilitares( new ArrayList<Militar>( list1 ) );
@@ -47,10 +43,7 @@ public class DocumentoMapper {
         documento.setTipo( documentoDTO.getTipo() );
         documento.setData( documentoDTO.getData() );
         documento.setDescricao( documentoDTO.getDescricao() );
-        List<Arquivo> list = documentoDTO.getArquivos();
-        if ( list != null ) {
-            documento.setArquivos( new ArrayList<Arquivo>( list ) );
-        }
+        documento.setArquivos(new ArrayList<Arquivo>());
         List<Militar> list1 = documentoDTO.getMilitares();
         if ( list1 != null ) {
             documento.setMilitares( new ArrayList<Militar>( list1 ) );

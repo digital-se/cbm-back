@@ -3,7 +3,6 @@ package com.digitalse.cbm.back.DTO;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.digitalse.cbm.back.entities.Arquivo;
 import com.digitalse.cbm.back.entities.Militar;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +19,6 @@ public class DocumentoDTO implements IValidation {
 	private String tipo;
 	private LocalDate data;
 	private String descricao;
-	private List<Arquivo> arquivos;
 	private List<Militar> militares;
 
 	@Override
@@ -29,7 +27,7 @@ public class DocumentoDTO implements IValidation {
 		// boolean emptyStep = false;
 		boolean tipoStep = false;
 		if (this.nome != null && this.numeracao != null && this.publico != null && this.tipo != null
-				&& this.data != null && this.descricao != null && this.arquivos != null && this.militares != null) {
+				&& this.data != null && this.descricao != null && this.militares != null) {
 			nullStep = true;
 		}
 
@@ -47,7 +45,7 @@ public class DocumentoDTO implements IValidation {
 
 	@Override
 	public String toString() {
-		return "DocumentoDTO [arquivos=" + arquivos + ", data=" + data + ", descricao=" + descricao + ", militares="
+		return "DocumentoDTO [data=" + data + ", descricao=" + descricao + ", militares="
 				+ militares + ", nome=" + nome + ", numeracao=" + numeracao + ", publico=" + publico + ", tipo=" + tipo
 				+ "]";
 	}
