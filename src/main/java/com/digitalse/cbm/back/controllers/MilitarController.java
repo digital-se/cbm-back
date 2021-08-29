@@ -44,7 +44,7 @@ public class MilitarController {
             if(nome != null && matricula == null) result.addAll(militarService.getListByName(nome));
             if(nome == null && matricula != null) result.add(militarService.getListByMatricula(matricula));
             
-            return ResponseEntity.status(HttpStatus.FOUND).body(result);
+            return ResponseEntity.status(HttpStatus.OK).body(result);
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (HttpClientErrorException e) {
