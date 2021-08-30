@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MilitarRepository extends JpaRepository<Militar, Long> {
 
     Militar findByMatricula(String matricula);
+
+    boolean existsByMatricula(String matricula);
 }

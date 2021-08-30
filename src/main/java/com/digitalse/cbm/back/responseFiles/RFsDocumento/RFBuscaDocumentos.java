@@ -1,6 +1,7 @@
-package com.digitalse.cbm.back.responseFiles;
+package com.digitalse.cbm.back.responseFiles.RFsDocumento;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.digitalse.cbm.back.entities.Documento;
@@ -13,19 +14,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class RFEditarDocumento {
-    private Long id;
+public class RFBuscaDocumentos {
+
+	private Long id;
 	private String nome;
 	private String numeracao;
 	private Boolean publico;
 	private String tipo;
-	private Date data;
+	private LocalDate data;
 	private String descricao;
-	private Date criado;
-	private Date atualizado;
-    private List<Militar> militares; 
+	private OffsetDateTime criado;
+	private OffsetDateTime atualizado;
+    private List<Militar> militares;
 
-    public RFEditarDocumento(Documento doc) {
+    public RFBuscaDocumentos(Documento doc) {
         this.id = doc.getId();
         this.nome = doc.getNome();
         this.numeracao = doc.getNumeracao();
@@ -34,7 +36,7 @@ public class RFEditarDocumento {
         this.data = doc.getData();
         this.descricao = doc.getDescricao();
         this.criado = doc.getCriado();
-        this.atualizado = doc.getAtualizado();
-        this.militares = doc.getMilitares();         
-    } 
+        this.atualizado = doc.getAtualizado();     
+        this.militares = doc.getMilitares();     
+    }
 }

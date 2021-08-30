@@ -1,6 +1,6 @@
-package com.digitalse.cbm.back.responseFiles;
+package com.digitalse.cbm.back.responseFiles.RFsBucket;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import com.digitalse.cbm.back.entities.Bucket;
 
@@ -18,8 +18,8 @@ public class RFBucket {
     private String mime;
     private Long tamanho;
     private byte[] dados;
-    private Date criado;
-    private Date atualizado;
+    private OffsetDateTime criado;
+    private OffsetDateTime atualizado;
 
     public RFBucket(Bucket bucket){
         this.id = bucket.getId();

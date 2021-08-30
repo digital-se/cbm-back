@@ -16,7 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class OcrService {
     
-    //Em teste
+    /**
+     * EM TESTES!!! INCOMPLETO
+     * Envia uma imagem para o OCR (Microsserviço do digital-se)
+     * @param file MultipartFile da imagem
+     * @return 
+     * @throws IOException
+     */
     public MultiValueMap<String,String> send(MultipartFile file) throws IOException {
         
         // converte arquivo para formato enviavel

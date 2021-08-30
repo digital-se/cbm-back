@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ public class Militar {
     @Id
     private String matricula;
     @ManyToMany(mappedBy = "militares")
+    @JsonBackReference
     private List<Documento> documentos;
     
 }

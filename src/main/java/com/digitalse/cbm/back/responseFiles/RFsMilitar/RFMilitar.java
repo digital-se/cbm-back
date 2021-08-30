@@ -1,19 +1,16 @@
-package com.digitalse.cbm.back.DTO;
+package com.digitalse.cbm.back.responseFiles.RFsMilitar;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class MilitarDTO {
-
+public class RFMilitar {
+    
     private String matricula;
     private String nome;
     private String nomeDeGuerra;
     private String cargo;
-
 }
