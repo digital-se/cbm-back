@@ -41,7 +41,7 @@ public class MilitarService {
     public RFMilitar getListByMatricula(String matricula) throws IOException {
         String url = "https://sandbox-api.cbm.se.gov.br/bmrh/militares/getMilitaryByMat/" + matricula;
         JsonNode jsonNode = new ObjectMapper().readTree(new RestTemplate().getForObject(url, String.class));
-        System.out.println(jsonNode.toString());
+        //System.out.println(jsonNode.toString());
         RFMilitar militarFound = new RFMilitar(jsonNode.get("num_matricula").asText(), jsonNode.get("nom_completo").asText(),
                 jsonNode.get("nom_guerra").asText(), jsonNode.get("dsc_cargo").asText());
         return militarFound;
