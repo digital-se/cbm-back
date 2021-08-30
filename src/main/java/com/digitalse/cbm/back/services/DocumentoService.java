@@ -114,12 +114,24 @@ public class DocumentoService {
         if (documentodto.getMilitares() != null) {
             documentodto.getMilitares().forEach(element -> {
                 if (!militarRepository.existsByMatricula(element.getMatricula())) {
-                    Militar mil = new Militar(element.getMatricula(), new ArrayList<Documento>());
-                    mil = militarRepository.save(mil);
-                    militares.add(mil);
+                    try {
+                        if (militarService.getListByMatricula(element.getMatricula()) != null) {
+                            Militar mil = new Militar(element.getMatricula(), new ArrayList<Documento>());
+                            mil = militarRepository.save(mil);
+                            militares.add(mil);
+                        } else {
+                            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Envie um militar valido");
+                        }
+
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 } else {
+
                     Militar mil = militarRepository.findByMatricula(element.getMatricula()).get();
                     militares.add(mil);
+
                 }
             });
         }
