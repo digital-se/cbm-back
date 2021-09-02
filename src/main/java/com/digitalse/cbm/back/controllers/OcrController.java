@@ -1,10 +1,7 @@
 package com.digitalse.cbm.back.controllers;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import com.digitalse.cbm.back.responseFiles.RFBucket;
-import com.digitalse.cbm.back.responseFiles.RFOcrBucket;
 import com.digitalse.cbm.back.services.OcrService;
 
 import org.springframework.beans.factory.annotation.Autowired;
