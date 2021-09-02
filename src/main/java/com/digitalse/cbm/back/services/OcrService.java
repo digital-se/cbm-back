@@ -1,10 +1,16 @@
 package com.digitalse.cbm.back.services;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Base64;
 
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import com.digitalse.cbm.back.responseFiles.RFOcrBucket;
+
+import org.springframework.amqp.AmqpException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,22 +22,55 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import ch.qos.logback.classic.pattern.MessageConverter;
-
 @Service
 public class OcrService {
-    /**
-     * Testes novos
-     * 
-     * @param file
-     * @throws IOException
-     */
-    /* public void sendAmqp(MultipartFile file) throws IOException {
-        AmqpTemplate amqp = new MessageConverter()
-        RabbitTemplate template = new RabbitTemplate(); 
-        template.setExchange("digital-se-cbm");
-        template.send(new Message(file.getBytes()));
+
+    @Autowired
+    private RabbitService rs = new RabbitService();
+    
+    public void testeRabbit(MultipartFile obj) throws AmqpException, IOException{
+        rs.publishMessage(serialize(obj));
+    }
+    
+    /* public RFOcrBucket sendAmqp(MultipartFile file) throws IOException {
+        //Channel channel = ctx.getBean("rabbitConnectionFactory"). connectionFactory.createChannel();
+        byte[] serializedObject  = new byte[]{};
+        serializedObject = serialize(file);
+        rt.send(new Message(serializedObject));
+        return deserialize(serializedObject);
     } */
+
+    public byte[] serialize(MultipartFile obj) throws IOException {
+        RFOcrBucket ocrb = new RFOcrBucket(0L, obj.getOriginalFilename(), obj.getContentType(), obj.getSize(), obj.getBytes());
+        
+
+        byte[] base64Object = new byte[]{};
+        try {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            ObjectOutputStream so = new ObjectOutputStream(bo);
+            so.writeObject(ocrb);
+            so.flush();
+            base64Object = Base64.getEncoder().encode(bo.toByteArray());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return base64Object;
+    }
+
+    public RFOcrBucket deserialize(byte[] base64Object) throws IOException {
+        RFOcrBucket obj = null;
+        try {
+            byte[] decodedBytes = Base64.getDecoder().decode(base64Object);
+            //byte b[] = serializedObject.getBytes(); 
+            ByteArrayInputStream bi = new ByteArrayInputStream(decodedBytes);
+            ObjectInputStream si = new ObjectInputStream(bi);
+            obj = (RFOcrBucket) si.readObject();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return obj;
+    }
+    
 
     /**
      * EM TESTES!!! INCOMPLETO Envia uma imagem para o OCR (Microsserviço do
