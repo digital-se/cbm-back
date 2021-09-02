@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BackApplication {
 
 
-	public static void main(String[] args) throws IOException, TimeoutException, KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
+	public static void main(String[] args) {
 		
 		SpringApplication.run(BackApplication.class, args);
 		
