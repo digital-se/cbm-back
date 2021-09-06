@@ -28,6 +28,11 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
+  rabbitmq:
+    host: ${env.RABBIT_HOST}
+    port: ${env.RABBIT_PORT}
+    username: ${env.RABBIT_USERNAME}
+    password: ${env.RABBIT_PASSWORD}
 
 keycloak:
   realm: ${env.KC_REALM}
@@ -36,9 +41,3 @@ keycloak:
   resource: ${env.KC_RESOURCE}
   public-client: true
   confidential-port: 0
-
-rabbitmq:
-  host: ${env.RABBIT_HOST}
-  port: ${env.RABBIT_PORT}
-  username: ${env.RABBIT_USERNAME}
-  password: ${env.RABBIT_PASSWORD}

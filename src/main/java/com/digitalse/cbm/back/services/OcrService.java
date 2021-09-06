@@ -1,15 +1,9 @@
 package com.digitalse.cbm.back.services;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Base64;
-
-import com.digitalse.cbm.back.responseFiles.RFOcrBucket;
 
 import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
@@ -25,11 +19,15 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class OcrService {
 
-    @Autowired
-    private RabbitService rs = new RabbitService();
     
+    @Autowired
+    private RabbitTemplate rt;
+    
+    public void sendImage(String nomeFila, MultipartFile file){
+        rt.convertAndSend(nomeFila, file);
+    }
     public void testeRabbit(MultipartFile obj) throws AmqpException, IOException{
-        rs.publishMessage(serialize(obj));
+        /* rs.publishMessage(serialize(obj)); */
     }
     
     /* public RFOcrBucket sendAmqp(MultipartFile file) throws IOException {
@@ -40,7 +38,7 @@ public class OcrService {
         return deserialize(serializedObject);
     } */
 
-    public byte[] serialize(MultipartFile obj) throws IOException {
+    /* public byte[] serialize(MultipartFile obj) throws IOException {
         RFOcrBucket ocrb = new RFOcrBucket(0L, obj.getOriginalFilename(), obj.getContentType(), obj.getSize(), obj.getBytes());
         
 
@@ -69,7 +67,7 @@ public class OcrService {
             System.out.println(e);
         }
         return obj;
-    }
+    } */
     
 
     /**

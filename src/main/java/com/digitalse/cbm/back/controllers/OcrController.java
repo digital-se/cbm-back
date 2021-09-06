@@ -3,6 +3,7 @@ package com.digitalse.cbm.back.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import com.digitalse.cbm.back.rabbitmq.RabbitMQConnection;
 import com.digitalse.cbm.back.responseFiles.RFBucket;
 import com.digitalse.cbm.back.responseFiles.RFOcrBucket;
 import com.digitalse.cbm.back.services.OcrService;
@@ -34,7 +35,7 @@ public class OcrController {
     public ResponseEntity<InputStreamResource> enviarImagem(@RequestParam(name = "file") MultipartFile file) throws RestClientException, IOException {
         try {
             //RFOcrBucket ocrbucket =  ocr.sendAmqp(file);
-            ocr.testeRabbit(file);
+            ocr.sendImage(RabbitMQConnection.NOME_QUEUE_OCR,file);
             return ResponseEntity.status(HttpStatus.OK).build();
             /* return ResponseEntity.status(HttpStatus.OK).contentLength(ocrbucket.getTamanho())
                     .contentType(org.springframework.http.MediaType.parseMediaType(ocrbucket.getMime()))
