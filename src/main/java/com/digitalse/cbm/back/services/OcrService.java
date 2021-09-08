@@ -1,6 +1,16 @@
 package com.digitalse.cbm.back.services;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Base64;
+
+import com.digitalse.cbm.back.DTO.BucketDTO;
+import com.digitalse.cbm.back.repository.ArquivoRepository;
+import com.digitalse.cbm.back.repository.BucketRepository;
+import com.digitalse.cbm.back.responseFiles.RFBucket;
 
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -19,11 +29,16 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class OcrService {
 
-    
+    @Autowired
+    ArquivoRepository arqRepo;
+
+    @Autowired
+    BucketRepository bucRepo;
+
     @Autowired
     private RabbitTemplate rt;
     
-    public void sendImage(String nomeFila, MultipartFile file){
+    public void sendImage(String nomeFila, BucketDTO file) throws AmqpException, IOException{
         rt.convertAndSend(nomeFila, file);
     }
     public void testeRabbit(MultipartFile obj) throws AmqpException, IOException{
@@ -38,8 +53,8 @@ public class OcrService {
         return deserialize(serializedObject);
     } */
 
-    /* public byte[] serialize(MultipartFile obj) throws IOException {
-        RFOcrBucket ocrb = new RFOcrBucket(0L, obj.getOriginalFilename(), obj.getContentType(), obj.getSize(), obj.getBytes());
+    public byte[] serialize(BucketDTO obj) throws IOException {
+        RFBucket ocrb = new RFBucket(obj.getId(), obj.getNome(), obj.getMime(), obj.getTamanho(), obj.getDados(), obj.getCriado(), obj.getAtualizado());
         
 
         byte[] base64Object = new byte[]{};
@@ -55,19 +70,19 @@ public class OcrService {
         return base64Object;
     }
 
-    public RFOcrBucket deserialize(byte[] base64Object) throws IOException {
-        RFOcrBucket obj = null;
+    public RFBucket deserialize(byte[] base64Object) throws IOException {
+        RFBucket obj = null;
         try {
             byte[] decodedBytes = Base64.getDecoder().decode(base64Object);
             //byte b[] = serializedObject.getBytes(); 
             ByteArrayInputStream bi = new ByteArrayInputStream(decodedBytes);
             ObjectInputStream si = new ObjectInputStream(bi);
-            obj = (RFOcrBucket) si.readObject();
+            obj = (RFBucket) si.readObject();
         } catch (Exception e) {
             System.out.println(e);
         }
         return obj;
-    } */
+    }
     
 
     /**

@@ -1,5 +1,6 @@
 package com.digitalse.cbm.back.DTO;
 
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BucketDTO {
+public class BucketDTO implements Serializable {
 
     private Long id;
     private String nome;
