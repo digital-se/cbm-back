@@ -10,14 +10,12 @@ import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.responseFiles.RFArquivo;
 import com.digitalse.cbm.back.responseFiles.RFBucket;
 import com.digitalse.cbm.back.responseFiles.RFCriarArquivo;
-
 import com.digitalse.cbm.back.services.ArquivoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
