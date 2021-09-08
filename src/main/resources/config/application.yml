@@ -41,3 +41,9 @@ keycloak:
   resource: ${env.KC_RESOURCE}
   public-client: true
   confidential-port: 0
+
+rabbitmq:
+  host: ${env.RABBIT_HOST}
+  port: ${env.RABBIT_PORT}
+  username: ${env.RABBIT_USERNAME}
+  password: ${env.RABBIT_PASSWORD}

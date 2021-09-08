@@ -1,8 +1,6 @@
-package com.digitalse.cbm.back.DTO;
+package com.digitalse.cbm.back.responseFiles;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,14 +10,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BucketDTO implements Serializable {
-
+public class RFOcrBucket implements Serializable  {
     private Long id;
     private String nome;
     private String mime;
     private Long tamanho;
     private byte[] dados;
-    private OffsetDateTime criado;
-    private OffsetDateTime atualizado;
-    
 }
+
+
+    

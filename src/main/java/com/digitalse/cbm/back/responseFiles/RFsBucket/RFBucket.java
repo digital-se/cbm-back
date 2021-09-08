@@ -1,4 +1,4 @@
-package com.digitalse.cbm.back.responseFiles;
+package com.digitalse.cbm.back.responseFiles.RFsBucket;
 
 import java.time.OffsetDateTime;
 

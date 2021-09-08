@@ -2,16 +2,16 @@ package com.digitalse.cbm.back.controllers;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
-import com.digitalse.cbm.back.DTO.DocumentoDTO;
-import com.digitalse.cbm.back.responseFiles.RFBuscaDocumentos;
-import com.digitalse.cbm.back.responseFiles.RFDocumento;
-import com.digitalse.cbm.back.responseFiles.RFEditarDocumento;
+import com.digitalse.cbm.back.DTO.DTOsDocumento.DocumentoDTO;
+import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFBuscaDocumentos;
+import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFDocumento;
+import com.digitalse.cbm.back.responseFiles.RFsDocumento.RFEditarDocumento;
 import com.digitalse.cbm.back.services.DocumentoService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,16 +46,15 @@ public class DocumentoController {
     @ApiResponses(value = { @ApiResponse(code = 201, message = "Criou um documento e salvou no DB"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @PostMapping("/documentos")
+    @PostMapping(path = "/documentos")
     @ResponseBody
-    public ResponseEntity<RFDocumento> cadastrar(
-            @RequestBody DocumentoDTO documentoDTO/* , @RequestPart List<MultipartFile> files */) throws IOException {
+    public ResponseEntity<RFDocumento> cadastrar(@RequestBody DocumentoDTO documentoDTO) throws IOException {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(documentoService.criar(documentoDTO));
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e.getCause());
         }
     }
 
@@ -71,19 +70,22 @@ public class DocumentoController {
             @RequestParam(required = false) String matriculaMilitar, @RequestParam(required = false) String nomeMilitar,
             @RequestParam(required = false) String palavras) throws IOException {
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            ObjectNode node = mapper.createObjectNode();
-            node.put("nome", nome);
-            node.put("tipo", tipo);
-            node.put("numeracao", numeracao);
-            node.put("dataInicial", dataInicial.toString());
-            node.put("dataFinal", dataFinal.toString());
-            node.put("matriculaMilitar", matriculaMilitar);
-            node.put("nomeMilitar", nomeMilitar);
-            node.put("palavras", palavras);
-            System.out.println(mapper.valueToTree(node).toString());
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(documentoService.getDocumento(mapper.valueToTree(node)));
+            Map<String, Object> map = new HashMap<>();
+            if (nome != null)
+                if (!nome.isBlank())
+                    map.put("nome", nome);
+            if (tipo != null)
+                if (!tipo.isBlank())
+                    map.put("tipo", tipo);
+            if (numeracao != null)
+                if (!numeracao.isBlank())
+                    map.put("numeracao", numeracao);
+            if (dataInicial != null)
+                map.put("dataInicial", dataInicial);
+            if (dataFinal != null)
+                map.put("dataFinal", dataFinal);
+
+            return ResponseEntity.status(HttpStatus.OK).body(documentoService.getDocumento(map));
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {

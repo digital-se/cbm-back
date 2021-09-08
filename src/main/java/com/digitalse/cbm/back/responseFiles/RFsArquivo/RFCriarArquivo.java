@@ -1,8 +1,7 @@
-package com.digitalse.cbm.back.responseFiles;
+package com.digitalse.cbm.back.responseFiles.RFsArquivo;
 
 import java.time.OffsetDateTime;
 
-import com.digitalse.cbm.back.DTO.ArquivoDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class RFCriarArquivo {
     private OffsetDateTime criado;
     private OffsetDateTime atualizado;
 
-    public RFCriarArquivo(ArquivoDTO dto) {
+    /* public RFCriarArquivo(ArquivoDTO dto) {
         this.id = dto.getId();
         this.documento_id = dto.getDocumento_id();
         this.ocr = dto.getOcr();
@@ -30,7 +29,7 @@ public class RFCriarArquivo {
         this.bucket = dto.getBucket();
         this.criado = dto.getCriado();
         this.atualizado = dto.getAtualizado();
-    }
+    } */
 
     public RFCriarArquivo(Arquivo arq) {
         this.id = arq.getId();

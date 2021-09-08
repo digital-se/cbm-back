@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.digitalse.cbm.back.responseFiles.RFMilitar;
+import com.digitalse.cbm.back.responseFiles.RFsMilitar.RFMilitar;
 import com.digitalse.cbm.back.services.MilitarService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class MilitarController {
             if(nome != null && matricula == null) result.addAll(militarService.getListByName(nome));
             if(nome == null && matricula != null) result.add(militarService.getListByMatricula(matricula));
             
-            return ResponseEntity.status(HttpStatus.FOUND).body(result);
+            return ResponseEntity.status(HttpStatus.OK).body(result);
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (HttpClientErrorException e) {

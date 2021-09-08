@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,8 +57,10 @@ public class Documento {
 	@OneToMany(mappedBy = "documento")
 	@JsonManagedReference
 	private List<Arquivo> arquivos;
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "fk_documento_militar", joinColumns = @JoinColumn(name = "militar_matricula"), inverseJoinColumns = @JoinColumn(name = "documento_id"))
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "fk_documento_militar",
+		joinColumns = @JoinColumn(name = "documento_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "militar_matricula", referencedColumnName = "matricula"))
 	@JsonManagedReference
 	private List<Militar> militares;
 

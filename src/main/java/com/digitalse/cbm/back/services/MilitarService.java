@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.digitalse.cbm.back.responseFiles.RFMilitar;
+import com.digitalse.cbm.back.responseFiles.RFsMilitar.RFMilitar;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,7 +41,7 @@ public class MilitarService {
     public RFMilitar getListByMatricula(String matricula) throws IOException {
         String url = "https://sandbox-api.cbm.se.gov.br/bmrh/militares/getMilitaryByMat/" + matricula;
         JsonNode jsonNode = new ObjectMapper().readTree(new RestTemplate().getForObject(url, String.class));
-        System.out.println(jsonNode.toString());
+        //System.out.println(jsonNode.toString());
         RFMilitar militarFound = new RFMilitar(jsonNode.get("num_matricula").asText(), jsonNode.get("nom_completo").asText(),
                 jsonNode.get("nom_guerra").asText(), jsonNode.get("dsc_cargo").asText());
         return militarFound;
