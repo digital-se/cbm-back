@@ -1,29 +1,19 @@
 package com.digitalse.cbm.back.services;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Base64;
+import java.util.List;
 
-import com.digitalse.cbm.back.DTO.BucketOcrDTO;
-import com.digitalse.cbm.back.DTO.DTOsBucket.BucketDTO;
+import com.digitalse.cbm.back.DTO.DTOsBucket.BucketOcrDTO;
 import com.digitalse.cbm.back.entities.Arquivo;
+import com.digitalse.cbm.back.entities.Bucket;
 import com.digitalse.cbm.back.repository.ArquivoRepository;
 import com.digitalse.cbm.back.repository.BucketRepository;
 import com.digitalse.cbm.back.responseFiles.RFBucketOcr;
-import com.digitalse.cbm.back.responseFiles.RFsBucket.RFBucket;
-import com.google.gson.Gson;
+import com.digitalse.cbm.back.services.utils.OcrHttpUtils;
 
-import org.springframework.amqp.AmqpException;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class OcrService {
@@ -34,43 +24,34 @@ public class OcrService {
     @Autowired
     BucketRepository bucRepo;
 
-    @Autowired
-    private RabbitTemplate rt;
+    /* @Autowired
+    private RabbitTemplate rt; */
 
     //Rabbit
-    public void sendImage(String nomeFila, BucketDTO file) throws AmqpException, IOException {
+    /* public void sendImage(String nomeFila, BucketDTO file) throws AmqpException, IOException {
         rt.convertAndSend(nomeFila, file);
-
+    } */
+    
+    @Async
+    public void updateOcr() throws IOException {
+        OcrHttpUtils.sendId(getImageIds());
     }
 
-    //Rabbit
-    public void testeRabbit(MultipartFile obj) throws AmqpException, IOException {
-        /* rs.publishMessage(serialize(obj)); */
+    public List<Long> getImageIds() {
+        List<Long> idsPorCriado = arqRepo.findOrderingCriado().get();
+        System.out.println(idsPorCriado);
+        return idsPorCriado;
     }
 
-    //Paliativo http
-    public void sendToOcr(BucketOcrDTO file) throws IOException {
-        String url = "http://localhost:9083/ocr/extrair";
-
-        URL UrlObj = new URL(url);
-
-        HttpURLConnection connection = (HttpURLConnection) UrlObj.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json; utf-8");
-        connection.setRequestProperty("Accept", "application/json");
-        connection.setDoOutput(true);
-
-        try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
-            byte[] input = new Gson().toJson(file).getBytes("utf-8");
-            outputStream.write(input, 0, input.length);
-        }
-
-        System.out.println(
-                "Sent 'HTTP POST' request to ocr on : " + url + " .  Response Code : " + connection.getResponseCode());
+    public BucketOcrDTO sendImageToScan(Long arquivo_id) throws IOException{
+        Long bucket_id = arqRepo.findById(arquivo_id).get().getBucket();
+        Bucket bucket = bucRepo.findById(bucket_id).get();
+        //Sent via http
+        return new BucketOcrDTO(bucket.getId(), arquivo_id, bucket.getNome(), bucket.getMime(),
+        bucket.getTamanho(), bucket.getDados());
     }
 
-    //Paliativo http
-    public void receiveFromOcr(RFBucketOcr rfBucketOcr) {
+    public void saveScannedText(RFBucketOcr rfBucketOcr) {
         Arquivo arquivo = arqRepo.findById(rfBucketOcr.getArquivo_id()).get();
         arquivo.setTexto(rfBucketOcr.getTexto());
         arquivo.setStatus("Processado");
@@ -78,7 +59,7 @@ public class OcrService {
     }
 
     // Utils
-    public byte[] serialize(BucketDTO obj) throws IOException {
+    /* public byte[] serialize(BucketDTO obj) throws IOException {
         RFBucket ocrb = new RFBucket(obj.getId(), obj.getNome(), obj.getMime(), obj.getTamanho(), obj.getDados(),null,null);
 
         byte[] base64Object = new byte[] {};
@@ -107,6 +88,6 @@ public class OcrService {
             System.out.println(e);
         }
         return obj;
-    }
+    } */
 
 }
