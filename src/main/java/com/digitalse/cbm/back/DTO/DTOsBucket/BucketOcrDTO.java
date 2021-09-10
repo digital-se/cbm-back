@@ -1,4 +1,4 @@
-package com.digitalse.cbm.back.DTO;
+package com.digitalse.cbm.back.DTO.DTOsBucket;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
