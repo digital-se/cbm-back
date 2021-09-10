@@ -38,7 +38,7 @@ public class RabbitMQConnection {
         return new Binding(queue.getName(), Binding.DestinationType.QUEUE, exchange.getName(), queue.getName(), null);
     }
 
-    @PostConstruct
+    //@PostConstruct
     private void iniciar(){
         Queue queueOcr = this.queue(NOME_QUEUE_OCR);
 
