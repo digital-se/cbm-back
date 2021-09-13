@@ -1,5 +1,5 @@
 package com.digitalse.cbm.back.rabbitmq;
-
+/* 
 import javax.annotation.PostConstruct;
 
 import org.springframework.amqp.core.AmqpAdmin;
@@ -7,11 +7,11 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.SimplePropertyValueConnectionNameStrategy;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Component; */
 
-@Component
+/* @Component */
 public class RabbitMQConnection {
-    public static final String NOME_EXCHANGE = "digital-se-cbm";
+    /* public static final String NOME_EXCHANGE = "digital-se-cbm";
     public static final String NOME_QUEUE_OCR = "ocr";
     public static final String NOME_QUEUE_PREPROCESSOR = "preprocessor";
     public static final String NOME_KEY = "ocr_v1";
@@ -51,7 +51,7 @@ public class RabbitMQConnection {
         this.amqpAdmin.declareBinding(bindingOcr);
     }
 
-    /* public byte[] consumeMessage() throws IOException {
+    public byte[] consumeMessage() throws IOException {
         Channel channel = connection.createChannel();
         GetResponse response = channel.basicGet(queueName, false);
         return response.getBody();
