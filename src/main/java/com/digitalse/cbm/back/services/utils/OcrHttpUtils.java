@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class OcrHttpUtils {
-    private static final String URL_OCR = "http://localhost:9083/ocr/queue/atualizar";
+    private static final String URL_OCR = "http://localhost:8083/ocr/queue/atualizar";
 
     // private static final String URL_PREPROCESSOR =
     // "http://localhost:9084/preprocessor";
