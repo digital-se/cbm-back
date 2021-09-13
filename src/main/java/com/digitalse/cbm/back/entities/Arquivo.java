@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
+// import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -43,8 +43,7 @@ public class Arquivo {
     private Boolean ocr = false;
     @Column(nullable = false)
     private String status;
-    @Lob
-    @Column(nullable = true, columnDefinition="text")
+    // @Lob
     @Column(nullable = true, columnDefinition = "text")
     private String texto;
     @Column(nullable = false)
