@@ -45,6 +45,7 @@ public class Arquivo {
     private String status;
     @Lob
     @Column(nullable = true, columnDefinition="text")
+    @Column(nullable = true, columnDefinition = "text")
     private String texto;
     @Column(nullable = false)
     private Long bucket;
