@@ -9,7 +9,7 @@ import com.digitalse.cbm.back.entities.Bucket;
 import com.digitalse.cbm.back.repository.ArquivoRepository;
 import com.digitalse.cbm.back.repository.BucketRepository;
 import com.digitalse.cbm.back.responseFiles.RFBucketOcr;
-import com.digitalse.cbm.back.services.utils.OcrHttpUtils;
+import com.digitalse.cbm.back.services.utils.OcrHttpConnection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -22,19 +22,14 @@ public class OcrService {
     ArquivoRepository arqRepo;
 
     @Autowired
-    BucketRepository bucRepo;
+    BucketRepository bucRepo; 
 
-    /* @Autowired
-    private RabbitTemplate rt; */
-
-    //Rabbit
-    /* public void sendImage(String nomeFila, BucketDTO file) throws AmqpException, IOException {
-        rt.convertAndSend(nomeFila, file);
-    } */
+    @Autowired
+    OcrHttpConnection ocrConnection;
     
     @Async
     public void updateOcr() throws IOException {
-        OcrHttpUtils.sendId(getImageIds());
+        ocrConnection.sendId(getImageIds());
     }
 
     public List<Long> getImageIds() {
@@ -57,6 +52,14 @@ public class OcrService {
         arquivo.setStatus("Processado");
         arqRepo.save(arquivo);
     }
+
+    /* @Autowired
+    private RabbitTemplate rt; */
+
+    //Rabbit
+    /* public void sendImage(String nomeFila, BucketDTO file) throws AmqpException, IOException {
+        rt.convertAndSend(nomeFila, file);
+    } */
 
     // Utils
     /* public byte[] serialize(BucketDTO obj) throws IOException {

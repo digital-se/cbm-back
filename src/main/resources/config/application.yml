@@ -41,3 +41,5 @@ keycloak:
   resource: ${env.KC_RESOURCE}
   public-client: true
   confidential-port: 0
+
+ocr-urn: ${env.OCR_URN}
