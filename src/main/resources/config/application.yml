@@ -1,5 +1,5 @@
 server:
-  port: 9082
+  port: 8082
   error:
     include-message: never
     include-binding-errors: never
@@ -28,6 +28,11 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
+  # rabbitmq:
+  #   host: ${env.RABBIT_HOST}
+  #   port: ${env.RABBIT_PORT}
+  #   username: ${env.RABBIT_USERNAME}
+  #   password: ${env.RABBIT_PASSWORD}
 
 keycloak:
   realm: ${env.KC_REALM}
@@ -37,8 +42,4 @@ keycloak:
   public-client: true
   confidential-port: 0
 
-rabbitmq:
-  host: ${env.RABBIT_HOST}
-  port: ${env.RABBIT_PORT}
-  username: ${env.RABBIT_USERNAME}
-  password: ${env.RABBIT_PASSWORD}
+ocr-urn: ${env.OCR_URN}

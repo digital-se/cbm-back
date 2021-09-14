@@ -1,6 +1,5 @@
 package com.digitalse.cbm.back.responseFiles;
 
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,13 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RFOcrBucket implements Serializable  {
+public class RFBucketOcr {
     private Long id;
-    private String nome;
-    private String mime;
-    private Long tamanho;
-    private byte[] dados;
+    private Long arquivo_id;
+    private String texto;
 }
-
-
-    

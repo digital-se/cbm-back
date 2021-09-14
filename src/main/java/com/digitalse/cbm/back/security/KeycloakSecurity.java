@@ -53,7 +53,7 @@ public class KeycloakSecurity extends KeycloakWebSecurityConfigurerAdapter {
                 // .antMatchers(HttpMethod.GET,
                 // "/documentos/*").permitAll().antMatchers("/documentos/*")
                 // .hasRole("bmrh.user")
-                .antMatchers(HttpMethod.GET, "/**").permitAll().anyRequest().authenticated();
+                .antMatchers(HttpMethod.GET, "/**").permitAll().antMatchers("/ocr/**").permitAll().anyRequest().authenticated();
         /*
          * .antMatchers(HttpMethod.PUT).hasAnyRole("brmh.user")
          * .antMatchers(HttpMethod.DELETE).hasAnyRole("brmh.user")
