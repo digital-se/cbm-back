@@ -12,6 +12,7 @@ services:
       - KC_SSL_REQUIRED
       - KC_RESOURCE
       - SECRET
+      - OCR_URN
     build:
       context: .
       dockerfile: dockerfile
