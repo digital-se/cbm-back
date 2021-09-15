@@ -27,6 +27,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class ArquivoService {
 
     @Autowired
+    private OcrService ocrService;
+
+    @Autowired
     private ArquivoRepository arquivoRepository;
 
     @Autowired
@@ -61,7 +64,7 @@ public class ArquivoService {
             finalArq.setStatus("Em pre-processamento");
 
         RFCriarArquivo responseFile = new RFCriarArquivo(arquivoRepository.save(finalArq));
-
+        ocrService.updateOcr();
         return responseFile;
     }
 
@@ -77,7 +80,6 @@ public class ArquivoService {
     public List<RFCriarArquivo> addAllArchives(long documento_id, LinkedList<ArquivoDTO> arquivosList,
             LinkedList<MultipartFile> filesList) throws IOException {
         List<RFCriarArquivo> returnRF = new ArrayList<>();
-
         Documento documento = documentoRepository.findById(documento_id).get();
 
         while (!arquivosList.isEmpty()) {
@@ -99,6 +101,7 @@ public class ArquivoService {
             RFCriarArquivo responseFile = new RFCriarArquivo(arquivoRepository.save(finalArq));
             returnRF.add(responseFile);
         }
+        ocrService.updateOcr();
         return returnRF;
     }
 
