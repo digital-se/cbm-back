@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ArquivoEditarDTO implements IValidation {
 
-    private Boolean ocr = false;
+    private Boolean ocr;
     private String texto;
 
     @Override
