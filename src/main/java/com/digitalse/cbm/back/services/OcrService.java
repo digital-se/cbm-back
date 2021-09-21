@@ -49,7 +49,7 @@ public class OcrService {
     public void saveScannedText(RFBucketOcr rfBucketOcr) {
         Arquivo arquivo = arqRepo.findById(rfBucketOcr.getArquivo_id()).get();
         arquivo.setTexto(rfBucketOcr.getTexto());
-        arquivo.setStatus("Processado");
+        arquivo.setStatus("Concluido");
         arqRepo.save(arquivo);
     }
 

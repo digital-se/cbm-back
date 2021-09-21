@@ -111,6 +111,7 @@ public class DocumentoService {
 
         List<Militar> militares = new ArrayList<Militar>();
 
+        //TODO: Melhorar resposta caso militar não exista!!!
         if (documentodto.getMilitares() != null) {
             documentodto.getMilitares().forEach(element -> {
                 if (!militarRepository.existsByMatricula(element.getMatricula())) {

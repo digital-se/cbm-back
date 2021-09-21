@@ -161,17 +161,20 @@ public class ArquivoService {
 
         Arquivo arq = arquivoRepository.findById(arquivo_id).get();
 
+        if (arquivodto.getOcr() != arq.getOcr()){
+            if (arquivodto.getOcr() == false){
+                arq.setStatus("Concluido");
+                arq.setTexto(null);
+            } else if (arquivodto.getOcr() == true){
+                arq.setStatus("Em pre-processamento");
+            }
+        } else if(arquivodto.getOcr() == true && arquivodto.getTexto() != null){
+            arq.setTexto(arquivodto.getTexto());
+        }
+
         arq.setOcr(arquivodto.getOcr());
-
-        if (arquivodto.getOcr() == false)
-            arq.setStatus("Concluido");
-        if (arquivodto.getOcr() == true)
-            arq.setStatus("Em pre-processamento");
-
-        arq.setTexto(arquivodto.getTexto());
         arquivoRepository.save(arq);
         return new RFArquivo(arq);
-
     }
 
     public void deletarArquivo(long id) {

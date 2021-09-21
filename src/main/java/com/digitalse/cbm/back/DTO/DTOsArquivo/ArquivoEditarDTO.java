@@ -23,7 +23,7 @@ public class ArquivoEditarDTO implements IValidation {
         if (this.ocr != null) {
             nullStep = true;
         }
-
+        
         if (nullStep == true)
             return true;
         else
