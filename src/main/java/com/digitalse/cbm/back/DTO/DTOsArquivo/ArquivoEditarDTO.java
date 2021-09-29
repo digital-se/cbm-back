@@ -10,8 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArquivoEditarDTO {
-
-    private Long id;
     private Boolean ocr;
     private String texto;
 

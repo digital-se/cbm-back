@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("/v2")
+@RequestMapping
 public class ArquivoController {
 
     @Autowired
@@ -96,9 +96,9 @@ public class ArquivoController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
     @PatchMapping("/documentos/{documento_id}/arquivos/{arquivo_id}")
     @ResponseBody
-    public ResponseEntity<RFArquivo> updateFile(@PathVariable(name = "documento_id") long documento_id, @RequestBody ArquivoEditarDTO arquivodto) throws IOException {
+    public ResponseEntity<RFArquivo> updateFile(@PathVariable(name = "arquivo_id") Long arquivo_id, @RequestBody ArquivoEditarDTO arquivodto) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.updateFile(documento_id, arquivodto));
+            return ResponseEntity.status(HttpStatus.OK).body(arquivoService.updateFile(arquivo_id, arquivodto));
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
         } catch (Exception e) {

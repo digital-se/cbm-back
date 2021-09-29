@@ -1,6 +1,7 @@
 package com.digitalse.cbm.back.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.digitalse.cbm.back.DTO.DTOsArquivo.ArquivoDTO;
@@ -34,8 +35,13 @@ public class ArquivoService {
     @Autowired
     private BucketRepository bucketRepository;
 
+    public static final String status_preprocessando = "em pre-processamento";
+    public static final String status_ocr = "no ocr";
+    public static final String status_concluido = "concluido";
+
 
     //========= V2 ============
+
     /**
      * 
      * @param documento_id
@@ -51,11 +57,13 @@ public class ArquivoService {
                 file.getBytes());
         bucket = bucketRepository.save(bucket);
 
-        Arquivo finalArq = new Arquivo(documento, file.getOriginalFilename(), arquivodto.getOcr(),
-                bucket.getId());
+        Arquivo finalArq = new Arquivo(documento, file.getOriginalFilename(), arquivodto.getOcr(), bucket.getId());
 
         RFCriarArquivo responseFile = new RFCriarArquivo(arquivoRepository.save(finalArq));
         ocrService.updateOcr();
+
+        validateStatus(finalArq.getStatus());
+
         return responseFile;
     }
 
@@ -90,18 +98,19 @@ public class ArquivoService {
      * @param documento_id
      * @param arquivodto
      * @return
+     * @throws Exception
      */
-    public RFArquivo updateFile(long documento_id, ArquivoEditarDTO arquivodto){
-        Arquivo arq = arquivoRepository.findById(arquivodto.getId()).get();
+    public RFArquivo updateFile(Long arquivo_id, ArquivoEditarDTO arquivodto) throws Exception{
+        Arquivo arq = arquivoRepository.findById(arquivo_id).get();
 
         if(arquivodto.getOcr() != arq.getOcr()){
             if(arquivodto.getOcr() == true){
                 arq.setOcr(arquivodto.getOcr());
-                arq.setStatus(Arquivo.status_processando);
+                arq.setStatus(status_preprocessando);
                 arq.setTexto(null);
             } else {
                 arq.setOcr(arquivodto.getOcr());
-                arq.setStatus(Arquivo.status_concluido);
+                arq.setStatus(status_concluido);
                 arq.setTexto(null);
             }
         } else {
@@ -109,6 +118,8 @@ public class ArquivoService {
                 arq.setTexto(arquivodto.getTexto());
             }
         }
+
+        validateStatus(arq.getStatus());
 
         arquivoRepository.save(arq);
         return new RFArquivo(arq);
@@ -132,4 +143,15 @@ public class ArquivoService {
         Bucket bucket = bucketRepository.findById(arquivo.getBucket()).get();
         return new RFBucket(bucket);
     }
+
+    //VALIDAÇÕES
+
+    public boolean validateStatus(String status) throws Exception {
+        List<String> statusTypes = Arrays.asList("em pre-processamento", "no ocr", "concluido");
+        if (!statusTypes.contains(status))
+            throw new Exception("Status invalido");
+        else
+            return true;
+    }
+
 }

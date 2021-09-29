@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.digitalse.cbm.back.services.ArquivoService;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,17 +29,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Arquivo {
-
-    
-    public static final String status_processando = "processando";
-    public static final String status_concluido = "concluido";
-    
-    public boolean validateStatus(String status){
-        boolean valid = false;
-        if(status.equals(status_processando)) valid = true;
-        if(status.equals(status_concluido)) valid = true;
-        return valid;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,8 +68,8 @@ public class Arquivo {
         this.nome = nome;
         this.ocr = ocr;
 
-        if(ocr == false) this.status = Arquivo.status_concluido;
-        else this.status = Arquivo.status_processando;
+        if(ocr == false) this.status = ArquivoService.status_concluido;
+        else this.status = ArquivoService.status_preprocessando;
        
         this.bucket = bucket;
     }
