@@ -4,15 +4,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.digitalse.cbm.back.DTO.DTOsMilitar.MilitarDTO;
+import com.digitalse.cbm.back.entities.Documento;
+import com.digitalse.cbm.back.entities.Militar;
+import com.digitalse.cbm.back.repository.MilitarRepository;
 import com.digitalse.cbm.back.responseFiles.RFsMilitar.RFMilitar;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 public class MilitarService {
+
+    @Autowired
+    private MilitarRepository militarRepository;
 
     /**
      * Busca um militar pelo seu nome (na API do CBMSE)
@@ -45,6 +53,18 @@ public class MilitarService {
         RFMilitar militarFound = new RFMilitar(jsonNode.get("num_matricula").asText(), jsonNode.get("nom_completo").asText(),
                 jsonNode.get("nom_guerra").asText(), jsonNode.get("dsc_cargo").asText());
         return militarFound;
+    }
+
+    public boolean militarExists(MilitarDTO militar) throws IOException {
+        if (!militarRepository.existsByMatricula(militar.getMatricula())) {
+            if (getListByMatricula(militar.getMatricula()) != null) {
+                Militar mil = new Militar(militar.getMatricula(), new ArrayList<Documento>());
+                mil = militarRepository.save(mil);
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

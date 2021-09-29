@@ -1,7 +1,6 @@
 package com.digitalse.cbm.back.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.digitalse.cbm.back.responseFiles.RFsMilitar.RFMilitar;
@@ -33,18 +32,14 @@ public class MilitarController {
     }
 
     @ApiOperation(value = "Procura militares por nome na API do CBM")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "Retornou o resultado da busca na API do CBM"),
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou o resultado da busca na API do CBM"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/militares/query")
-    public ResponseEntity<List<RFMilitar>> getMilitarPorNome(@RequestParam(required = false) String nome, @RequestParam(required = false) String matricula) throws IOException {
+    @GetMapping("/militares/matricula")
+    public ResponseEntity<RFMilitar> getMilitarByMatricula(@RequestParam(required = true) String matricula) throws IOException {
         try {
-            List<RFMilitar> result = new ArrayList<RFMilitar>();
-            if(nome != null && matricula != null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Apenas um campo na query é permitido!!!");
-            if(nome != null && matricula == null) result.addAll(militarService.getListByName(nome));
-            if(nome == null && matricula != null) result.add(militarService.getListByMatricula(matricula));
             
-            return ResponseEntity.status(HttpStatus.OK).body(result);
+            return ResponseEntity.status(HttpStatus.OK).body(militarService.getListByMatricula(matricula));
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (HttpClientErrorException e) {
@@ -55,14 +50,15 @@ public class MilitarController {
         }
     }
 
-    /* @ApiOperation(value = "Procura militares por matricula na API do CBM")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "Retornou o resultado da busca na API do CBM"),
+    @ApiOperation(value = "Procura militares por matricula na API do CBM")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retornou o resultado da busca na API do CBM"),
             @ApiResponse(code = 404, message = "Não encontrado"),
             @ApiResponse(code = 500, message = "Foi gerada uma exceção") })
-    @GetMapping("/militar/buscaPorMatricula")
-    public ResponseEntity<RFMilitar> getMilitarPorMatricula() throws IOException {
+    @GetMapping("/militares/nome")
+    public ResponseEntity<List<RFMilitar>> getMilitarByName(@RequestParam(required = true) String nome) throws IOException {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body();
+           
+            return ResponseEntity.status(HttpStatus.OK).body(militarService.getListByName(nome));
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (HttpClientErrorException e) {
@@ -71,5 +67,6 @@ public class MilitarController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
         }
-    } */
+    }
+
 }
