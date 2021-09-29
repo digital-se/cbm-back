@@ -53,4 +53,13 @@ public class Bucket {
     @UpdateTimestamp
     private OffsetDateTime atualizado;
 
+    public Bucket(String nome, String mime, Long tamanho, byte[] dados) {
+        this.nome = nome;
+        this.mime = mime;
+        this.tamanho = tamanho;
+        this.dados = dados;
+    }
+
+
+    
 }
