@@ -1,7 +1,5 @@
 package com.digitalse.cbm.back.DTO.DTOsArquivo;
 
-import com.digitalse.cbm.back.DTO.Interfaces.IValidation;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,23 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArquivoEditarDTO implements IValidation {
+public class ArquivoEditarDTO {
 
+    private Long id;
     private Boolean ocr;
     private String texto;
-
-    @Override
-    public boolean isValidationOk() {
-        boolean nullStep = false;
-
-        if (this.ocr != null) {
-            nullStep = true;
-        }
-        
-        if (nullStep == true)
-            return true;
-        else
-            return false;
-    }
 
 }
