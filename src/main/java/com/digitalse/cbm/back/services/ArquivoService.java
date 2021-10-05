@@ -64,7 +64,6 @@ public class ArquivoService {
             finalArq.setStatus("Em pre-processamento");
 
         RFCriarArquivo responseFile = new RFCriarArquivo(arquivoRepository.save(finalArq));
-        ocrService.updateOcr();
         return responseFile;
     }
 
@@ -101,7 +100,6 @@ public class ArquivoService {
             RFCriarArquivo responseFile = new RFCriarArquivo(arquivoRepository.save(finalArq));
             returnRF.add(responseFile);
         }
-        ocrService.updateOcr();
         return returnRF;
     }
 
