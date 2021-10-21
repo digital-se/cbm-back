@@ -27,9 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class ArquivoService {
 
     @Autowired
-    private OcrService ocrService;
-
-    @Autowired
     private ArquivoRepository arquivoRepository;
 
     @Autowired
@@ -105,7 +102,7 @@ public class ArquivoService {
 
     /**
      * Busca um arquivo e retorna a imagem do mesmo que está contida no bucket.
-     * 
+
      * @param arquivo_id id do arquivo para retornar a imagem do mesmo.
      * @return uma imagem.
      */

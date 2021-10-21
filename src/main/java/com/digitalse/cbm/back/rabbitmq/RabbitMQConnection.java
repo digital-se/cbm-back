@@ -1,7 +1,5 @@
 package com.digitalse.cbm.back.rabbitmq;
 
-import java.io.IOException;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.amqp.core.AmqpAdmin;
@@ -14,10 +12,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RabbitMQConnection {
-    public static final String NOME_EXCHANGE = "digital-se-cbm";
-    public static final String NOME_QUEUE_OCR = "ocr";
-    public static final String NOME_QUEUE_PREPROCESSOR = "preprocessor";
-    public static final String NOME_KEY_PREPROCESSOR = "pp_key";
+    private final String NOME_EXCHANGE = "digital-se-cbm";
+    private final String NOME_QUEUE_OCR = "ocr_queue";
+    private final String NOME_QUEUE_PREPROCESSOR = "preprocessor_queue";
+    //private final String NOME_KEY_PREPROCESSOR = "pp_key";
     
     private AmqpAdmin amqpAdmin;
 
@@ -41,33 +39,29 @@ public class RabbitMQConnection {
         return new Binding(queue.getName(), Binding.DestinationType.QUEUE, exchange.getName(), queue.getName(), null);
     }
 
+    //TODO: Verificar implementação sem AmqpAdmin
     @PostConstruct
     private void iniciar(){
         try{
+            Queue queuePreprocessor = this.queue(NOME_QUEUE_PREPROCESSOR);
             Queue queueOcr = this.queue(NOME_QUEUE_OCR);
 
             DirectExchange exchange = this.exchange(NOME_EXCHANGE);
-    
+
+            Binding bindingPreprocessor = this.binding(queuePreprocessor, exchange);
             Binding bindingOcr = this.binding(queueOcr, exchange);
     
+
+            this.amqpAdmin.declareQueue(queuePreprocessor);
             this.amqpAdmin.declareQueue(queueOcr);
+
             this.amqpAdmin.declareExchange(exchange);
+
+            this.amqpAdmin.declareBinding(bindingPreprocessor);
             this.amqpAdmin.declareBinding(bindingOcr);
         } catch (Exception e) {
             System.out.println("Erro: "+e.getMessage());
         }
-        
     }
-
-    /* public byte[] consumeMessage() throws IOException {
-        Channel channel = connection.createChannel();
-        GetResponse response = channel.basicGet(NOME_QUEUE_PREPROCESSOR, false);
-        return response.getBody();
-    }
-
-    public void publishMessage(byte[] bytes) throws IOException {
-        Channel channel = Connection.createChannel();
-        channel.basicPublish(NOME_EXCHANGE, NOME_KEY, new AMQP.BasicProperties(), bytes);
-    } */
 
 }
