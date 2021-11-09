@@ -18,6 +18,7 @@ import com.digitalse.cbm.back.repository.DocumentoRepository;
 import com.digitalse.cbm.back.responseFiles.RFsArquivo.RFArquivo;
 import com.digitalse.cbm.back.responseFiles.RFsArquivo.RFCriarArquivo;
 import com.digitalse.cbm.back.responseFiles.RFsBucket.RFBucket;
+import com.digitalse.cbm.back.rto.RTOBucket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,9 @@ public class ArquivoService {
 
     @Autowired
     private BucketRepository bucketRepository;
+
+    @Autowired
+    private RabbitmqService rabbitmqService;
 
     /**
      * Adiciona um arquivo a um documento.
@@ -61,6 +65,7 @@ public class ArquivoService {
             finalArq.setStatus("Em pre-processamento");
 
         RFCriarArquivo responseFile = new RFCriarArquivo(arquivoRepository.save(finalArq));
+        rabbitmqService.sendImage("preprocessor_queue", new RTOBucket(bucket.getId(), responseFile.getId(), bucket.getNome(), bucket.getMime(), bucket.getTamanho(), bucket.getDados(), null, null));
         return responseFile;
     }
 

@@ -21,9 +21,9 @@
 	<dependencies>
 		<!-- Depencency for using dotenv -->
 		<dependency>
-			<groupId>me.paulschwarz</groupId>
-			<artifactId>spring-dotenv</artifactId>
-			<version>2.3.0</version>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>dotenv-java</artifactId>
+			<version>2.2.0</version>
 		</dependency>
 
 		<dependency>

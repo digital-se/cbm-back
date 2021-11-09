@@ -1,18 +1,11 @@
 package com.digitalse.cbm.back.rabbitmq;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.connection.SimplePropertyValueConnectionNameStrategy;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class RabbitMQConnection {
-    private final String NOME_EXCHANGE = "digital-se-cbm";
+    /* private final String NOME_EXCHANGE = "digital-se-cbm";
     private final String NOME_QUEUE_OCR = "ocr_queue";
     private final String NOME_QUEUE_PREPROCESSOR = "preprocessor_queue";
     //private final String NOME_KEY_PREPROCESSOR = "pp_key";
@@ -63,5 +56,5 @@ public class RabbitMQConnection {
             System.out.println("Erro: "+e.getMessage());
         }
     }
-
+ */
 }

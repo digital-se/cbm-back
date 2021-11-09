@@ -11,6 +11,10 @@ services:
       - KC_AUTH_SERVER_URL
       - KC_SSL_REQUIRED
       - KC_RESOURCE
+      - RABBIT_HOST
+      - RABBIT_PORT
+      - RABBIT_USERNAME
+      - RABBIT_PASSWORD
       - SECRET
     build:
       context: .

@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.digitalse.cbm.back.rto.RTOBucket;
 
 import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class RabbitmqService {
         rt.convertAndSend(nomeFila, rtoBucket);
     }
 
-    //@RabbitListener(queues = "ocr")
+    @RabbitListener(queues = "ocr_queue")
     public void listener(RTOBucket bucket){
         System.out.println(">>> Imagem recebida do ocr: "+bucket.getArquivo_id());
     }
